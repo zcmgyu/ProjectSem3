@@ -1,7 +1,11 @@
-﻿@*@model Tuple<ProjectSem3.Models.AccountViewModels.LoginViewModel>*@
-@model ProjectSem3.Models.AccountViewModels.LoginViewModel
+﻿@model Tuple<ProjectSem3.Models.AccountViewModels.LoginViewModel, ProjectSem3.Models.AccountViewModels.RegisterViewModel>
+@*@model ProjectSem3.Models.AccountViewModels.LoginViewModel*@
 @{
     ViewBag.Title = "Register";
+}
+@if (@ViewBag.SelectedItem != default(string))
+{
+    <script>$("#@ViewBag.SelectedItem").focus;</script>
 }
 @section CustomStyle{
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
@@ -57,12 +61,12 @@
                                 <p>If you have an account with us, Please log in.</p>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        @Html.TextBoxFor(model => model.Email, new { @class = "custom-form", @placeholder = "Email Address" })
+                                        @Html.TextBoxFor(model => model.Item1.Email, new { @class = "custom-form", @placeholder = "Email Address" })
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        @Html.PasswordFor(model => model.Password, new { @class = "custom-form", @placeholder = "Password" })
+                                        @Html.PasswordFor(model => model.Item1.Password, new { @class = "custom-form", @placeholder = "Password" })
                                     </div>
                                 </div>
                                 <p>
@@ -75,37 +79,42 @@
                 </div>
                 <!-- Registered-Customers End -->
                 <div class="col-md-6">
-                    <form action="#">
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+                    {
                         <div class="new-customers">
                             <h2 class="login-title">NEW CUSTOMERS</h2>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input type="text" class="custom-form" placeholder="First Name" />
+                                    @*<input type="text" class="custom-form" placeholder="First Name" />*@
+                                    @Html.TextBoxFor(model => model.Item2.Firstname, new { @class = "custom-form", @placeholder = "First Name" })
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" class="custom-form" placeholder="Last Name" />
+                                    @*<input type="text" class="custom-form" placeholder="Last Name" />*@
+                                    @Html.TextBoxFor(model => model.Item2.Lastname, new { @class = "custom-form", @placeholder = "Last Name" })
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <select class="shop-select custom-form">
+                                    <select name="Gender" class="shop-select custom-form">
                                         <option value="-1">Gender</option>
                                         <option value="1">Male</option>
                                         <option value="0">Female</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input class="custom-form date-picker" size="16" type="text" value="" placeholder="Birthday"/>
+                                    @Html.TextBoxFor(model => model.Item2.DOB, new { @class = "custom-form date-picker", @size = "16", @placeholder = "Birthday" })
+                                    @*<input class="custom-form date-picker" size="16" type="text" value="" placeholder="Birthday"/>*@
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <input type="text" class="custom-form" placeholder="Address" />
+                                    @*<input type="text" class="custom-form" placeholder="Address"/>*@
+                                    @Html.TextBoxFor(model => model.Item2.Address, new { @class = "custom-form", @placeholder = "Address" })
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <select class="custom-select custom-form">
+                                    <select name="City" class="custom-select custom-form">
                                         <option>City</option>
                                         <option>Dhaka</option>
                                         <option>New York</option>
@@ -114,7 +123,7 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-6">
-                                    <select class="custom-select custom-form">
+                                    <select name="Country" class="custom-select custom-form">
                                         <option>Country</option>
                                         <option>Bangladesh</option>
                                         <option>United States</option>
@@ -125,31 +134,29 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input type="text" class="custom-form" placeholder="Phone Number" />
+                                    @*<input type="text" class="custom-form" placeholder="Phone Number"/>*@
+                                    @Html.TextBoxFor(model => model.Item2.Phone, new { @class = "custom-form", @placeholder = "Phone Number" })
                                 </div>
                                 <div class="col-sm-6">
-                                    <select class="custom-select custom-form">
-                                        <option>Post Code</option>
-                                        <option>012345</option>
-                                        <option>0123456</option>
-                                        <option>01234567</option>
-                                        <option>012345678</option>
-                                    </select>
+                                    @Html.TextBoxFor(model => model.Item2.PostCode, new { @class = "custom-form", @placeholder = "Post Code" })
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <input class="custom-form" type="text" placeholder="Email" name="email" />
+                                    @*<input class="custom-form" type="text" placeholder="Email" name="email"/>*@
+                                    @Html.TextBoxFor(model => model.Item2.Email, new { @class = "custom-form", @id="RegisterEmail", @placeholder = "Email" })
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <input class="custom-form" type="password" placeholder="Password" />
+                                    @*<input class="custom-form" type="password" placeholder="Password"/>*@
+                                    @Html.PasswordFor(model => model.Item2.Password, new { @class = "custom-form", @placeholder = "Password" })
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <input class="custom-form" type="password" placeholder="Confirm Password" />
+                                    @*<input class="custom-form" type="password" placeholder="Confirm Password"/>*@
+                                    @Html.PasswordFor(model => model.Item2.ConfirmPassword, new { @class = "custom-form", @placeholder = "Confirm Password" })
                                 </div>
                             </div>
                             <div class="checkbox">
@@ -171,7 +178,7 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    }
                 </div>
             </div>
         </div>

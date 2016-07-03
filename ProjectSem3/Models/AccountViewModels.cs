@@ -34,6 +34,11 @@ namespace ProjectSem3.Models
             public string Address { get; set; }
             [StringLength(50)]
             public string Password { get; set; }
+
+            [StringLength(20)]
+            [Compare("Password")]
+            public string ConfirmPassword { get; set; }
+
             [StringLength(20)]
             public string Country { get; set; }
             [StringLength(20)]

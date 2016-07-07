@@ -43,7 +43,8 @@ namespace Model.DAO
                 new SqlParameter("@Phone", model.Phone),
                 new SqlParameter("@CreatedBy", model.CreatedBy),
             };
-            return _db.Database.SqlQuery<int>("Sp_Register", sqlParams).SingleOrDefault();
+            return _db.Database.SqlQuery<int>(
+                "Sp_Register @Email, @Password, @Firstname, @Lastname, @Gender, @DOB, @Address, @City, @Country, @PostCode, @Phone, @CreatedBy", sqlParams).SingleOrDefault();
         }
     }
 }

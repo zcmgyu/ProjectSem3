@@ -23,43 +23,51 @@ namespace ProjectSem3.Models
         public class RegisterViewModel
         {
             [StringLength(50)]
+            [Required]
             public string Email { get; set; }
+
             [StringLength(25)]
+            [Required]
             public string Firstname { get; set; }
+
             [StringLength(25)]
+            [Required]
             public string Lastname { get; set; }
+
+            [Required]
             public int Gender { get; set; }
+
+            [Required]
             public DateTime DOB { get; set; }
+
             [StringLength(50)]
+            [Required]
             public string Address { get; set; }
+
+            [Required]
             [StringLength(50)]
             public string Password { get; set; }
 
             [StringLength(20)]
+            [Required]
             [Compare("Password")]
             public string ConfirmPassword { get; set; }
 
+            [Required]
             [StringLength(20)]
             public string Country { get; set; }
+
             [StringLength(20)]
+            [Required]
             public string City { get; set; }
+
             [StringLength(8)]
+            [Required]
             public string PostCode { get; set; }
 
             [StringLength(50)]
+            [Required]
             public string Phone { get; set; }
-
-            public DateTime? CreatedDate { get; set; }
-
-            [StringLength(50)]
-            public string CreatedBy { get; set; }
-
-            public DateTime? ModifiedDate { get; set; }
-
-            [StringLength(50)]
-            public string ModifiedBy { get; set; }
-
-            public bool Status { get; set; }
         }
     }
 }

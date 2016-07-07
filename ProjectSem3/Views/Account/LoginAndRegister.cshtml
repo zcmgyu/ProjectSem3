@@ -16,6 +16,7 @@
     <link href="~/Content/Client/lib/plugin-datepicker/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
     <link href="~/Content/Client/lib/plugin-datepicker/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
     <!-- END THEME GLOBAL STYLES -->
+
 }
 @section Scripts{
     <!-- BEGIN PAGE LEVEL PLUGINS -->
@@ -27,6 +28,11 @@
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="~/Content/Client/lib/plugin-datepicker/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL SCRIPTS -->
+    <script>
+        $('.date-picker').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+    </script>
 }
 <!-- PAGE-CONTENT START -->
 <section class="page-content">
@@ -81,8 +87,10 @@
                 <div class="col-md-6">
                     @using (Html.BeginForm("Register", "Account", FormMethod.Post))
                     {
+                        @Html.AntiForgeryToken()
                         <div class="new-customers">
                             <h2 class="login-title">NEW CUSTOMERS</h2>
+                            @*@Html.ValidationSummary(false)*@
                             <div class="row">
                                 <div class="col-sm-6">
                                     @*<input type="text" class="custom-form" placeholder="First Name" />*@
@@ -94,17 +102,38 @@
                                 </div>
                             </div>
                             <div class="row">
+                                @Html.ValidationMessageFor(model => model.Item2.Firstname)
+                            </div>
+                            <div class="row">
+                                @Html.ValidationMessageFor(model => model.Item2.Lastname)
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-6">
-                                    <select name="Gender" class="shop-select custom-form">
-                                        <option value="-1">Gender</option>
-                                        <option value="1">Male</option>
-                                        <option value="0">Female</option>
-                                    </select>
+                                    @*<select name="Gender" class="shop-select custom-form">
+                                            <option value="-1">Gender</option>
+                                            <option value="1">Male</option>
+                                            <option value="0">Female</option>
+                                        </select>*@
+                                    @{var listGender = new[]
+    {
+                                            new { Text = "Gender", Value = "-1" },
+                                            new { Text = "Male", Value="1" },
+                                            new { Text = "Female", Value="0" }
+                                    }.ToList();
+                                    }
+                                    @*@Html.DropDownList("Item2.Gender", new SelectList(listGender, "Value", "Text"), new { @class="shop-select custom-form"})*@
+                                    @Html.DropDownListFor(model => model.Item2.Gender, new SelectList(listGender, "Value", "Text"), new { @class = "shop-select custom-form" })
                                 </div>
                                 <div class="col-sm-6">
                                     @Html.TextBoxFor(model => model.Item2.DOB, new { @class = "custom-form date-picker", @size = "16", @placeholder = "Birthday" })
                                     @*<input class="custom-form date-picker" size="16" type="text" value="" placeholder="Birthday"/>*@
                                 </div>
+                            </div>
+                            <div class="row">
+                                @Html.ValidationMessageFor(model => model.Item2.Gender)
+                            </div>
+                            <div class="row">
+                                @Html.ValidationMessageFor(model => model.Item2.DOB)
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
@@ -113,24 +142,55 @@
                                 </div>
                             </div>
                             <div class="row">
+                                @Html.ValidationMessageFor(model => model.Item2.Address)
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-6">
-                                    <select name="City" class="custom-select custom-form">
-                                        <option>City</option>
-                                        <option>Dhaka</option>
-                                        <option>New York</option>
-                                        <option>London</option>
-                                        <option>Melbourne</option>
-                                    </select>
+                                    @*<select name="Country" class="custom-select custom-form">
+                                            <option>Country</option>
+                                            <option value="Bangladesh">Bangladesh</option>
+                                            <option value="United States">United States</option>
+                                            <option value="United States">United Kingdom</option>
+                                            <option value="Australia">Australia</option>
+                                        </select>*@
+                                    @{var listCountry = new[]
+    {
+                                            new { Text = "Country", Value = "Country" },
+                                            new { Text = "Bangladesh", Value="Bangladesh" },
+                                            new { Text = "United States", Value="United States" },
+                                            new { Text = "United States", Value="United States" },
+                                            new { Text = "Australia", Value="Australia" }
+                                    }.ToList();
+                                    }
+                                    @Html.DropDownList("Item2.Country", new SelectList(listCountry, "Value", "Text"), new { @class = "custom-select custom-form" })
                                 </div>
+
                                 <div class="col-sm-6">
-                                    <select name="Country" class="custom-select custom-form">
-                                        <option>Country</option>
-                                        <option>Bangladesh</option>
-                                        <option>United States</option>
-                                        <option>United Kingdom</option>
-                                        <option>Australia</option>
-                                    </select>
+                                    @*<select name="City" class="custom-select custom-form">
+                                            <option>City</option>
+                                            <option value="Dhaka">Dhaka</option>
+                                            <option value="New York">New York</option>
+                                            <option value="London">London</option>
+                                            <option value="Melbourne">Melbourne</option>
+                                        </select>*@
+                                    @{var listCity = new[]
+    {
+                                            new { Text = "City", Value = "City" },
+                                            new { Text = "Dhaka", Value="Dhaka" },
+                                            new { Text = "New York", Value="New York" },
+                                            new { Text = "London", Value="London" },
+                                            new { Text = "Melbourne", Value="Melbourne" }
+                                    }.ToList();
+                                    }
+                                    @Html.DropDownList("Item2.City", new SelectList(listCity, "Value", "Text"), new { @class = "custom-select custom-form" })
                                 </div>
+
+                            </div>
+                            <div class="row">
+                                @Html.ValidationMessageFor(model => model.Item2.Country)
+                            </div>
+                            <div class="row">
+                                @Html.ValidationMessageFor(model => model.Item2.City)
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
@@ -142,10 +202,19 @@
                                 </div>
                             </div>
                             <div class="row">
+                                @Html.ValidationMessageFor(model => model.Item2.Phone)
+                            </div>
+                            <div class="row">
+                                @Html.ValidationMessageFor(model => model.Item2.PostCode)
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-12">
                                     @*<input class="custom-form" type="text" placeholder="Email" name="email"/>*@
-                                    @Html.TextBoxFor(model => model.Item2.Email, new { @class = "custom-form", @id="RegisterEmail", @placeholder = "Email" })
+                                    @Html.TextBoxFor(model => model.Item2.Email, new { @class = "custom-form", @id = "RegisterEmail", @placeholder = "Email" })
                                 </div>
+                            </div>
+                            <div class="row">
+                                @Html.ValidationMessageFor(model => model.Item2.Email)
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
@@ -154,11 +223,18 @@
                                 </div>
                             </div>
                             <div class="row">
+                                @Html.ValidationMessageFor(model => model.Item2.Password)
+                            </div>
+
+                            <div class="row">
                                 <div class="col-sm-12">
                                     @*<input class="custom-form" type="password" placeholder="Confirm Password"/>*@
                                     @Html.PasswordFor(model => model.Item2.ConfirmPassword, new { @class = "custom-form", @placeholder = "Confirm Password" })
                                 </div>
                             </div>
+                            @*<div class="row">
+                                @Html.ValidationMessageFor(model => model.Item2.ConfirmPassword)
+                            </div>*@
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" checked="checked" name="create-account" />
@@ -170,6 +246,18 @@
                                 </label>
                             </div>
                             <div class="row">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" checked="checked" name="create-account" />
+                                        Sign up for our newsletter!
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="billing-address" />
+                                        Receive special offers from our partners!
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-6">
                                     <input type="submit" class="custom-form custom-submit no-margin" value="register" />
                                 </div>
@@ -178,7 +266,7 @@
                                 </div>
                             </div>
                         </div>
-                    }
+                                        }
                 </div>
             </div>
         </div>

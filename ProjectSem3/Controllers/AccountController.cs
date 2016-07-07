@@ -32,32 +32,44 @@ namespace ProjectSem3.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register([Bind(Prefix = "Item1")]AccountViewModels.RegisterViewModel model)
+        public ActionResult Register([Bind(Prefix = "Item2")] AccountViewModels.RegisterViewModel model)
         {
-            var account = new Account()
+            if (!ModelState.IsValid)
             {
-                Email = model.Email,
-                Password = Encryptor.Md5Hash(model.Password),
-                Firstname = model.Firstname,
-                Lastname = model.Lastname,
-                Gender = model.Gender,
-                DOB = model.DOB,
-                Country = model.City,
-                City = model.City,
-                Address = model.Address,
-                Phone = model.Phone,
-                PostCode = model.PostCode,
-                CreatedBy = "client"
-            };
-            var result = new AccountDao().Register(account);
-            if (result == 1)
-            {
-                return RedirectToAction("Index", "Home");
+                var tuble = new Tuple<AccountViewModels.LoginViewModel, AccountViewModels.RegisterViewModel>(null, model);
+                return View("LoginAndRegister", tuble);
             }
-            var tuple = new Tuple<AccountViewModels.LoginViewModel, AccountViewModels.RegisterViewModel>(null, model);
-            if (result != 3) return View("LoginAndRegister", tuple);
-            ViewBag.SelectedItem = "RegisterEmail";
-            return View("LoginAndRegister");
+                var account = new Account()
+                {
+                    Email = model.Email,
+                    Password = Encryptor.Md5Hash(model.Password),
+                    Firstname = model.Firstname,
+                    Lastname = model.Lastname,
+                    Gender = model.Gender,
+                    DOB = model.DOB,
+                    Country = model.City,
+                    City = model.City,
+                    Address = model.Address,
+                    Phone = model.Phone,
+                    PostCode = model.PostCode,
+                    CreatedBy = "client"
+                };
+                var result = new AccountDao().Register(account);
+                if (result == 1) // 1 == true ; 
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else if(result == 2) //2 == already exists; 
+                {
+                    var tuple = new Tuple<AccountViewModels.LoginViewModel, AccountViewModels.RegisterViewModel>(null, model);
+                    return View("LoginAndRegister", tuple);
+                }
+                else // 0 == fail;
+                {
+                    ViewBag.SelectedItem = "RegisterEmail";
+                    return View("LoginAndRegister");
+                }
+            
         }
     }
 }

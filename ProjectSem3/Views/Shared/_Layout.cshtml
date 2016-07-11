@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="~/Content/Client/css/master/master.css">
     <!-- render section-->
     @RenderSection("CustomStyle", false)
+    <!-- Overwrite cause conponent.css overwrite Bootstrap.css file -->
+    <link href="~/Content/Client/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/Client/css/master/style.css" rel="stylesheet" />
     <link href="~/Content/Client/css/responsive.css" rel="stylesheet" />
     <!-- modernizr css -->
@@ -377,7 +379,7 @@
     <!-- wow js -->
     <script src="~/Content/Client/js/wow.min.js"></script>
     <script type="text/javascript">
-			new WOW().init();
+        new WOW().init();
     </script>
     <!-- plugins js -->
     <script src="~/Content/Client/js/plugins.js"></script>

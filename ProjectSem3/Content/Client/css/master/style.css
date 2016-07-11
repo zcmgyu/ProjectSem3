@@ -3686,7 +3686,8 @@ span.email-notes {
 }
  .custom-form {
   border: 1px solid #ccc;
-  color: #999;
+  /*color: #999;*/
+  color: #000;
   display: block;
   font-size: 14px;
   height: 33px;

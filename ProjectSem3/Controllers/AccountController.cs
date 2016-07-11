@@ -31,7 +31,11 @@ namespace ProjectSem3.Controllers
             return View("LoginAndRegister");
         }
 
+        // Handle multiple Submit Action
+        // http://stackoverflow.com/questions/442704/how-do-you-handle-multiple-submit-buttons-in-asp-net-mvc-framework
+        // 
         [HttpPost]
+        [MultipleButton(Name = "action", Argument = "register")]
         public ActionResult Register([Bind(Prefix = "Item2")] AccountViewModels.RegisterViewModel model)
         {
             if (!ModelState.IsValid)

@@ -10,7 +10,6 @@
 @section CustomStyle{
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="~/Content/Client/lib/plugin-datepicker/plugins/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link href="~/Content/Client/lib/plugin-datepicker/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
     <!-- BEGIN THEME GLOBAL STYLES -->
     <link href="~/Content/Client/lib/plugin-datepicker/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
@@ -122,10 +121,10 @@
                                     }.ToList();
                                     }
                                     @*@Html.DropDownList("Item2.Gender", new SelectList(listGender, "Value", "Text"), new { @class="shop-select custom-form"})*@
-                                    @Html.DropDownListFor(model => model.Item2.Gender, new SelectList(listGender, "Value", "Text"), new { @class = "shop-select custom-form" })
+                                    @Html.DropDownListFor(model => model.Item2.Gender, new SelectList(listGender, "Value", "Text"), new { @class = "custom-select custom-form" })
                                 </div>
                                 <div class="col-sm-6">
-                                    @Html.TextBoxFor(model => model.Item2.DOB, new { @class = "custom-form date-picker", @size = "16", @placeholder = "Birthday" })
+                                    @Html.TextBoxFor(model => model.Item2.DOB, new { @class = "custom-select custom-form date-picker", @size = "16", @placeholder = "Birthday" })
                                     @*<input class="custom-form date-picker" size="16" type="text" value="" placeholder="Birthday"/>*@
                                 </div>
                             </div>
@@ -232,9 +231,6 @@
                                     @Html.PasswordFor(model => model.Item2.ConfirmPassword, new { @class = "custom-form", @placeholder = "Confirm Password" })
                                 </div>
                             </div>
-                            @*<div class="row">
-                                @Html.ValidationMessageFor(model => model.Item2.ConfirmPassword)
-                            </div>*@
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" checked="checked" name="create-account" />
@@ -245,24 +241,13 @@
                                     Receive special offers from our partners!
                                 </label>
                             </div>
-                            <div class="row">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" checked="checked" name="create-account" />
-                                        Sign up for our newsletter!
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="billing-address" />
-                                        Receive special offers from our partners!
-                                    </label>
-                                </div>
-                            </div>
+                            <!-- http://stackoverflow.com/questions/442704/how-do-you-handle-multiple-submit-buttons-in-asp-net-mvc-framework -->
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input type="submit" class="custom-form custom-submit no-margin" value="register" />
+                                    <input type="submit" class="custom-form custom-submit no-margin" value="register" name="action:register"/>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="submit" class="custom-form custom-submit no-margin" value="clear" />
+                                    <input type="submit" class="custom-form custom-submit no-margin" value="clear" name="action:clear"/>
                                 </div>
                             </div>
                         </div>

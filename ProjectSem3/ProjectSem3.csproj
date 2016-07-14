@@ -289,6 +289,7 @@
     <Content Include="Content\Client\img\total-cart\1.jpg" />
     <Content Include="Content\Client\js\bootstrap-datepicker.min.js" />
     <Content Include="Content\Client\js\bootstrap.min.js" />
+    <Content Include="Content\Client\js\controller\AccountController.js" />
     <Content Include="Content\Client\js\countdon.min.js" />
     <Content Include="Content\Client\js\jquery-ui.min.js" />
     <Content Include="Content\Client\js\jquery.meanmenu.js" />
@@ -497,6 +498,7 @@
     <Content Include="Content\Client\lib\plugin-datepicker\plugins\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\Client\lib\plugin-datepicker\plugins\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\Client\lib\plugin-datepicker\plugins\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\Client\json\vietnam_provinces_cities.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -506,6 +508,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />

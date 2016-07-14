@@ -28,10 +28,11 @@
     <script src="~/Content/Client/lib/plugin-datepicker/pages/scripts/components-date-time-pickers.min.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL SCRIPTS -->
     <script>
-        $('.date-picker').datepicker({
-            format: 'dd/mm/yyyy'
+        var DOB = $('.date-picker').datepicker({
+            format: 'dd/MM/yyyy'
         });
     </script>
+    <script src="~/Content/Client/js/controller/AccountController.js"></script>
 }
 <!-- PAGE-CONTENT START -->
 <section class="page-content">
@@ -60,10 +61,14 @@
                 <div class="col-md-6">
                     @using (Html.BeginForm("Login", "Account", FormMethod.Post))
                     {
+                        @Html.AntiForgeryToken()
                         <div class="registered-customers">
                             <h2 class="login-title">REGISTERED CUSTOMERS</h2>
                             <div class="registered">
                                 <p>If you have an account with us, Please log in.</p>
+                                <div class="row">
+                                    @Html.ValidationSummary(false)
+                                </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         @Html.TextBoxFor(model => model.Item1.Email, new { @class = "custom-form", @placeholder = "Email Address" })
@@ -84,12 +89,13 @@
                 </div>
                 <!-- Registered-Customers End -->
                 <div class="col-md-6">
-                    @using (Html.BeginForm("Register", "Account", FormMethod.Post))
-                    {
+                    @*@using (Html.BeginForm("", "Account", FormMethod.Post, new { @id = "register" }))
+                        {*@
+                    <form id="register" method="post" action="">
                         @Html.AntiForgeryToken()
                         <div class="new-customers">
                             <h2 class="login-title">NEW CUSTOMERS</h2>
-                            @*@Html.ValidationSummary(false)*@
+                            @Html.ValidationSummary(false)
                             <div class="row">
                                 <div class="col-sm-6">
                                     @*<input type="text" class="custom-form" placeholder="First Name" />*@
@@ -100,100 +106,49 @@
                                     @Html.TextBoxFor(model => model.Item2.Lastname, new { @class = "custom-form", @placeholder = "Last Name" })
                                 </div>
                             </div>
-                            <div class="row">
-                                @Html.ValidationMessageFor(model => model.Item2.Firstname)
-                            </div>
-                            <div class="row">
-                                @Html.ValidationMessageFor(model => model.Item2.Lastname)
-                            </div>
+
                             <div class="row">
                                 <div class="col-sm-6">
-                                    @*<select name="Gender" class="shop-select custom-form">
-                                            <option value="-1">Gender</option>
-                                            <option value="1">Male</option>
-                                            <option value="0">Female</option>
-                                        </select>*@
                                     @{var listGender = new[]
     {
-                                            new { Text = "Gender", Value = "-1" },
                                             new { Text = "Male", Value="1" },
                                             new { Text = "Female", Value="0" }
                                     }.ToList();
                                     }
-                                    @*@Html.DropDownList("Item2.Gender", new SelectList(listGender, "Value", "Text"), new { @class="shop-select custom-form"})*@
-                                    @Html.DropDownListFor(model => model.Item2.Gender, new SelectList(listGender, "Value", "Text"), new { @class = "custom-select custom-form" })
+                                    @Html.DropDownListFor(model => model.Item2.Gender, new SelectList(listGender, "Value", "Text"), "Gender", new { @class = "custom-select custom-form" })
                                 </div>
                                 <div class="col-sm-6">
                                     @Html.TextBoxFor(model => model.Item2.DOB, new { @class = "custom-select custom-form date-picker", @size = "16", @placeholder = "Birthday" })
-                                    @*<input class="custom-form date-picker" size="16" type="text" value="" placeholder="Birthday"/>*@
                                 </div>
                             </div>
-                            <div class="row">
-                                @Html.ValidationMessageFor(model => model.Item2.Gender)
-                            </div>
-                            <div class="row">
-                                @Html.ValidationMessageFor(model => model.Item2.DOB)
-                            </div>
+
                             <div class="row">
                                 <div class="col-sm-12">
-                                    @*<input type="text" class="custom-form" placeholder="Address"/>*@
                                     @Html.TextBoxFor(model => model.Item2.Address, new { @class = "custom-form", @placeholder = "Address" })
                                 </div>
                             </div>
                             <div class="row">
-                                @Html.ValidationMessageFor(model => model.Item2.Address)
-                            </div>
-                            <div class="row">
                                 <div class="col-sm-6">
-                                    @*<select name="Country" class="custom-select custom-form">
-                                            <option>Country</option>
-                                            <option value="Bangladesh">Bangladesh</option>
-                                            <option value="United States">United States</option>
-                                            <option value="United States">United Kingdom</option>
-                                            <option value="Australia">Australia</option>
-                                        </select>*@
-                                    @{var listCountry = new[]
-    {
-                                            new { Text = "Country", Value = "Country" },
-                                            new { Text = "Bangladesh", Value="Bangladesh" },
-                                            new { Text = "United States", Value="United States" },
-                                            new { Text = "United States", Value="United States" },
-                                            new { Text = "Australia", Value="Australia" }
+                                    @*{var listCountry = new[]
+                                    {
+                                    new { Text = "Bangladesh", Value="Bangladesh" },
+                                    new { Text = "United States", Value="United States" },
+                                    new { Text = "United States", Value="United States" },
+                                    new { Text = "Australia", Value="Australia" }
                                     }.ToList();
-                                    }
-                                    @Html.DropDownList("Item2.Country", new SelectList(listCountry, "Value", "Text"), new { @class = "custom-select custom-form" })
+                                    }*@
+                                    @Html.DropDownList("Item2.Country", new SelectList(new string[] { }), new { @class = "custom-select custom-form", @id = "ddlCity" })
                                 </div>
 
                                 <div class="col-sm-6">
-                                    @*<select name="City" class="custom-select custom-form">
-                                            <option>City</option>
-                                            <option value="Dhaka">Dhaka</option>
-                                            <option value="New York">New York</option>
-                                            <option value="London">London</option>
-                                            <option value="Melbourne">Melbourne</option>
-                                        </select>*@
-                                    @{var listCity = new[]
-    {
-                                            new { Text = "City", Value = "City" },
-                                            new { Text = "Dhaka", Value="Dhaka" },
-                                            new { Text = "New York", Value="New York" },
-                                            new { Text = "London", Value="London" },
-                                            new { Text = "Melbourne", Value="Melbourne" }
-                                    }.ToList();
-                                    }
-                                    @Html.DropDownList("Item2.City", new SelectList(listCity, "Value", "Text"), new { @class = "custom-select custom-form" })
+                                    
+                                    @Html.DropDownList("Item2.City", new SelectList(new string[] { }), "District", new { @class = "custom-select custom-form", @id = "ddlDistrict" })
                                 </div>
 
                             </div>
-                            <div class="row">
-                                @Html.ValidationMessageFor(model => model.Item2.Country)
-                            </div>
-                            <div class="row">
-                                @Html.ValidationMessageFor(model => model.Item2.City)
-                            </div>
+
                             <div class="row">
                                 <div class="col-sm-6">
-                                    @*<input type="text" class="custom-form" placeholder="Phone Number"/>*@
                                     @Html.TextBoxFor(model => model.Item2.Phone, new { @class = "custom-form", @placeholder = "Phone Number" })
                                 </div>
                                 <div class="col-sm-6">
@@ -201,33 +156,20 @@
                                 </div>
                             </div>
                             <div class="row">
-                                @Html.ValidationMessageFor(model => model.Item2.Phone)
-                            </div>
-                            <div class="row">
-                                @Html.ValidationMessageFor(model => model.Item2.PostCode)
-                            </div>
-                            <div class="row">
                                 <div class="col-sm-12">
-                                    @*<input class="custom-form" type="text" placeholder="Email" name="email"/>*@
                                     @Html.TextBoxFor(model => model.Item2.Email, new { @class = "custom-form", @id = "RegisterEmail", @placeholder = "Email" })
                                 </div>
-                            </div>
-                            <div class="row">
-                                @Html.ValidationMessageFor(model => model.Item2.Email)
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    @*<input class="custom-form" type="password" placeholder="Password"/>*@
-                                    @Html.PasswordFor(model => model.Item2.Password, new { @class = "custom-form", @placeholder = "Password" })
-                                </div>
-                            </div>
-                            <div class="row">
-                                @Html.ValidationMessageFor(model => model.Item2.Password)
                             </div>
 
                             <div class="row">
                                 <div class="col-sm-12">
-                                    @*<input class="custom-form" type="password" placeholder="Confirm Password"/>*@
+                                    @Html.PasswordFor(model => model.Item2.Password, new { @class = "custom-form", @placeholder = "Password" })
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-sm-12">
                                     @Html.PasswordFor(model => model.Item2.ConfirmPassword, new { @class = "custom-form", @placeholder = "Confirm Password" })
                                 </div>
                             </div>
@@ -244,14 +186,16 @@
                             <!-- http://stackoverflow.com/questions/442704/how-do-you-handle-multiple-submit-buttons-in-asp-net-mvc-framework -->
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input type="submit" class="custom-form custom-submit no-margin" value="register" name="action:register"/>
+                                    <input type="submit" class="custom-form custom-submit no-margin" value="register" name="action:register" />
                                 </div>
+
                                 <div class="col-sm-6">
-                                    <input type="submit" class="custom-form custom-submit no-margin" value="clear" name="action:clear"/>
+                                    <input type="submit" class="custom-form custom-submit no-margin" value="clear" name="action:clear" id="btnClear" />
                                 </div>
                             </div>
                         </div>
-                                        }
+                        @*}*@
+                    
                 </div>
             </div>
         </div>

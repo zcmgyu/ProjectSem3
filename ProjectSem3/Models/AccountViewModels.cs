@@ -38,6 +38,8 @@ namespace ProjectSem3.Models
             public int Gender { get; set; }
 
             [Required]
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
             public DateTime DOB { get; set; }
 
             [StringLength(50)]

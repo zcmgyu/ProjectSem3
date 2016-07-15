@@ -289,7 +289,7 @@
     <Content Include="Content\Client\img\total-cart\1.jpg" />
     <Content Include="Content\Client\js\bootstrap-datepicker.min.js" />
     <Content Include="Content\Client\js\bootstrap.min.js" />
-    <Content Include="Content\Client\js\controller\AccountController.js" />
+    <Content Include="Content\Client\js\controller\accountController.js" />
     <Content Include="Content\Client\js\countdon.min.js" />
     <Content Include="Content\Client\js\jquery-ui.min.js" />
     <Content Include="Content\Client\js\jquery.meanmenu.js" />

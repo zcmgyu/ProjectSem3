@@ -122,31 +122,31 @@
                                 </div>
                             </div>
 
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    @*{var listCountry = new[]
+                                        {
+                                        new { Text = "Bangladesh", Value="Bangladesh" },
+                                        new { Text = "United States", Value="United States" },
+                                        new { Text = "United States", Value="United States" },
+                                        new { Text = "Australia", Value="Australia" }
+                                        }.ToList();
+                                        }*@
+                                    @Html.DropDownList("Item2.Country", new SelectList(new string[] { }), new { @class = "custom-select custom-form", @id = "ddlCity" })
+                                </div>
+
+                                <div class="col-sm-6">
+
+                                    @Html.DropDownList("Item2.City", new SelectList(new string[] { }), "District", new { @class = "custom-select custom-form", @id = "ddlDistrict" })
+                                </div>
+
+                            </div>
                             <div class="row">
                                 <div class="col-sm-12">
                                     @Html.TextBoxFor(model => model.Item2.Address, new { @class = "custom-form", @placeholder = "Address" })
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    @*{var listCountry = new[]
-                                    {
-                                    new { Text = "Bangladesh", Value="Bangladesh" },
-                                    new { Text = "United States", Value="United States" },
-                                    new { Text = "United States", Value="United States" },
-                                    new { Text = "Australia", Value="Australia" }
-                                    }.ToList();
-                                    }*@
-                                    @Html.DropDownList("Item2.Country", new SelectList(new string[] { }), new { @class = "custom-select custom-form", @id = "ddlCity" })
-                                </div>
-
-                                <div class="col-sm-6">
-                                    
-                                    @Html.DropDownList("Item2.City", new SelectList(new string[] { }), "District", new { @class = "custom-select custom-form", @id = "ddlDistrict" })
-                                </div>
-
-                            </div>
-
                             <div class="row">
                                 <div class="col-sm-6">
                                     @Html.TextBoxFor(model => model.Item2.Phone, new { @class = "custom-form", @placeholder = "Phone Number" })
@@ -195,7 +195,7 @@
                             </div>
                         </div>
                         @*}*@
-                    
+                    </form>
                 </div>
             </div>
         </div>

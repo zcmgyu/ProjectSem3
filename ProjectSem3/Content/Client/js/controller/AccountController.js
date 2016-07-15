@@ -14,7 +14,7 @@
             }
             else {
                 $("#ddlDistrict").html("<option>District</option>")
-                $("#ddlDistrict").prop('disabled', false);
+                $("#ddlDistrict").prop('disabled', true);
             }
         });
     },
@@ -64,14 +64,17 @@ account.init();
 
 var register = {
     init: function() {
-        register.registerEvent()
+        register.registerEvent();
     },
     registerEvent: function () {
-        $("#btnClear").off("click").on("click", function (e) {
-            e.preventDefault(),
-            $("#register input:text").val("");
-            $("#register input:password").val("");
-            $("#register select").val("");
+        $("#btnClear").on("click", function (e) {
+            e.preventDefault();
+            $("[type='text']").val("");
+            $("[type='password']").val("");
+            $("#ddlDistrict").html("<option value=''>District</option>");
+            $("select").val("");
+            $("#ddlDistrict").prop("disabled", true);
+            alert("OK");
         });
     }
 }

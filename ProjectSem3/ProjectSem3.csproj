@@ -499,6 +499,7 @@
     <Content Include="Content\Client\lib\plugin-datepicker\plugins\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\Client\lib\plugin-datepicker\plugins\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="Content\Client\json\vietnam_provinces_cities.json" />
+    <None Include="Properties\PublishProfiles\ProjectSem3.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -1,18 +1,18 @@
-namespace Model.Migrations
+namespace WebApplication.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Model.EF.OnlineShopDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<WebApplication.Models.ApplicationUser.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Model.EF.OnlineShopDbContext context)
+        protected override void Seed(WebApplication.Models.ApplicationUser.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

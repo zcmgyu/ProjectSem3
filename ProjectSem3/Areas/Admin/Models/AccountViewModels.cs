@@ -1,24 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
 
-namespace WebApplication.Models
+namespace ProjectSem3.Ares.Admin.Models
 {
-    public class ExternalLoginConfirmationViewModel
-    {
-        [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
 
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
+
+    public class AccountViewModel
+    {
+        [StringLength(50)]
+        [Required]
+        public string Email { get; set; }
+
+        [StringLength(25)]
+        [Required]
+        public string Firstname { get; set; }
+
+        [StringLength(25)]
+        [Required]
+        public string Lastname { get; set; }
+
+        [Required]
+        public int Gender { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime DOB { get; set; }
+
+        [StringLength(50)]
+        [Required]
+        public string Address { get; set; }
+
+        [Required]
+        [StringLength(20)]
+        public string City { get; set; }
+
+        [StringLength(20)]
+        [Required]
+        public string District { get; set; }
+
+        [StringLength(8)]
+        [Required]
+        public string PostCode { get; set; }
+
+        [StringLength(50)]
+        [Required]
+        public string PhoneNumber { get; set; }
+    }
+
+    public class OrderAddressViewModel
+    {
+        [StringLength(50)]
+        [Required]
+        public string Email { get; set; }
 
         [StringLength(25)]
         [Required]
@@ -55,6 +93,15 @@ namespace WebApplication.Models
         [StringLength(50)]
         [Required]
         public string Phone { get; set; }
+    }
+
+    // Implement Identity
+
+    public class ExternalLoginConfirmationViewModel
+    {
+        [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -161,7 +208,7 @@ namespace WebApplication.Models
 
         [StringLength(50)]
         [Required]
-        public string Phone { get; set; }
+        public string PhoneNumber { get; set; }
     }
 
     public class ResetPasswordViewModel

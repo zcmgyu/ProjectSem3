@@ -14,6 +14,10 @@ namespace Model.EF
 
         public virtual DbSet<About> Abouts { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Content> Contents { get; set; }
@@ -30,6 +34,7 @@ namespace Model.EF
         public virtual DbSet<ProductCategory> ProductCategories { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Slide> Slides { get; set; }
+        public virtual DbSet<SystemConfig> SystemConfigs { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserGroup> UserGroups { get; set; }
@@ -51,6 +56,29 @@ namespace Model.EF
             modelBuilder.Entity<About>()
                 .Property(e => e.MetaDescriptions)
                 .IsFixedLength();
+
+            modelBuilder.Entity<Account>()
+                .Property(e => e.Email)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Account>()
+                .Property(e => e.Password)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AspNetRole>()
+                .HasMany(e => e.AspNetUsers)
+                .WithMany(e => e.AspNetRoles)
+                .Map(m => m.ToTable("AspNetUserRoles").MapLeftKey("RoleId").MapRightKey("UserId"));
+
+            modelBuilder.Entity<AspNetUser>()
+                .HasMany(e => e.AspNetUserClaims)
+                .WithRequired(e => e.AspNetUser)
+                .HasForeignKey(e => e.UserId);
+
+            modelBuilder.Entity<AspNetUser>()
+                .HasMany(e => e.AspNetUserLogins)
+                .WithRequired(e => e.AspNetUser)
+                .HasForeignKey(e => e.UserId);
 
             modelBuilder.Entity<Category>()
                 .Property(e => e.MetaTitle)
@@ -174,6 +202,14 @@ namespace Model.EF
 
             modelBuilder.Entity<Slide>()
                 .Property(e => e.ModifiedBy)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SystemConfig>()
+                .Property(e => e.ID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SystemConfig>()
+                .Property(e => e.Type)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Tag>()

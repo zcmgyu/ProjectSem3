@@ -58,11 +58,11 @@ namespace ASPNETIdentity
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "279584787506-uivfsdqrgsi13edlumr1rau3svs7irqc.apps.googleusercontent.com",
+                ClientSecret = "HZtNhueQfJRI9goHXzmfFub4"
+            });
         }
     }
 }

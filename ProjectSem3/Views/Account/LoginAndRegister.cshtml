@@ -1,4 +1,4 @@
-﻿@model Tuple<ProjectSem3.Models.AccountViewModels.LoginViewModel, ProjectSem3.Models.AccountViewModels.RegisterViewModel>
+﻿@model Tuple<ProjectSem3.Models.LoginViewModel, ProjectSem3.Models.RegisterViewModel>
 @*@model ProjectSem3.Models.AccountViewModels.LoginViewModel*@
 @{
     ViewBag.Title = "Register";
@@ -32,7 +32,7 @@
             format: 'dd/MM/yyyy'
         });
     </script>
-    <script src="~/Content/Client/js/controller/AccountController.js"></script>
+    <script src="~/Content/Client/js/controller/accountController.js"></script>
 }
 <!-- PAGE-CONTENT START -->
 <section class="page-content">
@@ -125,20 +125,12 @@
 
                             <div class="row">
                                 <div class="col-sm-6">
-                                    @*{var listCountry = new[]
-                                        {
-                                        new { Text = "Bangladesh", Value="Bangladesh" },
-                                        new { Text = "United States", Value="United States" },
-                                        new { Text = "United States", Value="United States" },
-                                        new { Text = "Australia", Value="Australia" }
-                                        }.ToList();
-                                        }*@
-                                    @Html.DropDownList("Item2.Country", new SelectList(new string[] { }), new { @class = "custom-select custom-form", @id = "ddlCity" })
+                                    @Html.DropDownList("Item2.City", new SelectList(new string[] { }), new { @class = "custom-select custom-form", @id = "ddlCity" })
                                 </div>
 
                                 <div class="col-sm-6">
 
-                                    @Html.DropDownList("Item2.City", new SelectList(new string[] { }), "District", new { @class = "custom-select custom-form", @id = "ddlDistrict" })
+                                    @Html.DropDownList("Item2.District", new SelectList(new string[] { }), "District", new { @class = "custom-select custom-form", @id = "ddlDistrict" })
                                 </div>
 
                             </div>
@@ -149,7 +141,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    @Html.TextBoxFor(model => model.Item2.Phone, new { @class = "custom-form", @placeholder = "Phone Number" })
+                                    @Html.TextBoxFor(model => model.Item2.PhoneNumber, new { @class = "custom-form", @placeholder = "Phone Number" })
                                 </div>
                                 <div class="col-sm-6">
                                     @Html.TextBoxFor(model => model.Item2.PostCode, new { @class = "custom-form", @placeholder = "Post Code" })
@@ -174,9 +166,11 @@
                                 </div>
                             </div>
                             <div class="checkbox">
+                                
                                 <label>
-                                    <input type="checkbox" name="agree-term" />
-                                    Yes, I agree to the Terms + Conditions
+                                    <input type="checkbox" name="subscribe" />
+                                    I have read and agree to the
+                                    <a href="#"><b>Privacy Policy</b></a>
                                 </label>
                                 <label>
                                     <input type="checkbox" checked="checked" name="create-account" />

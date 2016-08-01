@@ -3,6 +3,7 @@
         $("#ddlDistrict").prop('disabled', true);
         account.loadCity();
         account.registerEvent();
+        
     },
     registerEvent: function(){
         $("#ddlCity").off("change").on("change", function () {
@@ -48,6 +49,7 @@
                     if (i === city) {
                         $.each(item.cities, function (j, jItem) {
                             html += "<option value=" + j + ">" + item.cities[j] + "</option>"
+
                         });
                     } else {
                         console.log("City is valid")
@@ -74,7 +76,7 @@ var register = {
             $("#ddlDistrict").html("<option value=''>District</option>");
             $("select").val("");
             $("#ddlDistrict").prop("disabled", true);
-            alert("OK");
+            alert("Clear");
         });
     }
 }

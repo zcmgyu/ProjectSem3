@@ -3,11 +3,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Owin;
-using WebApplication.Models;
 using Microsoft.Owin.Security.Google;
+using Owin;
+using ProjectSem3.Models;
 
-namespace WebApplication
+namespace ProjectSem3
 {
     public partial class Startup
     {
@@ -15,7 +15,7 @@ namespace WebApplication
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
-            app.CreatePerOwinContext(ApplicationUser.ApplicationDbContext.Create);
+            app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 

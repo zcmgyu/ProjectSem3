@@ -46,5 +46,9 @@ namespace Model.DAO
             return _db.Database.SqlQuery<int>(
                 "Sp_Register @Email, @Password, @Firstname, @Lastname, @Gender, @DOB, @Address, @City, @Country, @PostCode, @Phone, @CreatedBy", sqlParams).SingleOrDefault();
         }
+        public AspNetUser GetInfo(string userId)
+        {
+            return _db.Database.SqlQuery<AspNetUser>("[dbo].[Sp_GetAccountInfo_ById] @userId", new SqlParameter("@userId", userId)).SingleOrDefault();
+        }
     }
 }

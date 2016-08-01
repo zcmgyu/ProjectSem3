@@ -1,0 +1,21 @@
+﻿<ul class="submenu">
+    @if (Request.IsAuthenticated)
+    {
+        <li><a href="#">My Account</a></li>
+    }
+    <li><a href="#">Wishlist</a></li>
+    <li><a href="#">Checkout</a></li>
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("Signout", "Account", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Sign-out</a></li>
+        }
+        <li><a href="@Url.Action("LogOff", "Account")"></a></li>
+    }
+    else
+    {
+        <li><a href="@Url.Action("LoginAndRegister", "Account")">Register and Login</a></li>
+    }
+</ul>

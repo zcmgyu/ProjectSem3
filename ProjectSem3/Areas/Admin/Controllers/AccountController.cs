@@ -1,20 +1,21 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
+using ProjectSem3.Models;
 using Microsoft.Owin.Security;
-using ASPNETIdentity.Models;
+using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.Owin;
+using ProjectSem3.Common;
 
-namespace ASPNETIdentity.Controllers
+namespace ProjectSem3.Areas.Admin.Controllers
 {
-    [Authorize]
     public class AccountController : Controller
     {
+        
+
+        // Implement Identity
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -22,7 +23,7 @@ namespace ASPNETIdentity.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +35,9 @@ namespace ASPNETIdentity.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -57,10 +58,6 @@ namespace ASPNETIdentity.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -70,9 +67,9 @@ namespace ASPNETIdentity.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login([Bind(Prefix = "Item1")] LoginViewModel model, string returnUrl)
         {
-            
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -95,6 +92,8 @@ namespace ASPNETIdentity.Controllers
                     return View(model);
             }
         }
+
+
 
         //
         // GET: /Account/VerifyCode
@@ -125,7 +124,7 @@ namespace ASPNETIdentity.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -144,24 +143,39 @@ namespace ASPNETIdentity.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            return RedirectToAction("LoginAndRegister");
         }
+
 
         //
         // POST: /Account/Register
         [HttpPost]
+        [MultipleButton(Name = "action", Argument = "register")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register([Bind(Prefix = "Item2")] RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Firstname = model.Firstname,
+                    Lastname = model.Lastname,
+                    Address = model.Address,
+                    City = model.City,
+                    District = model.District,
+                    DOB = model.DOB,
+                    PhoneNumber = model.PhoneNumber,
+                    PostCode = model.PostCode
+
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -394,7 +408,8 @@ namespace ASPNETIdentity.Controllers
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        [AllowAnonymous]
+        public ActionResult Signout()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
@@ -486,5 +501,66 @@ namespace ASPNETIdentity.Controllers
             }
         }
         #endregion
+
+        // Research
+        //[HttpPost]
+        //public ActionResult Login([Bind(Prefix = "Item1")] AccountViewModels.LoginViewModel model)
+        //{
+        //    if (!ModelState.IsValid) return View("LoginAndRegister");
+        //    var encryptedPassword = Encryptor.Md5Hash(model.Password);
+        //    if (new AccountDao().Login(model.Email, encryptedPassword))
+        //    {
+        //        FormsAuthentication.SetAuthCookie(model.Email, false);
+        //        ViewBag.Email = model.Email;
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //    return View("LoginAndRegister");
+        //}
+
+        //// Handle multiple Submit Action
+        //// http://stackoverflow.com/questions/442704/how-do-you-handle-multiple-submit-buttons-in-asp-net-mvc-framework
+        //// 
+        //[HttpPost]
+        //[MultipleButton(Name = "action", Argument = "register")]
+        //public ActionResult Register([Bind(Prefix = "Item2")] AccountViewModels.RegisterViewModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        var tuble = new Tuple<AccountViewModels.LoginViewModel, AccountViewModels.RegisterViewModel>(null, model);
+        //        return View("LoginAndRegister", tuble);
+        //    }
+        //    //var formatDOB = model.DOB.ToString("yyyy/mm/dd");
+        //    //var DOB = Convert.ToDateTime(formatDOB);
+        //    var account = new Account()
+        //    {
+        //        Email = model.Email,
+        //        Password = Encryptor.Md5Hash(model.Password),
+        //        Firstname = model.Firstname,
+        //        Lastname = model.Lastname,
+        //        Gender = model.Gender,
+        //        DOB = model.DOB,
+        //        Country = model.City,
+        //        City = model.City,
+        //        Address = model.Address,
+        //        Phone = model.Phone,
+        //        PostCode = model.PostCode,
+        //        CreatedBy = "client"
+        //    };
+        //    var result = new AccountDao().Register(account);
+        //    if (result == 1) // 1 == true ; 
+        //    {
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //    else if (result == 2) //2 == already exists; 
+        //    {
+        //        var tuple = new Tuple<AccountViewModels.LoginViewModel, AccountViewModels.RegisterViewModel>(null, model);
+        //        return View("LoginAndRegister", tuple);
+        //    }
+        //    else // 0 == fail;
+        //    {
+        //        ViewBag.SelectedItem = "RegisterEmail";
+        //        return View("LoginAndRegister");
+        //    }
+        //}
     }
 }

@@ -54,6 +54,10 @@
     <Compile Include="DAO\AccountDao.cs" />
     <Compile Include="EF\About.cs" />
     <Compile Include="EF\Account.cs" />
+    <Compile Include="EF\AspNetRole.cs" />
+    <Compile Include="EF\AspNetUser.cs" />
+    <Compile Include="EF\AspNetUserClaim.cs" />
+    <Compile Include="EF\AspNetUserLogin.cs" />
     <Compile Include="EF\Category.cs" />
     <Compile Include="EF\Contact.cs" />
     <Compile Include="EF\Content.cs" />
@@ -71,70 +75,20 @@
     <Compile Include="EF\ProductCategory.cs" />
     <Compile Include="EF\Role.cs" />
     <Compile Include="EF\Slide.cs" />
-    <Compile Include="EF\SP\OnlineShopEntites.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>OnlineShopEntites.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\SP\OnlineShopEntites.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>OnlineShopEntites.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\SP\OnlineShopEntites.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>OnlineShopEntites.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="EF\SystemConfig.cs" />
     <Compile Include="EF\Tag.cs" />
     <Compile Include="EF\User.cs" />
     <Compile Include="EF\UserGroup.cs" />
-    <Compile Include="Migrations\201606301825167_First.cs" />
-    <Compile Include="Migrations\201606301825167_First.Designer.cs">
-      <DependentUpon>201606301825167_First.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606301831316_Edit Account Tbl.cs" />
-    <Compile Include="Migrations\201606301831316_Edit Account Tbl.Designer.cs">
-      <DependentUpon>201606301831316_Edit Account Tbl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <EntityDeploy Include="EF\SP\OnlineShopEntites.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>OnlineShopEntites.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="EF\SP\OnlineShopEntites.edmx.diagram">
-      <DependentUpon>OnlineShopEntites.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="EF\SP\OnlineShopEntites.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>OnlineShopEntites.edmx</DependentUpon>
-      <LastGenOutput>OnlineShopEntites.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="EF\SP\OnlineShopEntites.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>OnlineShopEntites.edmx</DependentUpon>
-      <LastGenOutput>OnlineShopEntites.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201606301825167_First.resx">
-      <DependentUpon>201606301825167_First.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606301831316_Edit Account Tbl.resx">
-      <DependentUpon>201606301831316_Edit Account Tbl.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

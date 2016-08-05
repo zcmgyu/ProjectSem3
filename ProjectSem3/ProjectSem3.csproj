@@ -201,6 +201,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Models\AccountViewModels.cs" />
+    <Compile Include="Areas\Admin\Models\IdentityModels.cs" />
     <Compile Include="Common\Encryptor.cs" />
     <Compile Include="Common\MultipleButtonAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />

@@ -24,6 +24,9 @@
         var DOB = $('.date-picker').datepicker({
             format: 'dd/MM/yyyy'
         });
+        $('.date-picker').change(function () {
+            $(this).attr('value', $('.date-picker').val());
+        });
     </script>
     <script src="~/Content/Client/js/controller/manageController.js"></script>  @*Muốn thằng này chạy trước*@
 
@@ -77,91 +80,92 @@
                             </div>
                             <div id="personal-info" class="panel-collapse collapse in" role="tabpanel">
                                 <div class="panel-body">
-                                  
-
-
-                                    <form id="register" method="post" action="">
+                                    @*<form id="register" method="post" action="">*@
+                                    @using (Html.BeginForm("UpdateInfo", "Manage", FormMethod.Post))
+                                    {
                                         @Html.AntiForgeryToken()
                                         <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="billing-address">
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            @Html.TextBoxFor(model => model.Item1.Firstname, new { @class = "custom-form", @placeholder = "First Name" })
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            @Html.TextBoxFor(model => model.Item1.Lastname, new { @class = "custom-form", @placeholder = "Last Name" })
-                                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="billing-address">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        @Html.TextBoxFor(model => model.Item1.Firstname, new { @class = "custom-form", @placeholder = "First Name" })
                                                     </div>
+                                                    <div class="col-sm-6">
+                                                        @Html.TextBoxFor(model => model.Item1.Lastname, new { @class = "custom-form", @placeholder = "Last Name" })
+                                                    </div>
+                                                </div>
 
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            @{var listGender = new[]
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        @{var listGender = new[]
     {
                                                         new { Text = "Male", Value="1" },
                                                         new { Text = "Female", Value="0" }
                                                     }.ToList();
-                                                            }
-                                                            @Html.DropDownListFor(model => model.Item1.Gender, new SelectList(listGender, "Value", "Text", Model.Item1.Gender), "Gender", new { @class = "custom-select custom-form" })
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            @Html.TextBoxFor(model => model.Item1.DOB, new { @class = "custom-select custom-form date-picker", @size = "16", @placeholder = "Birthday" })
-                                                        </div>
+                                                        }
+                                                        @Html.DropDownListFor(model => model.Item1.Gender, new SelectList(listGender, "Value", "Text", Model.Item1.Gender), "Gender", new { @class = "custom-select custom-form" })
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        @Html.TextBoxFor(model => model.Item1.DOB, new { @class = "custom-select custom-form date-picker", @size = "16", @placeholder = "Birthday" })
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        @Html.DropDownList("Item1.City", new SelectList(new string[] { }, Model.Item1.City), new { @class = "custom-select custom-form", @id = "ddlCity" })
                                                     </div>
 
+                                                    <div class="col-sm-6">
 
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            @Html.DropDownList("Item1.City", new SelectList(new string[] { }, Model.Item1.City), new { @class = "custom-select custom-form", @id = "ddlCity" })
-                                                        </div>
-
-                                                        <div class="col-sm-6">
-
-                                                            @Html.DropDownList("Item1.District", new SelectList(new string[] { }, Model.Item1.District), "District", new { @class = "custom-select custom-form", @id = "ddlDistrict" })
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            @Html.TextBoxFor(model => model.Item1.Address, new { @class = "custom-form", @placeholder = "Address" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            @Html.TextBoxFor(model => model.Item1.PhoneNumber, new { @class = "custom-form", @placeholder = "Phone Number" })
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            @Html.TextBoxFor(model => model.Item1.PostCode, new { @class = "custom-form", @placeholder = "Post Code" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            @Html.TextBoxFor(model => model.Item1.Email, new { @class = "custom-form", @id = "RegisterEmail", @placeholder = "Email" })
-                                                        </div>
+                                                        @Html.DropDownList("Item1.District", new SelectList(new string[] { }, Model.Item1.District), "District", new { @class = "custom-select custom-form", @id = "ddlDistrict" })
                                                     </div>
 
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" checked="checked" name="create-account" />
-                                                            Sign up for our newsletter!
-                                                        </label>
-
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        @Html.TextBoxFor(model => model.Item1.Address, new { @class = "custom-form", @placeholder = "Address" })
                                                     </div>
-                                                    <!-- http://stackoverflow.com/questions/442704/how-do-you-handle-multiple-submit-buttons-in-asp-net-mvc-framework -->
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        @Html.TextBoxFor(model => model.Item1.PhoneNumber, new { @class = "custom-form", @placeholder = "Phone Number" })
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        @Html.TextBoxFor(model => model.Item1.PostCode, new { @class = "custom-form", @placeholder = "Post Code" })
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        @Html.TextBoxFor(model => model.Item1.Email, new { @class = "custom-form", @id = "RegisterEmail", @placeholder = "Email" })
+                                                    </div>
+                                                </div>
 
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <input type="submit" class="custom-submit-2 save" value="Edit" id="edit-btn"/>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <input type="submit" class="custom-submit-2 save hide-element" value="Update" />
-                                                        </div>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" checked="checked" name="create-account" />
+                                                        Sign up for our newsletter!
+                                                    </label>
+
+                                                </div>
+                                                <!-- http://stackoverflow.com/questions/442704/how-do-you-handle-multiple-submit-buttons-in-asp-net-mvc-framework -->
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <input type="submit" class="custom-submit-2 save" value="Edit" id="edit-btn" />
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <input type="submit" class="custom-submit-2 save hide-element" value="Update" id="update-btn"/>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
+
+                                                            }
                                 </div>
+
                             </div>
                         </div>
                         <div class="panel panel-default">
@@ -286,43 +290,43 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- MY-ACCOUNT-AREA END -->
-    <!-- BRAND-LOGO-AREA START -->
-    <div class="brand-logo-area margin-bottom-80">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-5 col-sm-12">
-                    <div class="brand-brief">
-                        <h2 class="border-left-right">they are with us</h2>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+        </div>
+        <!-- MY-ACCOUNT-AREA END -->
+        <!-- BRAND-LOGO-AREA START -->
+        <div class="brand-logo-area margin-bottom-80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5 col-sm-12">
+                        <div class="brand-brief">
+                            <h2 class="border-left-right">they are with us</h2>
+                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-7 col-sm-12">
-                    <div class="brand-logo fix">
-                        <div class="single-logo">
-                            <img src="~/Content/Client/img/brand/1.png" />
-                        </div>
-                        <div class="single-logo">
-                            <img src="~/Content/Client/img/brand/2.png" />
-                        </div>
-                        <div class="single-logo">
-                            <img src="~/Content/Client/img/brand/3.png" />
-                        </div>
-                        <div class="single-logo">
-                            <img src="~/Content/Client/img/brand/4.png" />
-                        </div>
-                        <div class="single-logo">
-                            <img src="~/Content/Client/img/brand/5.png" />
-                        </div>
-                        <div class="single-logo">
-                            <img src="~/Content/Client/img/brand/6.png" />
+                    <div class="col-md-7 col-sm-12">
+                        <div class="brand-logo fix">
+                            <div class="single-logo">
+                                <img src="~/Content/Client/img/brand/1.png" />
+                            </div>
+                            <div class="single-logo">
+                                <img src="~/Content/Client/img/brand/2.png" />
+                            </div>
+                            <div class="single-logo">
+                                <img src="~/Content/Client/img/brand/3.png" />
+                            </div>
+                            <div class="single-logo">
+                                <img src="~/Content/Client/img/brand/4.png" />
+                            </div>
+                            <div class="single-logo">
+                                <img src="~/Content/Client/img/brand/5.png" />
+                            </div>
+                            <div class="single-logo">
+                                <img src="~/Content/Client/img/brand/6.png" />
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- BRAND-LOGO-AREA END -->
-</section>
-<!-- PAGE-CONTENT END -->
+        <!-- BRAND-LOGO-AREA END -->
+    </section>
+    <!-- PAGE-CONTENT END -->

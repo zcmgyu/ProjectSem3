@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Model.DAO;
+using Model.EF;
 using ProjectSem3.Models;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace ProjectSem3.Controllers
         // GET: /Manage/Index
         public ActionResult Index()
         {
-            
+
             var userId = User.Identity.GetUserId();
             var user = new AccountDao().GetInfo(userId);
             var account = new AccountViewModel
@@ -36,6 +37,29 @@ namespace ProjectSem3.Controllers
             };
             var model = new Tuple<AccountViewModel>(account);
             return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public JsonResult UpdateInfo([Bind(Prefix = "Item1")] AccountViewModel model)
+        {
+            var account = new AspNetUser
+            {
+                Id = User.Identity.GetUserId(),
+                Firstname = model.Firstname,
+                Lastname = model.Lastname,
+                Address = model.Address,
+                PhoneNumber = model.PhoneNumber,
+                City = model.City,
+                District = model.District,
+                Email = model.Email,
+                Gender = model.Gender,
+                DOB = model.DOB,
+                PostCode = model.PostCode
+            };
+            var result = new AccountDao().UpdateInfo(account);
+            return Json(new { result = result });
         }
 
 
@@ -76,6 +100,6 @@ namespace ProjectSem3.Controllers
             }
         }
 
-        
+
     }
 }

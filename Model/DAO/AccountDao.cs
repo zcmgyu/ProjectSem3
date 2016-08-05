@@ -50,5 +50,33 @@ namespace Model.DAO
         {
             return _db.Database.SqlQuery<AspNetUser>("[dbo].[Sp_GetAccountInfo_ById] @userId", new SqlParameter("@userId", userId)).SingleOrDefault();
         }
+
+        public bool UpdateInfo(AspNetUser model)
+        {
+            object[] sqlParams =
+            {
+                new SqlParameter("@userId", model.Id),
+                new SqlParameter("@Firstname", model.Firstname),
+                new SqlParameter("@Lastname", model.Lastname),
+                new SqlParameter("@Gender", model.Gender),
+                new SqlParameter("@DOB", model.DOB),
+                new SqlParameter("@Address", model.Address),
+                new SqlParameter("@City", model.City),
+                new SqlParameter("@District", model.District),
+                new SqlParameter("@PostCode", model.PostCode),
+                new SqlParameter("@PhoneNumber", model.PhoneNumber)
+        
+            };
+            return _db.Database.SqlQuery<bool>(
+                "[dbo].[Sp_Update_ById] @userId, @Firstname, @Lastname, @Gender, @DOB, @Address, @City, @District, @PostCode, @PhoneNumber", 
+                sqlParams).SingleOrDefault();
+        }
+        
+
+
+        //public AspNetUser Update()
+        //{
+
+        //}
     }
 }

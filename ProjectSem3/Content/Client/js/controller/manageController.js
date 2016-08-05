@@ -4,8 +4,14 @@
         account.loadCity();
         account.stateChangeEvent();
         account.disableAllComponent();
+        account.editEvent();
+        account.updateEvent();
+        // $("input[value='Update']").off("click").on("click", function (e) {
+        //    e.preventDefault();
+        //    alert("1");
+        // });
     },
-    
+
     loadCity: function () {
         var html = "<option value=\"\" >City</option>";
         $.ajax({
@@ -68,7 +74,7 @@
         });
     },
 
-    disableAllComponent: function() {
+    disableAllComponent: function () {
         $("input").prop('disabled', true);
         $("input[type='submit']").prop('disabled', false);
         $("select").prop('disabled', true);
@@ -77,25 +83,36 @@
         $("input").prop('disabled', false);
         $("select").prop('disabled', false);
     },
-    editEvent: function() {
-        $("input[value='Edit']").off('click').on('click', function () {
+    editEvent: function () {
+        $("input[value='Edit']").off('click').on('click', function (e) {
+            e.preventDefault();
             $("input[value='Edit']").addClass("hide-element");
             $("input[value='Update']").removeClass("hide-element");
             account.enableAllComponent();
         });
     },
-    updateEvent: function() {
+    updateEvent: function () {
         $("input[value='Update']").off("click").on("click", function (e) {
             e.preventDefault();
+            var element = this;
             $.ajax(
                 {
-                    url: "",
                     type: "POST",
-                    
-                }
-            );
+                    url: "Manage/UpdateInfo",
+                    dataType: "json",
+                    //data: $('#personalInfo').serialize(),
+                    success: function (response) {
+                        if (response.result) {
+                            alert("Success");
+                            $(element).closest("form").submit();
+                            account.disableAllComponent();
+                        } else {
+                            alert("Update fail");
+                        }
+                    }
+                });
         });
-    },
+    }
 
 }
 account.init();

@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
 using ProjectSem3.Common;
+using System;
 
 namespace ProjectSem3.Controllers
 {
@@ -175,7 +176,11 @@ namespace ProjectSem3.Controllers
                     District = model.District,
                     DOB = model.DOB,
                     PhoneNumber = model.PhoneNumber,
-                    PostCode = model.PostCode
+                    PostCode = model.PostCode,
+                    CreateBy = "USER",
+                    CreateDate = DateTime.Today,
+                    UpdateDate = DateTime.Today,
+                    Status = true
 
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);

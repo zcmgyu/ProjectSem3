@@ -210,6 +210,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608030542557_BlankInit.cs" />
+    <Compile Include="Migrations\201608030542557_BlankInit.Designer.cs">
+      <DependentUpon>201608030542557_BlankInit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608030544068_AddMoreColumn.cs" />
+    <Compile Include="Migrations\201608030544068_AddMoreColumn.Designer.cs">
+      <DependentUpon>201608030544068_AddMoreColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -607,6 +616,14 @@
       <Project>{b30c0f19-7c8f-49d1-8393-3fbe6caecf25}</Project>
       <Name>Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201608030542557_BlankInit.resx">
+      <DependentUpon>201608030542557_BlankInit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608030544068_AddMoreColumn.resx">
+      <DependentUpon>201608030544068_AddMoreColumn.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

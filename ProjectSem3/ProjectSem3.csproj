@@ -224,20 +224,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Admin\apps\css\inbox.css" />
-    <Content Include="Content\Admin\apps\css\inbox.min.css" />
-    <Content Include="Content\Admin\apps\css\todo-2.css" />
-    <Content Include="Content\Admin\apps\css\todo-2.min.css" />
-    <Content Include="Content\Admin\apps\css\todo.css" />
-    <Content Include="Content\Admin\apps\css\todo.min.css" />
-    <Content Include="Content\Admin\apps\scripts\calendar.js" />
-    <Content Include="Content\Admin\apps\scripts\calendar.min.js" />
-    <Content Include="Content\Admin\apps\scripts\inbox.js" />
-    <Content Include="Content\Admin\apps\scripts\inbox.min.js" />
-    <Content Include="Content\Admin\apps\scripts\todo-2.js" />
-    <Content Include="Content\Admin\apps\scripts\todo-2.min.js" />
-    <Content Include="Content\Admin\apps\scripts\todo.js" />
-    <Content Include="Content\Admin\apps\scripts\todo.min.js" />
     <Content Include="Content\Client\css\animate.css" />
     <Content Include="Content\Client\css\bootstrap-datepicker3.min.css" />
     <Content Include="Content\Client\css\bootstrap.min.css" />
@@ -615,10 +601,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Content\Admin\apps\img\" />
-    <Folder Include="Content\Admin\global\" />
-    <Folder Include="Content\Admin\layouts\" />
-    <Folder Include="Content\Admin\pages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

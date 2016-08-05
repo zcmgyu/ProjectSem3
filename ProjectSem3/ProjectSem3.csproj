@@ -201,6 +201,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Models\AccountViewModels.cs" />
+    <Compile Include="Areas\Admin\Models\IdentityModels.cs" />
     <Compile Include="Common\Encryptor.cs" />
     <Compile Include="Common\MultipleButtonAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -219,7 +220,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

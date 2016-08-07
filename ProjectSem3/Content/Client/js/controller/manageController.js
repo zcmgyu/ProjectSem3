@@ -3,13 +3,10 @@
         $("#ddlDistrict").prop('disabled', true);
         account.loadCity();
         account.stateChangeEvent();
-        account.disableAllComponent();
+        account.disableAllComponentInPersonalInfo();
         account.editEvent();
         account.updateEvent();
-        // $("input[value='Update']").off("click").on("click", function (e) {
-        //    e.preventDefault();
-        //    alert("1");
-        // });
+        account.cancelEvent();
     },
 
     loadCity: function () {
@@ -33,7 +30,7 @@
     getSelectedCity: function () {
         var selectedDistrictValue = $('#ddlCity').find(':selected').val();
         account.loadDistrict(selectedDistrictValue);
-        $("#ddlDistrict").prop('disabled', false);
+        $("#ddlDistrict").prop('disabled', true);
     },
 
     loadDistrict: function (city) {
@@ -74,20 +71,21 @@
         });
     },
 
-    disableAllComponent: function () {
-        $("input").prop('disabled', true);
-        $("input[type='submit']").prop('disabled', false);
-        $("select").prop('disabled', true);
+    disableAllComponentInPersonalInfo: function () {
+        $("#personalInfo input").prop('disabled', true);
+        $("#personalInfo input[type='submit']").prop('disabled', false);
+        $("#personalInfo select").prop('disabled', true);
     },
     enableAllComponent: function () {
-        $("input").prop('disabled', false);
-        $("select").prop('disabled', false);
+        $("#personalInfo input").prop('disabled', false);
+        $("#personalInfo select").prop('disabled', false);
     },
     editEvent: function () {
         $("input[value='Edit']").off('click').on('click', function (e) {
             e.preventDefault();
-            $("input[value='Edit']").addClass("hide-element");
-            $("input[value='Update']").removeClass("hide-element");
+            //$("input[value='Edit']").addClass("hide-element");
+            //$("input[value='Update']").removeClass("hide-element");
+            account.showOrHide();
             account.enableAllComponent();
         });
     },
@@ -100,19 +98,71 @@
                     type: "POST",
                     url: "Manage/UpdateInfo",
                     dataType: "json",
-                    //data: $('#personalInfo').serialize(),
+                    data: $('#personalInfo').serialize(),
                     success: function (response) {
                         if (response.result) {
                             alert("Success");
-                            $(element).closest("form").submit();
-                            account.disableAllComponent();
+                            //$(element).closest("form").submit();
+                            accountInfo = account.getAccountInfo();
+                            account.showOrHide();
+                            account.disableAllComponentInPersonalInfoInPersonalInfo();
                         } else {
                             alert("Update fail");
                         }
+                    },
+                    error: function () {
+                        alert("Fail");
                     }
                 });
         });
+    },
+
+    cancelEvent: function () {
+        $("input[value='Cancel']").off("click").on("click", function (e) {
+            e.preventDefault();
+            account.setAccountInfo(accountInfo.Firstname, accountInfo.Lastname,
+                accountInfo.Address, accountInfo.City,
+                accountInfo.District, accountInfo.DOB, accountInfo.Gender,
+                accountInfo.PhoneNumber, accountInfo.PostCode);
+            account.disableAllComponentInPersonalInfo();
+            account.showOrHide();
+        });
+    },
+
+    showOrHide: function () {
+        $("input[value='Edit']").toggleClass("hide-element");
+        $("input[value='Update']").toggleClass("hide-element");
+        $("input[value='Cancel']").toggleClass("hide-element");
+    },
+
+    getAccountInfo: function () {
+        var data =
+        {
+            Firstname: $("#Firstname").val(),
+            Lastname: $("#Lastname").val(),
+            Address: $("#Address").val(),
+            City: $("#City").val(),
+            District: $("#District").val(),
+            DOB: $("#DOB").val(),
+            Gender: $("#Gender").val(),
+            PhoneNumber: $("#PhoneNumber").val(),
+            PostCode: $("#PostCode").val()
+        };
+        return data;
+    },
+    setAccountInfo: function (firstname, lastname, address, city, district, dob, gender, phoneNumber, postCode) {
+        $("#Firstname").val(firstname);
+        $("#Lastname").val(lastname);
+        $("#Address").val(address);
+        $("#City").val(city);
+        $("#District").val(district);
+        $("#DOB").val(dob);
+        $("#Gender").val(gender);
+        $("#PhoneNumber").val(phoneNumber);
+        $("#PostCode").val(postCode);
     }
+
 
 }
 account.init();
+var accountInfo = account.getAccountInfo();

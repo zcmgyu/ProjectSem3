@@ -22,7 +22,7 @@ namespace ProjectSem3.Controllers
 
             var userId = User.Identity.GetUserId();
             var user = new AccountDao().GetInfo(userId);
-            var account = new AccountViewModel
+            var model = new AccountViewModel
             {
                 Firstname = user.Firstname,
                 Lastname = user.Lastname,
@@ -35,14 +35,14 @@ namespace ProjectSem3.Controllers
                 PhoneNumber = user.PhoneNumber,
                 PostCode = user.PostCode
             };
-            var model = new Tuple<AccountViewModel>(account);
+            
             return View(model);
         }
 
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public JsonResult UpdateInfo([Bind(Prefix = "Item1")] AccountViewModel model)
+        public JsonResult UpdateInfo(AccountViewModel model)
         {
             var account = new AspNetUser
             {
@@ -53,13 +53,13 @@ namespace ProjectSem3.Controllers
                 PhoneNumber = model.PhoneNumber,
                 City = model.City,
                 District = model.District,
-                Email = model.Email,
+                //Email = model.Email,
                 Gender = model.Gender,
                 DOB = model.DOB,
                 PostCode = model.PostCode
             };
             var result = new AccountDao().UpdateInfo(account);
-            return Json(new { result = result });
+            return Json(new { result = result }, JsonRequestBehavior.AllowGet);
         }
 
 

@@ -77,6 +77,7 @@ namespace ProjectSem3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login([Bind(Prefix = "Item1")] LoginViewModel model, string returnUrl)
         {
+            var tupleModel = new Tuple<LoginViewModel, RegisterViewModel>(model, null);
 
             if (!ModelState.IsValid)
             {
@@ -97,7 +98,7 @@ namespace ProjectSem3.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                    return View("LoginAndRegister", tupleModel);
             }
         }
 

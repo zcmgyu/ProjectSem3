@@ -5,9 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace ProjectSem3.Ares.Admin.Models
+namespace ProjectSem3.Areas.Admin.Models
 {
-
 
     public class AccountViewModel
     {

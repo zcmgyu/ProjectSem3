@@ -75,13 +75,14 @@ namespace ProjectSem3.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+
         public async Task<ActionResult> Login([Bind(Prefix = "Item1")] LoginViewModel model, string returnUrl)
         {
             var tupleModel = new Tuple<LoginViewModel, RegisterViewModel>(model, null);
 
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("LoginAndRegister", tupleModel);
             }
 
             // This doesn't count login failures towards account lockout
@@ -201,7 +202,8 @@ namespace ProjectSem3.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            var tupleModel = new Tuple<LoginViewModel, RegisterViewModel>(null, model);
+            return View("LoginAndRegister", tupleModel);
         }
 
         //

@@ -6154,6 +6154,8 @@
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Manage\_PersonalInfo.cshtml" />
     <Content Include="Views\Manage\_ShippingAddress.cshtml" />
+    <Content Include="Views\Account\_LoginPartial.cshtml" />
+    <Content Include="Views\Account\_RegisterPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

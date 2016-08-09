@@ -1,7 +1,7 @@
 ﻿@model Tuple<ProjectSem3.Models.LoginViewModel, ProjectSem3.Models.RegisterViewModel>
-@*@model ProjectSem3.Models.AccountViewModels.LoginViewModel*@
 @{
     ViewBag.Title = "Register";
+    var listGender = new[] { new { Text = "Male", Value = "1" }, new { Text = "Female", Value = "0" } }.ToList();
 }
 @if (@ViewBag.SelectedItem != default(string))
 {
@@ -89,9 +89,8 @@
                 </div>
                 <!-- Registered-Customers End -->
                 <div class="col-md-6">
-                    @*@using (Html.BeginForm("", "Account", FormMethod.Post, new { @id = "register" }))
-                        {*@
-                    <form id="register" method="post" action="">
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @id = "register" }))
+                    {
                         @Html.AntiForgeryToken()
                         <div class="new-customers">
                             <h2 class="login-title">NEW CUSTOMERS</h2>
@@ -109,12 +108,6 @@
 
                             <div class="row">
                                 <div class="col-sm-6">
-                                    @{var listGender = new[]
-    {
-                                            new { Text = "Male", Value="1" },
-                                            new { Text = "Female", Value="0" }
-                                    }.ToList();
-                                    }
                                     @Html.DropDownListFor(model => model.Item2.Gender, new SelectList(listGender, "Value", "Text"), "Gender", new { @class = "custom-select custom-form" })
                                 </div>
                                 <div class="col-sm-6">
@@ -125,12 +118,12 @@
 
                             <div class="row">
                                 <div class="col-sm-6">
-                                    @Html.DropDownList("Item2.City", new SelectList(new string[] { }), new { @class = "custom-select custom-form", @id = "ddlCity" })
+                                    @Html.DropDownListFor(model => model.Item2.City, new SelectList(new string[] { }), new { @class = "custom-select custom-form", @id = "ddlCity" })
                                 </div>
 
                                 <div class="col-sm-6">
 
-                                    @Html.DropDownList("Item2.District", new SelectList(new string[] { }), "District", new { @class = "custom-select custom-form", @id = "ddlDistrict" })
+                                    @Html.DropDownListFor(model => model.Item2.District, new SelectList(new string[] { }), "District", new { @class = "custom-select custom-form", @id = "ddlDistrict" })
                                 </div>
 
                             </div>
@@ -166,7 +159,7 @@
                                 </div>
                             </div>
                             <div class="checkbox">
-                                
+
                                 <label>
                                     <input type="checkbox" name="subscribe" />
                                     I have read and agree to the
@@ -176,7 +169,7 @@
                                     <input type="checkbox" checked="checked" name="create-account" />
                                     Sign up for our newsletter!
                                 </label>
-                                
+
                             </div>
                             <!-- http://stackoverflow.com/questions/442704/how-do-you-handle-multiple-submit-buttons-in-asp-net-mvc-framework -->
                             <div class="row">
@@ -189,8 +182,9 @@
                                 </div>
                             </div>
                         </div>
-                        @*}*@
-                    </form>
+                    }
+
+
                 </div>
             </div>
         </div>

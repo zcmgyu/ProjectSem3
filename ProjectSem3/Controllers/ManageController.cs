@@ -62,6 +62,10 @@ namespace ProjectSem3.Controllers
             return Json(new { result = result }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult Shipping()
+        {
+            return Json(new { a = "" });
+        }
 
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;

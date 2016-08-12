@@ -67,6 +67,7 @@ account.init();
 var register = {
     init: function() {
         register.registerEvent();
+        register.checkPolicyRequiredEvent();
     },
     registerEvent: function () {
         $("#btnClear").on("click", function (e) {

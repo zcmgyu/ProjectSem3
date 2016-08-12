@@ -66,7 +66,7 @@ namespace ProjectSem3.Areas.Admin.Controllers
         //
         // POST: /Account/Login
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(Models.LoginViewModel model, string returnUrl)
         {

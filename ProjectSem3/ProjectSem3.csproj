@@ -200,6 +200,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\AccountViewModels.cs" />
     <Compile Include="Migrations\201608051651302_Add More Column in IdentityModels Table.cs" />
     <Compile Include="Migrations\201608051651302_Add More Column in IdentityModels Table.Designer.cs">
@@ -208,6 +209,10 @@
     <Compile Include="Migrations\201608051655254_Add More Column in IdentityModels Table 2.cs" />
     <Compile Include="Migrations\201608051655254_Add More Column in IdentityModels Table 2.Designer.cs">
       <DependentUpon>201608051655254_Add More Column in IdentityModels Table 2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608111821256_Remove Required PostCode.cs" />
+    <Compile Include="Migrations\201608111821256_Remove Required PostCode.Designer.cs">
+      <DependentUpon>201608111821256_Remove Required PostCode.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Common\Encryptor.cs" />
@@ -6120,6 +6125,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -6159,6 +6166,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\Home\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Content\Admin\apps\img\" />
     <Folder Include="Content\Admin\global\plugins\angularjs\plugins\angular-file-upload\uploads\" />
@@ -6186,6 +6194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608051655254_Add More Column in IdentityModels Table 2.resx">
       <DependentUpon>201608051655254_Add More Column in IdentityModels Table 2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608111821256_Remove Required PostCode.resx">
+      <DependentUpon>201608111821256_Remove Required PostCode.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

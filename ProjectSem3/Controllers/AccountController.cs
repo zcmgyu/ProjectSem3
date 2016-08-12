@@ -15,7 +15,7 @@ namespace ProjectSem3.Controllers
     {
         public ActionResult LoginAndRegister()
         {
-            if(Request.IsAuthenticated)
+            if (Request.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -63,26 +63,32 @@ namespace ProjectSem3.Controllers
 
         //
         // GET: /Account/Login
-        [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
-        {
-            ViewBag.ReturnUrl = returnUrl;
-            return RedirectToAction("LoginAndRegister");
-        }
+        //[AllowAnonymous]
+        //[ChildActionOnly]
+        //public ActionResult Login(string returnUrl)
+        //{
+        //    ViewBag.ReturnUrl = returnUrl;
+        //    //return RedirectToAction("LoginAndRegister");
+
+        //    return PartialView("_LoginPartial");
+
+        //}
 
         //
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-
-        public async Task<ActionResult> Login([Bind(Prefix = "Item1")] LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login([Bind(Prefix = "Login")] LoginViewModel model, string returnUrl)
         {
-            var tupleModel = new Tuple<LoginViewModel, RegisterViewModel>(model, null);
-
+            Session["ValidationSummary"] = "LoginForm";
+            var login = new LoginAndRegisterViewModel
+            {
+                Login = model
+            };
             if (!ModelState.IsValid)
             {
-                return View("LoginAndRegister", tupleModel);
+                return View("LoginAndRegister", login);
             }
 
             // This doesn't count login failures towards account lockout
@@ -99,11 +105,73 @@ namespace ProjectSem3.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
-                    return View("LoginAndRegister", tupleModel);
+                    return View("LoginAndRegister", login);
             }
         }
 
+        //
+        // GET: /Account/Register
+        //[AllowAnonymous]
+        //public ActionResult Register()
+        //{
+        //    return RedirectToAction("LoginAndRegister", "Account");
+        //}
 
+
+        //
+        // POST: /Account/Register
+        [HttpPost]
+        [MultipleButton(Name = "action", Argument = "register")]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Register([Bind(Prefix = "Register")] RegisterViewModel model)
+        {
+            Session["ValidationSummary"] = "RegisterForm";
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Firstname = model.Firstname,
+                    Lastname = model.Lastname,
+                    Address = model.Address,
+                    City = model.City,
+                    District = model.District,
+                    DOB = model.DOB,
+                    PhoneNumber = model.PhoneNumber,
+                    PostCode = model.PostCode,
+                    CreateBy = "USER",
+                    CreateDate = DateTime.Today,
+                    UpdateDate = DateTime.Today,
+                    Status = true,
+                    
+
+                };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            //var tupleModel = new Tuple<LoginViewModel, RegisterViewModel>(null, model);
+            var register = new LoginAndRegisterViewModel
+            {
+                Register = model
+            };
+            return View("LoginAndRegister", register);
+        }
 
         //
         // GET: /Account/VerifyCode
@@ -146,64 +214,6 @@ namespace ProjectSem3.Controllers
                     ModelState.AddModelError("", "Invalid code.");
                     return View(model);
             }
-        }
-
-        //
-        // GET: /Account/Register
-        [AllowAnonymous]
-        public ActionResult Register()
-        {
-            return RedirectToAction("LoginAndRegister");
-        }
-
-
-        //
-        // POST: /Account/Register
-        [HttpPost]
-        [MultipleButton(Name = "action", Argument = "register")]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register([Bind(Prefix = "Item2")] RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser
-                {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    Firstname = model.Firstname,
-                    Lastname = model.Lastname,
-                    Address = model.Address,
-                    City = model.City,
-                    District = model.District,
-                    DOB = model.DOB,
-                    PhoneNumber = model.PhoneNumber,
-                    PostCode = model.PostCode,
-                    CreateBy = "USER",
-                    CreateDate = DateTime.Today,
-                    UpdateDate = DateTime.Today,
-                    Status = true
-
-                };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
-            }
-
-            // If we got this far, something failed, redisplay form
-            var tupleModel = new Tuple<LoginViewModel, RegisterViewModel>(null, model);
-            return View("LoginAndRegister", tupleModel);
         }
 
         //

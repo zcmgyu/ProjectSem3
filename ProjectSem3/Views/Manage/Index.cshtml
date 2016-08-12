@@ -1,5 +1,4 @@
-﻿@model Tuple<ProjectSem3.Models.AccountViewModel>
-@section CustomStyle{
+﻿@section CustomStyle{
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="~/Content/Client/lib/plugin-datepicker/plugins/font-awesome/css/font-awesome.css">
     <link href="~/Content/Client/lib/plugin-datepicker/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
@@ -33,10 +32,10 @@
     <script>
         @*var selectedCityValue = @Model.Item1.City.ToString();*@
         var setSelectedCity = function () {
-            $('select[name="Item1.City"] option[value="@Model.Item1.City"]').attr('selected', 'selected'); // Goi thang nay trong ham success cua Ajax
+            $('select[name="City"] option[value="@Model.City"]').attr('selected', 'selected'); // Goi thang nay trong ham success cua Ajax
         };
         var setSelectedDistrict = function () {
-            $('select[name="Item1.District"] option[value="@Model.Item1.District"]').attr('selected', 'selected'); // Goi thang nay trong ham success cua Ajax
+            $('select[name="District"] option[value="@Model.District"]').attr('selected', 'selected'); // Goi thang nay trong ham success cua Ajax
         };
     </script>
 }
@@ -80,90 +79,8 @@
                             </div>
                             <div id="personal-info" class="panel-collapse collapse in" role="tabpanel">
                                 <div class="panel-body">
-                                    @*<form id="register" method="post" action="">*@
-                                    @using (Html.BeginForm("UpdateInfo", "Manage", FormMethod.Post))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="billing-address">
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        @Html.TextBoxFor(model => model.Item1.Firstname, new { @class = "custom-form", @placeholder = "First Name" })
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        @Html.TextBoxFor(model => model.Item1.Lastname, new { @class = "custom-form", @placeholder = "Last Name" })
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        @{var listGender = new[]
-    {
-                                                        new { Text = "Male", Value="1" },
-                                                        new { Text = "Female", Value="0" }
-                                                    }.ToList();
-                                                        }
-                                                        @Html.DropDownListFor(model => model.Item1.Gender, new SelectList(listGender, "Value", "Text", Model.Item1.Gender), "Gender", new { @class = "custom-select custom-form" })
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        @Html.TextBoxFor(model => model.Item1.DOB, new { @class = "custom-select custom-form date-picker", @size = "16", @placeholder = "Birthday" })
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        @Html.DropDownList("Item1.City", new SelectList(new string[] { }, Model.Item1.City), new { @class = "custom-select custom-form", @id = "ddlCity" })
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-
-                                                        @Html.DropDownList("Item1.District", new SelectList(new string[] { }, Model.Item1.District), "District", new { @class = "custom-select custom-form", @id = "ddlDistrict" })
-                                                    </div>
-
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        @Html.TextBoxFor(model => model.Item1.Address, new { @class = "custom-form", @placeholder = "Address" })
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        @Html.TextBoxFor(model => model.Item1.PhoneNumber, new { @class = "custom-form", @placeholder = "Phone Number" })
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        @Html.TextBoxFor(model => model.Item1.PostCode, new { @class = "custom-form", @placeholder = "Post Code" })
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        @Html.TextBoxFor(model => model.Item1.Email, new { @class = "custom-form", @id = "RegisterEmail", @placeholder = "Email" })
-                                                    </div>
-                                                </div>
-
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox" checked="checked" name="create-account" />
-                                                        Sign up for our newsletter!
-                                                    </label>
-
-                                                </div>
-                                                <!-- http://stackoverflow.com/questions/442704/how-do-you-handle-multiple-submit-buttons-in-asp-net-mvc-framework -->
-
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <input type="submit" class="custom-submit-2 save" value="Edit" id="edit-btn" />
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <input type="submit" class="custom-submit-2 save hide-element" value="Update" id="update-btn"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                                            }
+                                    @Html.Partial("_PersonalInfo")
+                                    
                                 </div>
 
                             </div>
@@ -181,82 +98,7 @@
                                 <div class="panel-body">
                                     <!-- CHECKOUT-AREA START -->
                                     <div class="checkout-area">
-                                        <form action="#">
-                                            <div class="row">
-                                                <!-- Shipping-Address Start -->
-                                                <div class="col-md-12">
-                                                    <div class="shipping-address">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <select class="custom-select custom-form">
-                                                                    <option>Select Delivery Method</option>
-                                                                    <option>Select Delivery Method</option>
-                                                                    <option>Select Delivery Method</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <input class="custom-form" type="text" placeholder="Subash" name="firstname" />
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <input class="custom-form" type="text" placeholder="Chandra" name="lastname" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <input type="text" class="custom-form" placeholder="Address" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <select class="custom-select custom-form">
-                                                                    <option>City</option>
-                                                                    <option>Dhaka</option>
-                                                                    <option>New York</option>
-                                                                    <option>London</option>
-                                                                    <option>Melbourne</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <select class="custom-select custom-form">
-                                                                    <option>Country</option>
-                                                                    <option>Bangladesh</option>
-                                                                    <option>United States</option>
-                                                                    <option>United Kingdom</option>
-                                                                    <option>Australia</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <input class="custom-form" type="text" placeholder="Phone Number" />
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <select class="custom-select custom-form">
-                                                                    <option>Post Code</option>
-                                                                    <option>012345</option>
-                                                                    <option>0123456</option>
-                                                                    <option>01234567</option>
-                                                                    <option>012345678</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <input type="text" class="custom-form" placeholder="Email" name="email" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <textarea class="custom-form" placeholder="Order Note"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- Shipping-Address End -->
-                                            </div>
-                                        </form>
+                                        @Html.Partial("_ShippingAddress")
                                     </div>
                                     <!-- CHECKOUT-AREA END -->
                                 </div>

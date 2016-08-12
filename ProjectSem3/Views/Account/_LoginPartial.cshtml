@@ -1,0 +1,36 @@
+﻿@model ProjectSem3.Models.LoginViewModel
+
+@using (Ajax.BeginForm("Login", "Account", new AjaxOptions
+{
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "login-target"
+}))
+{
+    @Html.AntiForgeryToken()
+    <div class="registered-customers">
+        <h2 class="login-title">REGISTERED CUSTOMERS</h2>
+        <div class="registered">
+            <p>If you have an account with us, Please log in.</p>
+            <div class="row">
+                <div class="col-sm-12">
+                    @Html.ValidationSummary(false)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.TextBoxFor(model => model.Email, new { @class = "custom-form", @placeholder = "Email Address" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.PasswordFor(model => model.Password, new { @class = "custom-form", @placeholder = "Password" })
+                </div>
+            </div>
+            <p>
+                <label class="forgot"><a href="#">Forgot your password?</a></label>
+            </p>
+            <input type="submit" class="custom-submit-2" value="login" />
+        </div>
+    </div>
+}

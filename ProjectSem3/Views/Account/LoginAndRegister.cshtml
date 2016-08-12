@@ -1,5 +1,5 @@
-﻿@model Tuple<ProjectSem3.Models.LoginViewModel, ProjectSem3.Models.RegisterViewModel>
-@*@model ProjectSem3.Models.AccountViewModels.LoginViewModel*@
+﻿@model ProjectSem3.Models.LoginAndRegisterViewModel
+@{var listGender = new[] { new { Text = "Male", Value = "1" }, new { Text = "Female", Value = "0" } }.ToList();}
 @{
     ViewBag.Title = "Register";
 }
@@ -59,6 +59,7 @@
             <div class="row">
                 <!-- Registered-Customers Start -->
                 <div class="col-md-6">
+                    <!-- http://forums.asp.net/t/1923712.aspx?Validation+in+Partial+View+after+form+postback -->
                     @using (Html.BeginForm("Login", "Account", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
@@ -67,121 +68,123 @@
                             <div class="registered">
                                 <p>If you have an account with us, Please log in.</p>
                                 <div class="row">
-                                    @Html.ValidationSummary(false)
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        @Html.TextBoxFor(model => model.Item1.Email, new { @class = "custom-form", @placeholder = "Email Address" })
+                                    <div class="col-sm-12">
+                                        @if ((string)Session["ValidationSummary"] == "LoginForm")
+                                        {
+                                            @Html.ValidationSummary(false);
+                                        }
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        @Html.PasswordFor(model => model.Item1.Password, new { @class = "custom-form", @placeholder = "Password" })
+                                        @Html.TextBoxFor(model => Model.Login.Email, new { @class = "custom-form", @placeholder = "Email Address" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @Html.PasswordFor(model => Model.Login.Password, new { @class = "custom-form", @placeholder = "Password" })
                                     </div>
                                 </div>
                                 <p>
                                     <label class="forgot"><a href="#">Forgot your password?</a></label>
                                 </p>
-                                <input type="submit" class="custom-submit-2" value="login" />
+                                <input type="submit" class="custom-submit-2" name="login-btn" value="login" />
                             </div>
                         </div>
                     }
                 </div>
                 <!-- Registered-Customers End -->
                 <div class="col-md-6">
-                    @*@using (Html.BeginForm("", "Account", FormMethod.Post, new { @id = "register" }))
-                        {*@
-                    <form id="register" method="post" action="">
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @id = "register" }))
+                    {
+
                         @Html.AntiForgeryToken()
                         <div class="new-customers">
                             <h2 class="login-title">NEW CUSTOMERS</h2>
-                            @Html.ValidationSummary(false)
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    @*<input type="text" class="custom-form" placeholder="First Name" />*@
-                                    @Html.TextBoxFor(model => model.Item2.Firstname, new { @class = "custom-form", @placeholder = "First Name" })
-                                </div>
-                                <div class="col-sm-6">
-                                    @*<input type="text" class="custom-form" placeholder="Last Name" />*@
-                                    @Html.TextBoxFor(model => model.Item2.Lastname, new { @class = "custom-form", @placeholder = "Last Name" })
-                                </div>
-                            </div>
 
                             <div class="row">
-                                <div class="col-sm-6">
-                                    @{var listGender = new[]
-    {
-                                            new { Text = "Male", Value="1" },
-                                            new { Text = "Female", Value="0" }
-                                    }.ToList();
+                                <div class="col-sm-12">
+                                    @if ((string)Session["ValidationSummary"] == "RegisterForm")
+                                    {
+                                        @Html.ValidationSummary();
                                     }
-                                    @Html.DropDownListFor(model => model.Item2.Gender, new SelectList(listGender, "Value", "Text"), "Gender", new { @class = "custom-select custom-form" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    @Html.TextBoxFor(model => model.Register.Firstname, new { @class = "custom-form", @placeholder = "First Name" })
                                 </div>
                                 <div class="col-sm-6">
-                                    @Html.TextBoxFor(model => model.Item2.DOB, new { @class = "custom-select custom-form date-picker", @size = "16", @placeholder = "Birthday" })
+                                    @Html.TextBoxFor(model => model.Register.Lastname, new { @class = "custom-form", @placeholder = "Last Name" })
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    @Html.DropDownListFor(model => model.Register.Gender, new SelectList(listGender, "Value", "Text"), "Gender", new { @class = "custom-select custom-form" })
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.TextBoxFor(model => model.Register.DOB, new { @class = "custom-select custom-form date-picker", @size = "16", @placeholder = "Birthday" })
                                 </div>
                             </div>
 
 
                             <div class="row">
                                 <div class="col-sm-6">
-                                    @Html.DropDownList("Item2.City", new SelectList(new string[] { }), new { @class = "custom-select custom-form", @id = "ddlCity" })
+                                    @Html.DropDownListFor(model => model.Register.City, new SelectList(new string[] { }), new { @class = "custom-select custom-form", @id = "ddlCity" })
                                 </div>
 
                                 <div class="col-sm-6">
 
-                                    @Html.DropDownList("Item2.District", new SelectList(new string[] { }), "District", new { @class = "custom-select custom-form", @id = "ddlDistrict" })
+                                    @Html.DropDownListFor(model => model.Register.District, new SelectList(new string[] { }), "District", new { @class = "custom-select custom-form", @id = "ddlDistrict" })
                                 </div>
 
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    @Html.TextBoxFor(model => model.Item2.Address, new { @class = "custom-form", @placeholder = "Address" })
+                                    @Html.TextBoxFor(model => model.Register.Address, new { @class = "custom-form", @placeholder = "Address" })
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    @Html.TextBoxFor(model => model.Item2.PhoneNumber, new { @class = "custom-form", @placeholder = "Phone Number" })
+                                    @Html.TextBoxFor(model => model.Register.PhoneNumber, new { @class = "custom-form", @placeholder = "Phone Number" })
                                 </div>
                                 <div class="col-sm-6">
-                                    @Html.TextBoxFor(model => model.Item2.PostCode, new { @class = "custom-form", @placeholder = "Post Code" })
+                                    @Html.TextBoxFor(model => model.Register.PostCode, new { @class = "custom-form", @placeholder = "Post Code" })
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    @Html.TextBoxFor(model => model.Item2.Email, new { @class = "custom-form", @id = "RegisterEmail", @placeholder = "Email" })
+                                    @Html.TextBoxFor(model => model.Register.Email, new { @class = "custom-form", @id = "RegisterEmail", @placeholder = "Email" })
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-sm-12">
-                                    @Html.PasswordFor(model => model.Item2.Password, new { @class = "custom-form", @placeholder = "Password" })
+                                    @Html.PasswordFor(model => model.Register.Password, new { @class = "custom-form", @placeholder = "Password" })
                                 </div>
                             </div>
 
 
                             <div class="row">
                                 <div class="col-sm-12">
-                                    @Html.PasswordFor(model => model.Item2.ConfirmPassword, new { @class = "custom-form", @placeholder = "Confirm Password" })
+                                    @Html.PasswordFor(model => model.Register.ConfirmPassword, new { @class = "custom-form", @placeholder = "Confirm Password" })
                                 </div>
                             </div>
                             <div class="checkbox">
-                                
+
                                 <label>
-                                    <input type="checkbox" name="subscribe" />
+                                    @*<input type="checkbox" name="subscribe" id="checkbox-policy"/>*@
+                                    @Html.CheckBoxFor(model => model.Register.AgreeTerm, new { @name = "subscribe" })
                                     I have read and agree to the
                                     <a href="#"><b>Privacy Policy</b></a>
                                 </label>
-                                <label>
-                                    <input type="checkbox" checked="checked" name="create-account" />
-                                    Sign up for our newsletter!
-                                </label>
-                                
+
                             </div>
                             <!-- http://stackoverflow.com/questions/442704/how-do-you-handle-multiple-submit-buttons-in-asp-net-mvc-framework -->
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input type="submit" class="custom-form custom-submit no-margin" value="register" name="action:register" />
+                                    <input type="submit" id="register-btn" class="custom-form custom-submit no-margin" value="register" name="action:register"/>
                                 </div>
 
                                 <div class="col-sm-6">
@@ -189,8 +192,7 @@
                                 </div>
                             </div>
                         </div>
-                        @*}*@
-                    </form>
+                    }
                 </div>
             </div>
         </div>

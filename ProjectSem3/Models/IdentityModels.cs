@@ -40,7 +40,6 @@ namespace ProjectSem3.Models
         public string District { get; set; }
 
         [StringLength(8)]
-        [Required]
         public string PostCode { get; set; }
         public string CreateBy { get; set; }
         public DateTime CreateDate { get; set; }

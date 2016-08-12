@@ -7,7 +7,11 @@ using System.Web;
 
 namespace ProjectSem3.Models
 {
-
+    public class LoginAndRegisterViewModel
+    {
+        public LoginViewModel Login { get; set; }
+        public RegisterViewModel Register { get; set; }
+    }
 
     public class AccountViewModel
     {
@@ -187,6 +191,7 @@ namespace ProjectSem3.Models
 
         [Required]
         [DataType(DataType.Date)]
+        [Display(Name = "Birthday")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DOB { get; set; }
 
@@ -203,12 +208,16 @@ namespace ProjectSem3.Models
         public string District { get; set; }
 
         [StringLength(8)]
-        [Required]
         public string PostCode { get; set; }
 
         [StringLength(50)]
         [Required]
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
+
+        [Required]
+        [Range(typeof(bool), "true", "true", ErrorMessage = "Please read and agree to the Privacy Policy")]
+        public bool AgreeTerm { get; set; }
     }
 
     public class ResetPasswordViewModel

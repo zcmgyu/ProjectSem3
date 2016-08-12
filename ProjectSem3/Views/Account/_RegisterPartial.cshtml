@@ -1,0 +1,105 @@
+﻿@model ProjectSem3.Models.RegisterViewModel
+@{var listGender = new[] { new { Text = "Male", Value = "1" }, new { Text = "Female", Value = "0" } }.ToList();}
+@using (Ajax.BeginForm("Register", "Account", new AjaxOptions
+{
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "register-target",
+    OnSuccess = "reloadScript()"
+}, new { @id = "register" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="new-customers">
+        <h2 class="login-title">NEW CUSTOMERS</h2>
+
+        <div class="row">
+            <div class="col-sm-12">
+                @Html.ValidationSummary(false)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                @Html.TextBoxFor(model => model.Firstname, new { @class = "custom-form", @placeholder = "First Name" })
+            </div>
+            <div class="col-sm-6">
+                @Html.TextBoxFor(model => model.Lastname, new { @class = "custom-form", @placeholder = "Last Name" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                @Html.DropDownListFor(model => model.Gender, new SelectList(listGender, "Value", "Text"), "Gender", new { @class = "custom-select custom-form" })
+            </div>
+            <div class="col-sm-6">
+                @Html.TextBoxFor(model => model.DOB, new { @class = "custom-select custom-form date-picker", @size = "16", @placeholder = "Birthday" })
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-6">
+                @Html.DropDownListFor(model => model.City, new SelectList(new string[] { }), new { @class = "custom-select custom-form", @id = "ddlCity" })
+            </div>
+
+            <div class="col-sm-6">
+
+                @Html.DropDownListFor(model => model.District, new SelectList(new string[] { }), "District", new { @class = "custom-select custom-form", @id = "ddlDistrict" })
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                @Html.TextBoxFor(model => model.Address, new { @class = "custom-form", @placeholder = "Address" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "custom-form", @placeholder = "Phone Number" })
+            </div>
+            <div class="col-sm-6">
+                @Html.TextBoxFor(model => model.PostCode, new { @class = "custom-form", @placeholder = "Post Code" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                @Html.TextBoxFor(model => model.Email, new { @class = "custom-form", @id = "RegisterEmail", @placeholder = "Email" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                @Html.PasswordFor(model => model.Password, new { @class = "custom-form", @placeholder = "Password" })
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "custom-form", @placeholder = "Confirm Password" })
+            </div>
+        </div>
+        <div class="checkbox">
+
+            <label>
+                <input type="checkbox" name="subscribe" />
+                I have read and agree to the
+                <a href="#"><b>Privacy Policy</b></a>
+            </label>
+            <label>
+                <input type="checkbox" checked="checked" name="create-account" />
+                Sign up for our newsletter!
+            </label>
+
+        </div>
+        <!-- http://stackoverflow.com/questions/442704/how-do-you-handle-multiple-submit-buttons-in-asp-net-mvc-framework -->
+        <div class="row">
+            <div class="col-sm-6">
+                <input type="submit" class="custom-form custom-submit no-margin" value="register" name="action:register" />
+            </div>
+
+            <div class="col-sm-6">
+                <input type="submit" class="custom-form custom-submit no-margin" value="clear" name="action:clear" id="btnClear" />
+            </div>
+        </div>
+    </div>
+}

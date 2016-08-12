@@ -198,6 +198,22 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Models\AccountViewModels.cs" />
+    <Compile Include="Migrations\201608051651302_Add More Column in IdentityModels Table.cs" />
+    <Compile Include="Migrations\201608051651302_Add More Column in IdentityModels Table.Designer.cs">
+      <DependentUpon>201608051651302_Add More Column in IdentityModels Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608051655254_Add More Column in IdentityModels Table 2.cs" />
+    <Compile Include="Migrations\201608051655254_Add More Column in IdentityModels Table 2.Designer.cs">
+      <DependentUpon>201608051655254_Add More Column in IdentityModels Table 2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608111821256_Remove Required PostCode.cs" />
+    <Compile Include="Migrations\201608111821256_Remove Required PostCode.Designer.cs">
+      <DependentUpon>201608111821256_Remove Required PostCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Common\Encryptor.cs" />
     <Compile Include="Common\MultipleButtonAttribute.cs" />
@@ -5733,6 +5749,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -5765,9 +5783,16 @@
     <Content Include="Views\Account\LoginAndRegister.cshtml" />
     <Content Include="Views\Shared\_AccountPartial.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\_PersonalInfo.cshtml" />
+    <Content Include="Views\Manage\_ShippingAddress.cshtml" />
+    <Content Include="Views\Account\_LoginPartial.cshtml" />
+    <Content Include="Views\Account\_RegisterPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
+    <Folder Include="Content\Admin\apps\img\" />
+    <Folder Include="Content\Admin\global\plugins\angularjs\plugins\angular-file-upload\uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -5782,6 +5807,20 @@
       <Project>{b30c0f19-7c8f-49d1-8393-3fbe6caecf25}</Project>
       <Name>Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201608030542557_BlankInit.resx">
+      <DependentUpon>201608030542557_BlankInit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608051651302_Add More Column in IdentityModels Table.resx">
+      <DependentUpon>201608051651302_Add More Column in IdentityModels Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608051655254_Add More Column in IdentityModels Table 2.resx">
+      <DependentUpon>201608051655254_Add More Column in IdentityModels Table 2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608111821256_Remove Required PostCode.resx">
+      <DependentUpon>201608111821256_Remove Required PostCode.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

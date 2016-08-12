@@ -1,0 +1,87 @@
+﻿@model ProjectSem3.Models.AccountViewModel
+@using (Html.BeginForm("UpdateInfo", "Manage", FormMethod.Post, new { @id = "personalInfo" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-12">
+            <div class="billing-address">
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(model => model.Firstname, new { @class = "custom-form", @placeholder = "First Name" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(model => model.Lastname, new { @class = "custom-form", @placeholder = "Last Name" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        @{var listGender = new[]
+                    {
+                            new { Text = "Male", Value="1" },
+                            new { Text = "Female", Value="0" }
+                        }.ToList();
+                        }
+                        @Html.DropDownListFor(model => model.Gender, new SelectList(listGender, "Value", "Text", Model.Gender), "Gender", new { @class = "custom-select custom-form" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(model => model.DOB, new { @class = "custom-select custom-form date-picker", @size = "16", @placeholder = "Birthday" })
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.DropDownListFor(model => model.City, new SelectList(new string[] { }, Model.City), new { @class = "custom-select custom-form", @id = "ddlCity" })
+                    </div>
+
+                    <div class="col-sm-6">
+
+                        @Html.DropDownListFor(model => model.District, new SelectList(new string[] { }, Model.District), "District", new { @class = "custom-select custom-form", @id = "ddlDistrict" })
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        @Html.TextBoxFor(model => model.Address, new { @class = "custom-form", @placeholder = "Address" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "custom-form", @placeholder = "Phone Number" })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(model => model.PostCode, new { @class = "custom-form", @placeholder = "Post Code" })
+                    </div>
+                </div>
+                @*<div class="row">
+                    <div class="col-sm-12">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "custom-form", @id = "RegisterEmail", @placeholder = "Email" })
+                    </div>
+                </div>*@
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" checked="checked" name="create-account" />
+                        Sign up for our newsletter!
+                    </label>
+
+                </div>
+                <!-- http://stackoverflow.com/questions/442704/how-do-you-handle-multiple-submit-buttons-in-asp-net-mvc-framework -->
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" class="custom-submit-2 save" value="Edit" id="edit-btn" />
+                    </div>
+                    <div class="col-md-12">
+                        <input type="submit" class="custom-submit-2 save hide-element" value="Update" id="update-btn" />
+                        <div class="col-md-3">
+                            <input type="submit" class="custom-submit-2 save hide-element" value="Cancel" id="cancel-btn" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                            }

@@ -23,7 +23,7 @@ namespace Model.DAO
                 new SqlParameter("@Email", email),
                 new SqlParameter("@Password", password)
             };
-            return _db.Database.SqlQuery<bool>("Sp_Login @Email, @Password", sqlParams).SingleOrDefault();
+            return _db.Database.SqlQuery<bool>("Login @Email, @Password", sqlParams).SingleOrDefault();
         }
 
         public int Register(Account model)
@@ -44,11 +44,11 @@ namespace Model.DAO
                 new SqlParameter("@CreatedBy", model.CreatedBy),
             };
             return _db.Database.SqlQuery<int>(
-                "Sp_Register @Email, @Password, @Firstname, @Lastname, @Gender, @DOB, @Address, @City, @Country, @PostCode, @Phone, @CreatedBy", sqlParams).SingleOrDefault();
+                "Register @Email, @Password, @Firstname, @Lastname, @Gender, @DOB, @Address, @City, @Country, @PostCode, @Phone, @CreatedBy", sqlParams).SingleOrDefault();
         }
         public AspNetUser GetInfo(string userId)
         {
-            return _db.Database.SqlQuery<AspNetUser>("[dbo].[Sp_GetAccountInfo_ById] @userId", new SqlParameter("@userId", userId)).SingleOrDefault();
+            return _db.Database.SqlQuery<AspNetUser>("[dbo].[GetAccountInfo_ById] @userId", new SqlParameter("@userId", userId)).SingleOrDefault();
         }
 
         public bool UpdateInfo(AspNetUser model)
@@ -68,7 +68,7 @@ namespace Model.DAO
         
             };
             return _db.Database.SqlQuery<bool>(
-                "[dbo].[Sp_Update_ById] @userId, @Firstname, @Lastname, @Gender, @DOB, @Address, @City, @District, @PostCode, @PhoneNumber", 
+                "[dbo].[Update_ById] @userId, @Firstname, @Lastname, @Gender, @DOB, @Address, @City, @District, @PostCode, @PhoneNumber", 
                 sqlParams).SingleOrDefault();
         }
         

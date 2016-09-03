@@ -1,0 +1,23 @@
+﻿@model ProjectSem3.Areas.Admin.Models.SizeColorQuantityViewModel
+<div class="form-group">
+    <label class="col-md-2 control-label">Color:</label>
+    <div class="col-md-2">
+        @Html.TextBoxFor(m => m.ColorId, new { @class = "form-control", @readonly = "readonly", @Value = selectedColor })
+
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-2 control-label">Size and Quantity:</label>
+    @for (var j = 0; j < Model.SizeAndQuantities.Count; j++)
+    {
+        <div class="col-md-2">
+            @Html.TextBoxFor(m => m.SizeAndQuantities[j].SizeId, new
+           {
+               @class = "form-control",
+               @style = "margin-bottom: 15px",
+               @readonly = "readonly"
+           })
+            @Html.TextBoxFor(m => m.SizeAndQuantities[j].Quantity, new { @class = "form-control" })
+        </div>
+    }
+</div>

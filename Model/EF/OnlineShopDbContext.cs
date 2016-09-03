@@ -21,7 +21,6 @@ namespace Model.EF
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Content> Contents { get; set; }
-        public virtual DbSet<ContentTag> ContentTags { get; set; }
         public virtual DbSet<Credential> Credentials { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Footer> Footers { get; set; }
@@ -32,9 +31,11 @@ namespace Model.EF
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductCategory> ProductCategories { get; set; }
+        public virtual DbSet<ProductColor> ProductColors { get; set; }
+        public virtual DbSet<ProductSize> ProductSizes { get; set; }
+        public virtual DbSet<ProductSizeColor> ProductSizeColors { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Slide> Slides { get; set; }
-        public virtual DbSet<SystemConfig> SystemConfigs { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserGroup> UserGroups { get; set; }
@@ -120,9 +121,10 @@ namespace Model.EF
                 .Property(e => e.Language)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<ContentTag>()
-                .Property(e => e.TagID)
-                .IsUnicode(false);
+            modelBuilder.Entity<Content>()
+                .HasMany(e => e.Tags1)
+                .WithMany(e => e.Contents)
+                .Map(m => m.ToTable("ContentTag").MapLeftKey("ContentID").MapRightKey("TagID"));
 
             modelBuilder.Entity<Credential>()
                 .Property(e => e.UserGroupID)
@@ -140,16 +142,27 @@ namespace Model.EF
                 .Property(e => e.ID)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<MenuType>()
+                .HasMany(e => e.Menus)
+                .WithOptional(e => e.MenuType)
+                .HasForeignKey(e => e.TypeID);
+
             modelBuilder.Entity<Order>()
                 .Property(e => e.ShipMobile)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Order>()
+                .HasMany(e => e.OrderDetails)
+                .WithRequired(e => e.Order)
+                .HasForeignKey(e => e.ProductID)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<OrderDetail>()
                 .Property(e => e.Price)
                 .HasPrecision(18, 0);
 
             modelBuilder.Entity<Product>()
-                .Property(e => e.Code)
+                .Property(e => e.SKU)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Product>()
@@ -176,6 +189,16 @@ namespace Model.EF
                 .Property(e => e.MetaDescriptions)
                 .IsFixedLength();
 
+            modelBuilder.Entity<Product>()
+                .HasMany(e => e.OrderDetails)
+                .WithRequired(e => e.Product)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Product>()
+                .HasMany(e => e.ProductSizeColors)
+                .WithRequired(e => e.Product)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<ProductCategory>()
                 .Property(e => e.MetaTitle)
                 .IsUnicode(false);
@@ -192,6 +215,43 @@ namespace Model.EF
                 .Property(e => e.MetaDescriptions)
                 .IsFixedLength();
 
+            modelBuilder.Entity<ProductCategory>()
+                .HasMany(e => e.Products)
+                .WithOptional(e => e.ProductCategory)
+                .HasForeignKey(e => e.CategoryID);
+
+            modelBuilder.Entity<ProductColor>()
+                .Property(e => e.ColorName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ProductColor>()
+                .Property(e => e.RGBHex)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ProductColor>()
+                .HasMany(e => e.ProductSizeColors)
+                .WithRequired(e => e.ProductColor)
+                .HasForeignKey(e => e.ColorID)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ProductSize>()
+                .Property(e => e.ID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ProductSize>()
+                .Property(e => e.SizeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ProductSize>()
+                .HasMany(e => e.ProductSizeColors)
+                .WithRequired(e => e.ProductSize)
+                .HasForeignKey(e => e.SizeID)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ProductSizeColor>()
+                .Property(e => e.SizeID)
+                .IsUnicode(false);
+
             modelBuilder.Entity<Role>()
                 .Property(e => e.ID)
                 .IsUnicode(false);
@@ -202,14 +262,6 @@ namespace Model.EF
 
             modelBuilder.Entity<Slide>()
                 .Property(e => e.ModifiedBy)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<SystemConfig>()
-                .Property(e => e.ID)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<SystemConfig>()
-                .Property(e => e.Type)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Tag>()

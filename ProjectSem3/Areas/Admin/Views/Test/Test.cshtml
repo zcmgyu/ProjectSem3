@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section LevelScriptJs {
+    <script>
+        $(document).ready(function () {
+            $("#chooseImg").on("click", function () {
+                var finder = new CKFinder();
+                finder.selectActionFunction = function (fileUrl) {
+                    $("#text-show").val(fileUrl);
+                    $("#img-target").attr("src", fileUrl);
+                };
+                finder.popup();
+            });
+        });
+    </script>
+}
+
+<h2>Test</h2>
+
+<button class="btn btn-primary" id="chooseImg">Choose image</button>
+<input type="text" id="text-show">
+<img id="img-target"/>

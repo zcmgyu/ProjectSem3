@@ -42,7 +42,6 @@ namespace Model.EF
         [StringLength(20)]
         public string District { get; set; }
 
-        [Required]
         [StringLength(8)]
         public string PostCode { get; set; }
 

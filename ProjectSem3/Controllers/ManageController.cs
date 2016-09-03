@@ -103,7 +103,5 @@ namespace ProjectSem3.Controllers
                 _userManager = value;
             }
         }
-
-
     }
 }

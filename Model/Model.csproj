@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAO\AccountDao.cs" />
+    <Compile Include="DAO\ComponentDao.cs" />
+    <Compile Include="DAO\ProductDao.cs" />
     <Compile Include="EF\About.cs" />
     <Compile Include="EF\Account.cs" />
     <Compile Include="EF\AspNetRole.cs" />
@@ -61,7 +63,6 @@
     <Compile Include="EF\Category.cs" />
     <Compile Include="EF\Contact.cs" />
     <Compile Include="EF\Content.cs" />
-    <Compile Include="EF\ContentTag.cs" />
     <Compile Include="EF\Credential.cs" />
     <Compile Include="EF\Feedback.cs" />
     <Compile Include="EF\Footer.cs" />
@@ -73,12 +74,35 @@
     <Compile Include="EF\OrderDetail.cs" />
     <Compile Include="EF\Product.cs" />
     <Compile Include="EF\ProductCategory.cs" />
+    <Compile Include="EF\ProductColor.cs" />
+    <Compile Include="EF\ProductSize.cs" />
+    <Compile Include="EF\ProductSizeColor.cs" />
     <Compile Include="EF\Role.cs" />
     <Compile Include="EF\Slide.cs" />
-    <Compile Include="EF\SystemConfig.cs" />
     <Compile Include="EF\Tag.cs" />
     <Compile Include="EF\User.cs" />
     <Compile Include="EF\UserGroup.cs" />
+    <Compile Include="Migrations\201608221728187_Initial.cs" />
+    <Compile Include="Migrations\201608221728187_Initial.Designer.cs">
+      <DependentUpon>201608221728187_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608221730375_Add IsChecked in Table ProductCategory.cs" />
+    <Compile Include="Migrations\201608221730375_Add IsChecked in Table ProductCategory.Designer.cs">
+      <DependentUpon>201608221730375_Add IsChecked in Table ProductCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608221734070_Add IsChecked nullable in Table ProductCategory.cs" />
+    <Compile Include="Migrations\201608221734070_Add IsChecked nullable in Table ProductCategory.Designer.cs">
+      <DependentUpon>201608221734070_Add IsChecked nullable in Table ProductCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608221742203_Add IsChecked in Table ProductCategory Update.cs" />
+    <Compile Include="Migrations\201608221742203_Add IsChecked in Table ProductCategory Update.Designer.cs">
+      <DependentUpon>201608221742203_Add IsChecked in Table ProductCategory Update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608291616580_Edit Product Table.cs" />
+    <Compile Include="Migrations\201608291616580_Edit Product Table.Designer.cs">
+      <DependentUpon>201608291616580_Edit Product Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -90,7 +114,23 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201608221728187_Initial.resx">
+      <DependentUpon>201608221728187_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608221730375_Add IsChecked in Table ProductCategory.resx">
+      <DependentUpon>201608221730375_Add IsChecked in Table ProductCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608221734070_Add IsChecked nullable in Table ProductCategory.resx">
+      <DependentUpon>201608221734070_Add IsChecked nullable in Table ProductCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608221742203_Add IsChecked in Table ProductCategory Update.resx">
+      <DependentUpon>201608221742203_Add IsChecked in Table ProductCategory Update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608291616580_Edit Product Table.resx">
+      <DependentUpon>201608291616580_Edit Product Table.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

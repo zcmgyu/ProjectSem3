@@ -1,0 +1,25 @@
+﻿@using ProjectSem3.Common
+@model ProjectSem3.Areas.Admin.Models.Image
+@using (Html.BeginCollectionItem("ProductImages"))
+{
+    <td>
+        @*<a href="@(Model.Name != null ? "@Url.Content(Model.Name)" : "~/Content/Admin/pages/media/works/img2.jpg")" class="fancybox-button" data-rel="fancybox-button">*@
+        @Html.HiddenFor(m => m.Url, new { @class = "hidden-image-name"})
+        <a href="" class="fancybox-button" data-rel="fancybox-button">
+            <img class="img-responsive" src="" alt="" id="setImgHere">
+        </a>
+    </td>
+    <td>
+        @*<input type="text" class="form-control" name="product[images][1][label]" value="Thumbnail image">*@
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+    </td>
+    <td>
+        @*<input type="text" class="form-control" name="product[images][1][sort_order]" value="1">*@
+        @Html.TextBoxFor(m => m.Order, new { @class = "form-control" })
+    </td>
+    <td>
+        <a href="javascript:;" class="btn btn-default btn-sm" onclick="$(this).closest('tr').remove();">
+            <i class="fa fa-times"></i> Remove
+        </a>
+    </td>
+}

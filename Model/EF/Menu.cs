@@ -17,6 +17,9 @@ namespace Model.EF
         [StringLength(250)]
         public string Link { get; set; }
 
+        [StringLength(20)]
+        public string Icon { get; set; }
+
         public int? DisplayOrder { get; set; }
 
         [StringLength(50)]
@@ -25,5 +28,9 @@ namespace Model.EF
         public bool? Status { get; set; }
 
         public int? TypeID { get; set; }
+
+        public int? ParentID { get; set; }
+
+        public virtual MenuType MenuType { get; set; }
     }
 }

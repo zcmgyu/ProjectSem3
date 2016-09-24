@@ -22,7 +22,6 @@ namespace Model.EF
 
         [StringLength(250)]
         public string MetaTitle { get; set; }
-        public bool IsSelected { get; set; }
 
         public long? ParentID { get; set; }
 
@@ -50,6 +49,8 @@ namespace Model.EF
         public bool? Status { get; set; }
 
         public bool? ShowOnHome { get; set; }
+
+        public bool IsSelected { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }

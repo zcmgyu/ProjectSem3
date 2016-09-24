@@ -388,6 +388,12 @@
         <div class="page-content-wrapper">
             <!-- BEGIN CONTENT BODY -->
             <div class="page-content">
+                @if(TempData["AlertMessage"] != null)
+                {
+                    <div id="AlertBox" class="alert @TempData["AlertType"] hide">
+                        @TempData["AlertMessage"]
+                    </div>
+                }
                 @RenderBody()
             </div>
             <!-- END CONTENT BODY -->
@@ -1019,7 +1025,12 @@
     <script src="~/Content/Admin/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
     <script src="~/Content/Admin/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
     <!-- END CORE PLUGINS -->
-    
+    <!-- BEGIN INJECT SCRIPT -->
+    <script>
+        $("#AlertBox").remove("hide");
+        $("#AlertBox").delay(3000).slideUp(500);
+    </script>
+    <!-- END INJECT SCRIPT -->
     <!-- BEGIN PAGE LEVEL PLUGINS -->
     @RenderSection("LevelPluginJs", false)
     <!-- END PAGE LEVEL PLUGINS -->

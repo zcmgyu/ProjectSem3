@@ -33,11 +33,25 @@ var EcommerceOrders = function () {
                 ],
                 "pageLength": 10, // default record count per page
                 "ajax": {
-                    "url": "../demo/ecommerce_orders.php", // ajax source
+                    "url": "LoadOrderToTable", // ajax source
                 },
                 "order": [
                     [1, "asc"]
-                ] // set first column as a default sort by asc
+                ], // set first column as a default sort by asc
+                "processing": true,
+                "serverSide": true,
+                //"dom": '<"top"i>rt<"bottom"lp><"clear">',
+                "columns": [
+                    { "data": "ForCheckbox" },
+                    { "data": "OrderID" },
+                    { "data": "DisplayPurchasedOn" },
+                    { "data": "Customer" },
+                    { "data": "ShipTo" },
+                    { "data": "ShipEmail" },
+                    { "data": "DisplayPaymentType" },
+                    { "data": "DisplayStatus" },
+                    { "data": "ForAction" }
+                ],
             }
         });
 
@@ -71,6 +85,25 @@ var EcommerceOrders = function () {
         });
 
     }
+    var handleSearch = function () {
+        $(document).ready(function () {
+            // DataTable
+            var table = $('#datatable_orders').DataTable();
+
+            // Apply the search
+            $("#btnSearch").click(function () {
+                //var test = table.columns(1).search($("input[name='ID']").val().trim());
+                //table.columns(2).search($("input[name='product_name']").val().trim());
+                //table.columns(3).search($("input[name='product_category']").val().trim());
+                //table.columns(4).search($("input[name='product_price_from']").val().trim());
+                //table.columns(4).search($("input[name='product_price_to']").val().trim());
+                //table.columns(5).search($("input[name='product_promotionprice_from']").val().trim());
+                //table.columns(5).search($("input[name='product_promotionprice_to']").val().trim());
+                table.draw(); 
+            });
+        });
+
+    }
 
     return {
 
@@ -79,6 +112,7 @@ var EcommerceOrders = function () {
 
             initPickers();
             handleOrders();
+            handleSearch();
         }
 
     };

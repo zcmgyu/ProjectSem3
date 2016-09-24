@@ -53,7 +53,9 @@
   <ItemGroup>
     <Compile Include="DAO\AccountDao.cs" />
     <Compile Include="DAO\ComponentDao.cs" />
+    <Compile Include="DAO\OrderDao.cs" />
     <Compile Include="DAO\ProductDao.cs" />
+    <Compile Include="DAO\ShoppingDao.cs" />
     <Compile Include="EF\About.cs" />
     <Compile Include="EF\Account.cs" />
     <Compile Include="EF\AspNetRole.cs" />
@@ -78,32 +80,36 @@
     <Compile Include="EF\ProductSize.cs" />
     <Compile Include="EF\ProductSizeColor.cs" />
     <Compile Include="EF\Role.cs" />
+    <Compile Include="EF\Shipping.cs" />
     <Compile Include="EF\Slide.cs" />
     <Compile Include="EF\Tag.cs" />
     <Compile Include="EF\User.cs" />
     <Compile Include="EF\UserGroup.cs" />
-    <Compile Include="Migrations\201608221728187_Initial.cs" />
-    <Compile Include="Migrations\201608221728187_Initial.Designer.cs">
-      <DependentUpon>201608221728187_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201609240409351_Initial.cs" />
+    <Compile Include="Migrations\201609240409351_Initial.Designer.cs">
+      <DependentUpon>201609240409351_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201608221730375_Add IsChecked in Table ProductCategory.cs" />
-    <Compile Include="Migrations\201608221730375_Add IsChecked in Table ProductCategory.Designer.cs">
-      <DependentUpon>201608221730375_Add IsChecked in Table ProductCategory.cs</DependentUpon>
+    <Compile Include="Migrations\201609240436362_Remove question mark from CustomerID in Order table.cs" />
+    <Compile Include="Migrations\201609240436362_Remove question mark from CustomerID in Order table.Designer.cs">
+      <DependentUpon>201609240436362_Remove question mark from CustomerID in Order table.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201608221734070_Add IsChecked nullable in Table ProductCategory.cs" />
-    <Compile Include="Migrations\201608221734070_Add IsChecked nullable in Table ProductCategory.Designer.cs">
-      <DependentUpon>201608221734070_Add IsChecked nullable in Table ProductCategory.cs</DependentUpon>
+    <Compile Include="Migrations\201609240447228_Change type of CustomerID string in Order table.cs" />
+    <Compile Include="Migrations\201609240447228_Change type of CustomerID string in Order table.Designer.cs">
+      <DependentUpon>201609240447228_Change type of CustomerID string in Order table.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201608221742203_Add IsChecked in Table ProductCategory Update.cs" />
-    <Compile Include="Migrations\201608221742203_Add IsChecked in Table ProductCategory Update.Designer.cs">
-      <DependentUpon>201608221742203_Add IsChecked in Table ProductCategory Update.cs</DependentUpon>
+    <Compile Include="Migrations\201609240659598_Add PaymentType Column in Order table.cs" />
+    <Compile Include="Migrations\201609240659598_Add PaymentType Column in Order table.Designer.cs">
+      <DependentUpon>201609240659598_Add PaymentType Column in Order table.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201608291616580_Edit Product Table.cs" />
-    <Compile Include="Migrations\201608291616580_Edit Product Table.Designer.cs">
-      <DependentUpon>201608291616580_Edit Product Table.cs</DependentUpon>
+    <Compile Include="Migrations\201609240715549_Add State, Country in Order table.cs" />
+    <Compile Include="Migrations\201609240715549_Add State, Country in Order table.Designer.cs">
+      <DependentUpon>201609240715549_Add State, Country in Order table.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\OrderDetailViewModel.cs" />
+    <Compile Include="ViewModel\OrderViewModel.cs" />
+    <Compile Include="ViewModel\ProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -115,20 +121,23 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201608221728187_Initial.resx">
-      <DependentUpon>201608221728187_Initial.cs</DependentUpon>
+    <Folder Include="ViewModel\Client\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201609240409351_Initial.resx">
+      <DependentUpon>201609240409351_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608221730375_Add IsChecked in Table ProductCategory.resx">
-      <DependentUpon>201608221730375_Add IsChecked in Table ProductCategory.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201609240436362_Remove question mark from CustomerID in Order table.resx">
+      <DependentUpon>201609240436362_Remove question mark from CustomerID in Order table.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608221734070_Add IsChecked nullable in Table ProductCategory.resx">
-      <DependentUpon>201608221734070_Add IsChecked nullable in Table ProductCategory.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201609240447228_Change type of CustomerID string in Order table.resx">
+      <DependentUpon>201609240447228_Change type of CustomerID string in Order table.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608221742203_Add IsChecked in Table ProductCategory Update.resx">
-      <DependentUpon>201608221742203_Add IsChecked in Table ProductCategory Update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201609240659598_Add PaymentType Column in Order table.resx">
+      <DependentUpon>201609240659598_Add PaymentType Column in Order table.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608291616580_Edit Product Table.resx">
-      <DependentUpon>201608291616580_Edit Product Table.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201609240715549_Add State, Country in Order table.resx">
+      <DependentUpon>201609240715549_Add State, Country in Order table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -11,25 +11,25 @@ namespace Model.EF
     {
         [Key]
         [Column(Order = 0)]
+        public long ID { get; set; }
+
+        [Key]
+        [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long ProductID { get; set; }
 
         [Key]
-        [Column(Order = 1)]
-        [StringLength(3)]
-        public string SizeID { get; set; }
+        [Column(Order = 2)]
+        [StringLength(10)]
+        public string ColorID { get; set; }
 
         [Key]
-        [Column(Order = 2)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ColorID { get; set; }
+        [Column(Order = 3)]
+        [StringLength(3)]
+        public string SizeID { get; set; }
 
         public int? Quantity { get; set; }
 
         public virtual Product Product { get; set; }
-
-        public virtual ProductColor ProductColor { get; set; }
-
-        public virtual ProductSize ProductSize { get; set; }
     }
 }

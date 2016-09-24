@@ -20,9 +20,9 @@ namespace ProjectSem3.Controllers
         public ActionResult Index()
         {
 
-            var userId = User.Identity.GetUserId();
-            var user = new AccountDao().GetInfo(userId);
-            var model = new AccountViewModel
+            var currentUserId = User.Identity.GetUserId();
+            var user = new AccountDao().GetInfo(currentUserId);
+            var accountInfo = new AccountViewModel
             {
                 Firstname = user.Firstname,
                 Lastname = user.Lastname,
@@ -35,7 +35,17 @@ namespace ProjectSem3.Controllers
                 PhoneNumber = user.PhoneNumber,
                 PostCode = user.PostCode
             };
-            
+
+            var shippingInfo = new AccountDao().GetShippingInfo(currentUserId);
+            // Check this info is created?
+            ViewBag.IsCreated = (shippingInfo == null) ? false : true;
+            shippingInfo = shippingInfo ?? new Shipping();
+
+            var model = new ManageViewModel()
+            {
+                AccountInfo = accountInfo,
+                ShippingInfo = shippingInfo
+            };
             return View(model);
         }
 
@@ -62,9 +72,20 @@ namespace ProjectSem3.Controllers
             return Json(new { result = result }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Shipping()
+        //[HttpPost]
+        //public ActionResult UpdateShipping(Shipping model)
+        //{
+        //    var acc = new AccountDao().UpdateInfo
+        //    return PartialView();
+        //}
+
+        [HttpPost]
+        public ActionResult CreateShipping(ManageViewModel model)
         {
-            return Json(new { a = "" });
+            
+            model.ShippingInfo.AccountID = User.Identity.GetUserId();
+            var result = new AccountDao().CreateShipping(model.ShippingInfo);
+            return Json(new { result = result });
         }
 
         private ApplicationSignInManager _signInManager;

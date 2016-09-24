@@ -11,16 +11,19 @@ namespace Model.EF
     {
         public int ID { get; set; }
 
+        [StringLength(50)]
+        public string Title { get; set; }
+
+        [StringLength(250)]
+        public string Description { get; set; }
+
         [StringLength(250)]
         public string Image { get; set; }
-
-        public int? DisplayOrder { get; set; }
 
         [StringLength(250)]
         public string Link { get; set; }
 
-        [StringLength(50)]
-        public string Description { get; set; }
+        public int? DisplayOrder { get; set; }
 
         public DateTime? CreatedDate { get; set; }
 
@@ -32,6 +35,6 @@ namespace Model.EF
         [StringLength(50)]
         public string ModifiedBy { get; set; }
 
-        public bool? Status { get; set; }
+        public int? Status { get; set; }
     }
 }

@@ -1,0 +1,217 @@
+﻿@model List<ProjectSem3.Models.CartItem>
+@using System.Configuration
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section CustomStyle {
+    <style>
+        #checkout-or {
+            text-align: center;
+        }
+    </style>
+}
+
+@section Scripts{
+
+    <script>
+        $('.payment-submit').on('click', function (event) {
+            var paymenttype = $(this).data("payment-type");
+            if (paymenttype == "1") {
+                $("#checkout-form").attr("action", "/Shop/Payment/");
+            } else {
+                $("#checkout-form").attr("action", "@ConfigurationManager.AppSettings["urlSubmitPayment"]");
+            }
+        });
+    </script>
+}
+
+<section class="page-content">
+    <!-- PAGE-BANNER START -->
+    <div class="page-banner-area photo-3 margin-bottom-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-banner-menu">
+                        <h2 class="page-banner-title">Shopping Cart</h2>
+                        <ul>
+                            <li><a href="index.html">home</a></li>
+                            <li>Shoping Cart</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- PAGE-BANNER END -->
+    <!-- SHOPPING-CART-AREA START -->
+    <div class="shopping-cart-area margin-bottom-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "paypalSubmit", @action = Url.Content(ConfigurationManager.AppSettings["urlSubmitPayment"]) }))
+
+                    {
+                        <div class="table-content table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="product-thumbnail">Image</th>
+                                        <th class="product-name">Name</th>
+                                        <th class="product-edit">Color</th>
+                                        <th class="product-edit">Size</th>
+                                        <th class="product-price">Price</th>
+                                        <th class="product-quantity">Quantity</th>
+                                        <th class="product-subtotal">Subtotal</th>
+                                        <th class="product-remove">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ decimal? totalPrice = 0;}
+                                    @{if (Model.Count != 0)
+                                        {
+                                            foreach (var item in Model)
+                                            {
+                                                var actualPrice = item.Product.PromotionPrice ?? item.Product.Price;
+                                                <tr>
+                                                    @Html.HiddenFor(m => item.Product.ID)
+                                                    <td class="product-thumbnail"><a href="#"><img src="@Url.Content(@item.Product.Image)" alt="" /></a></td>
+                                                    <td class="product-name"><a href="#">@item.Product.Name</a></td>
+                                                    <td class="product-color"><a href="#">@item.Color</a></td>
+                                                    <td class="product-color"><a href="#">@item.Size</a></td>
+                                                    <td class="product-price"><span class="amount">$@actualPrice</span></td>
+                                                    <td class="product-quantity"><input type="text" value="@item.Quantity" /></td>
+                                                    <td class="product-subtotal">$@(actualPrice * item.Quantity)</td>
+                                                    <td class="product-remove"><a href="#"><i class="pe-7s-close"></i></a></td>
+                                                </tr>
+                                                totalPrice = totalPrice + (actualPrice * item.Quantity);
+                                            }
+                                        }
+                                        else {
+                                            <tr>Current have no item in cart</tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                                        if (Model.Count != 0)
+                                        {
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="coupon">
+                                                        <input type="submit" value="update cart" />
+                                                        <span>do you have coupon code</span>
+                                                        <input type="text" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5 col-md-offset-7">
+                                                    <div class="cart-totals">
+                                                        <h2>Total</h2>
+                                                        <div class="table-cart table-responsive">
+                                                            <table>
+                                                                <tbody class="cart-totals-list">
+                                                                    <tr>
+                                                                        <th>Subtotal</th>
+                                                                        <td>$@totalPrice</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Discount</th>
+                                                                        <td><span>no discount or coupon code</span></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Shipping</th>
+                                                                        <td><p>free shipping</p></td>
+                                                                    </tr>
+                                                                    <tr class="cart-total">
+                                                                        <th>Total</th>
+                                                                        <td>$@totalPrice</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <div class="we-proceed-to-checkout">
+                                                                <a href="/Shop/Checkout">proceed to checkout</a>
+                                                            </div>
+                                                            <div id="checkout-or" class="col-md-offset-6">- or -</div>
+
+                                                            <!-- Begin For Paypal-->
+                                                            <input type="hidden" name="cmd" value="_cart" />
+                                                            <input type="hidden" name="upload" value="1" />
+                                                            <input type="hidden" name="return" value='@ConfigurationManager.AppSettings["urlReturn"]' />
+                                                            <input type="hidden" name="business" value='@ConfigurationManager.AppSettings["accountBusiness"]' />
+                                                            @{
+                                                                var cart = (List<ProjectSem3.Models.CartItem>)Session[ProjectSem3.Common.CommonSession.CartSession];
+                                                                if (cart != null)
+                                                                {
+                                                                    for (var i = 0; i < cart.Count; i++)
+                                                                    {
+                                                                        var actualPrice = cart[i].Product.PromotionPrice ?? cart[i].Product.Price;
+                                                                        <input type="hidden" name="@Url.Content("item_name_" + (i + 1))" value="@cart[i].Product.Name" />
+                                                                        <input type="hidden" name="@Url.Content("item_number_" + (i + 1))" value="@cart[i].Product.ID" />
+                                                                        <input type="hidden" name="@Url.Content("amount_" + (i + 1))" value="@actualPrice" />
+                                                                        <input type="hidden" name="@Url.Content("quantity_" + (i + 1))" value="@cart[i].Quantity" />
+                                                                    }
+
+                                                                }
+                                                    <!-- End for Paypal -->
+                                                                <div class="we-proceed-to-checkout">
+                                                                    <a href="javascript:document.getElementById('paypalSubmit').submit()">
+                                                                        <img alt="Check out with PayPal" src="http://im.uniqlo.com/images/us/pc/img/cart/PP_Checkout_silver_228x44.png" width="188">
+                                                                    </a>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                                                    }
+                                                                }
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SHOPPING-CART-AREA END -->
+    <!-- BRAND-LOGO-AREA START -->
+    <div class="brand-logo-area margin-bottom-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 col-sm-12">
+                    <div class="brand-brief">
+                        <h2 class="border-left-right">they are with us</h2>
+                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+                    </div>
+                </div>
+                <div class="col-md-7 col-sm-12">
+                    <div class="brand-logo fix">
+                        <div class="single-logo">
+                            <img src="img/brand/1.png" alt="" />
+                        </div>
+                        <div class="single-logo">
+                            <img src="img/brand/2.png" alt="" />
+                        </div>
+                        <div class="single-logo">
+                            <img src="img/brand/3.png" alt="" />
+                        </div>
+                        <div class="single-logo">
+                            <img src="img/brand/4.png" alt="" />
+                        </div>
+                        <div class="single-logo">
+                            <img src="img/brand/5.png" alt="" />
+                        </div>
+                        <div class="single-logo">
+                            <img src="img/brand/6.png" alt="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- BRAND-LOGO-AREA END -->
+</section>

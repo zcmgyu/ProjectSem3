@@ -163,7 +163,11 @@ $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
 		var $button = $(this);
 		var oldValue = $button.parent().find("input").val();
 		if ($button.text() == "+") {
-		  var newVal = parseFloat(oldValue) + 1;
+		    var maxVal = parseFloat($('.cart-plus-minus input').attr('max'));
+		    var newVal = parseFloat(oldValue) + 1;
+		    if (maxVal < newVal) {
+		        newVal = oldValue;
+		    }
 		} else {
 		   // Don't allow decrementing below zero
 		  if (oldValue > 0) {

@@ -1,0 +1,75 @@
+﻿@model Model.ViewModel.OrderFilterViewModel
+<tr role="row" class="filter">
+    <td> </td>
+    <td>
+        @Html.TextBoxFor(m => m.OrderID, new { @class = "form-control form-filter input-sm", @type = "number" })
+        @*<input type="text" class="form-control form-filter input-sm" name="order_id">*@
+    </td>
+    <td>
+        <div class="input-group date date-picker margin-bottom-5" data-date-format="dd/mm/yyyy">
+            @*<input type="text" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="From">*@
+            @Html.TextBoxFor(m => m.PurchasedOnFrom, new { @class = "form-control form-filter input-sm", @readonly = "true", @placeholer = "From" })
+            <span class="input-group-btn">
+                <button class="btn btn-sm default" type="button">
+                    <i class="fa fa-calendar"></i>
+                </button>
+            </span>
+        </div>
+        <div class="input-group date date-picker" data-date-format="dd/mm/yyyy">
+            @*<input type="text" class="form-control form-filter input-sm" readonly name="order_date_to" placeholder="To">*@
+            @Html.TextBoxFor(m => m.PurchasedOnTo, new { @class = "form-control form-filter input-sm", @readonly = "true", @placeholer = "To" })
+            <span class="input-group-btn">
+                <button class="btn btn-sm default" type="button">
+                    <i class="fa fa-calendar"></i>
+                </button>
+            </span>
+        </div>
+    </td>
+    <td>
+        <div class="margin-bottom-5">
+            @Html.TextBoxFor(m => m.Firstname, new { @class = "form-control form-filter input-sm", @placeholer = "Firstname" })
+        </div>
+        @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control form-filter input-sm", @placeholer = "Lastname" })
+    </td>
+    <td>
+        @Html.TextBoxFor(m => m.ShipTo, new { @class = "form-control form-filter input-sm", @placeholer = "Ship To" })
+    </td>
+    <td>
+        @Html.TextBoxFor(m => m.ShipEmail, new { @class = "form-control form-filter input-sm", @placeholer = "Ship Email" })
+    </td>
+    <td>
+        @{
+            var listPaymentStatus = new[]
+            {
+                new { value = "1", Text = "Normal"},
+                new { value = "2", Text = "Paypal"},
+            }.ToList();
+        }
+        @Html.DropDownListFor(m => m.Status, new SelectList(listPaymentStatus, "value", "text"), "Select...", new { @class = "form-control form-filter input-sm" })
+
+    </td>
+    <td>
+        @{
+            var listStatus = new[]
+            {
+                new { value = "0", Text = "Ignore"},
+                new { value = "1", Text = "Waiting"},
+                new { value = "2", Text = "Sent"},
+                new { value = "2", Text = "Closed"},
+            }.ToList();
+        }
+        @Html.DropDownListFor(m => m.Status, new SelectList(listStatus, "value", "text"), "Select...", new { @class = "form-control form-filter input-sm" })
+
+    </td>
+
+    <td>
+        <div class="margin-bottom-5">
+            <button class="btn btn-sm btn-success filter-submit margin-bottom" id="btnSearch">
+                <i class="fa fa-search"></i> Search
+            </button>
+        </div>
+        <button class="btn btn-sm btn-default filter-cancel">
+            <i class="fa fa-times"></i> Reset
+        </button>
+    </td>
+</tr>

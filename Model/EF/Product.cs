@@ -21,16 +21,11 @@ namespace Model.EF
         [StringLength(250)]
         public string Name { get; set; }
 
-        [StringLength(10)]
-        public string SKU { get; set; }
-
         [StringLength(250)]
         public string MetaTitle { get; set; }
 
         [StringLength(500)]
         public string Description { get; set; }
-        [StringLength(200)]
-        public string ShortDescription { get; set; }
 
         [StringLength(250)]
         public string Image { get; set; }
@@ -64,11 +59,17 @@ namespace Model.EF
         [StringLength(250)]
         public string MetaDescriptions { get; set; }
 
-        public bool? Status { get; set; }
+        public int? Status { get; set; }
 
         public DateTime? TopHot { get; set; }
 
         public int? ViewCount { get; set; }
+
+        [StringLength(10)]
+        public string SKU { get; set; }
+
+        [StringLength(200)]
+        public string ShortDescription { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }

@@ -18,7 +18,8 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -141,9 +142,21 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.5840.25917, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.6\lib\net40\System.Linq.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -211,21 +224,32 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ShoppingController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MasterController.cs" />
     <Compile Include="Areas\Admin\Controllers\NotificationController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
-    <Compile Include="Areas\Admin\Controllers\TestController.cs" />
     <Compile Include="Areas\Admin\Models\AccountViewModels.cs" />
     <Compile Include="Areas\Admin\Models\CommonViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\FormMailViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductViewModel.cs" />
     <Compile Include="Common\AreaAuthorizeAttribute.cs" />
+    <Compile Include="Common\BaseController.cs" />
     <Compile Include="Common\CollectionEditingHtmlExtensions.cs" />
+    <Compile Include="Common\CommonSession.cs" />
+    <Compile Include="Controllers\PaypalController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Migrations\201608221722005_Initial.cs" />
     <Compile Include="Migrations\201608221722005_Initial.Designer.cs">
       <DependentUpon>201608221722005_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\CartItem.cs" />
+    <Compile Include="Models\GetDataPaypal.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Common\Encryptor.cs" />
     <Compile Include="Common\MultipleButtonAttribute.cs" />
@@ -236,6 +260,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ManageViewModel.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -254,6 +281,7 @@
     <Content Include="Content\Admin\apps\scripts\todo-2.min.js" />
     <Content Include="Content\Admin\apps\scripts\todo.js" />
     <Content Include="Content\Admin\apps\scripts\todo.min.js" />
+    <Content Include="Content\Admin\controller\orderController.js" />
     <Content Include="Content\Admin\Extension\ckfinder\bin\Debug\CKFinder.dll" />
     <Content Include="Content\Admin\Extension\ckfinder\bin\Debug\CKFinder.pdb" />
     <Content Include="Content\Admin\Extension\ckfinder\bin\Debug\CKFinder_FileEditor.dll" />
@@ -912,6 +940,7 @@
     <Content Include="Content\Admin\Extension\ckfinder\_samples\skin_v1.html" />
     <Content Include="Content\Admin\Extension\ckfinder\_samples\standalone.html" />
     <Content Include="Content\Admin\Extension\ckfinder\_samples\standalone_v1.html" />
+    <Content Include="Content\Admin\Extension\MailContent.html" />
     <Content Include="Content\Admin\global\css\components-md.css" />
     <Content Include="Content\Admin\global\css\components-md.min.css" />
     <Content Include="Content\Admin\global\css\components-rounded.css" />
@@ -5649,6 +5678,7 @@
     <Content Include="Content\Admin\pages\css\tasks.min.css" />
     <Content Include="Content\Admin\pages\css\timeline-old.css" />
     <Content Include="Content\Admin\pages\css\timeline-old.min.css" />
+    <Content Include="Content\Admin\pages\customscript\SlideController.js" />
     <Content Include="Content\Admin\pages\img\avatars\team1.jpg" />
     <Content Include="Content\Admin\pages\img\avatars\team10.jpg" />
     <Content Include="Content\Admin\pages\img\avatars\team11.jpg" />
@@ -6218,7 +6248,9 @@
     <Content Include="Content\Client\js\bootstrap-datepicker.min.js" />
     <Content Include="Content\Client\js\bootstrap.min.js" />
     <Content Include="Content\Client\js\controller\accountController.js" />
+    <Content Include="Content\Client\js\controller\cartController.js" />
     <Content Include="Content\Client\js\controller\manageController.js" />
+    <Content Include="Content\Client\js\controller\shopController.js" />
     <Content Include="Content\Client\js\countdon.min.js" />
     <Content Include="Content\Client\js\jquery-ui.min.js" />
     <Content Include="Content\Client\js\jquery.meanmenu.js" />
@@ -6395,6 +6427,7 @@
     <Content Include="Content\Client\lib\plugin-datepicker\plugins\font-awesome\css\font-awesome.css" />
     <Content Include="Content\Client\lib\plugin-datepicker\plugins\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\Client\lib\plugin-datepicker\plugins\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -6821,6 +6854,16 @@
     <Content Include="Content\Admin\Extension\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\Admin\Extension\ckfinder\userfiles\.htaccess" />
     <Content Include="Areas\Admin\Views\Product\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\_LoadProduct.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\_FilterPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Master\CreateSlide.cshtml" />
+    <Content Include="Areas\Admin\Views\Master\ListSlide.cshtml" />
+    <Content Include="Areas\Admin\Views\Master\EditSlide.cshtml" />
+    <Content Include="Areas\Admin\Views\Master\SlideDetail.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\List.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\_FilterPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Detail.cshtml" />
     <None Include="Properties\PublishProfiles\ProjectSem3.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -6864,12 +6907,22 @@
     <Content Include="Views\Manage\_ShippingAddress.cshtml" />
     <Content Include="Views\Account\_LoginPartial.cshtml" />
     <Content Include="Views\Account\_RegisterPartial.cshtml" />
+    <Content Include="Views\Home\_TopSlide.cshtml" />
+    <Content Include="Views\Product\ShopList.cshtml" />
+    <Content Include="Views\Product\_ListProduct.cshtml" />
+    <Content Include="Views\Product\_Pagination.cshtml" />
+    <Content Include="Views\Product\Detail.cshtml" />
+    <Content Include="Views\Shop\Checkout.cshtml" />
+    <Content Include="Views\Shared\_HeaderCart.cshtml" />
+    <Content Include="Views\Paypal\GetDataPaypal.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Start\App_Data\" />
+    <Folder Include="Areas\Admin\Views\Shopping\" />
     <Folder Include="Content\Admin\apps\img\" />
     <Folder Include="Content\Admin\global\plugins\angularjs\plugins\angular-file-upload\uploads\" />
     <Folder Include="Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -6880,6 +6933,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{a30363e7-364f-489c-a2e3-74d31bd91867}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{b30c0f19-7c8f-49d1-8393-3fbe6caecf25}</Project>
       <Name>Model</Name>

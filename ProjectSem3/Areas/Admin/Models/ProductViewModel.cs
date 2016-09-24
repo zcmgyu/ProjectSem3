@@ -19,7 +19,7 @@ namespace ProjectSem3.Areas.Admin.Models
         public string Name { get; set; }
         [Required]
         public string Description { get; set; }
-        
+
         public string ShortDescription { get; set; }
         public string MetaTitle { get; set; }
 
@@ -27,12 +27,13 @@ namespace ProjectSem3.Areas.Admin.Models
         [Required]
         public string SKU { get; set; }
         [Required]
-        public float Price { get; set; }
-        public float PromotionPrice { get; set; }
+        public decimal? Price { get; set; }
+        public decimal? PromotionPrice { get; set; }
         [Required]
         public int Status { get; set; }
     }
-    public class Image {
+    public class Image
+    {
         public int Id { get; set; }
 
         public string Name { get; set; }

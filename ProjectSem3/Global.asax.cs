@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -12,6 +13,9 @@ namespace ProjectSem3
     {
         protected void Application_Start()
         {
+            // Fix bug The request was aborted: Could not create SSL/TLS secure channel sandbox account
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            // Default
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

@@ -9,13 +9,8 @@ namespace Model.EF
     [Table("ProductColor")]
     public partial class ProductColor
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ProductColor()
-        {
-            ProductSizeColors = new HashSet<ProductSizeColor>();
-        }
-
-        public int ID { get; set; }
+        [StringLength(10)]
+        public string ID { get; set; }
 
         [StringLength(10)]
         public string ColorName { get; set; }
@@ -24,8 +19,5 @@ namespace Model.EF
         public string RGBHex { get; set; }
 
         public bool? Status { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProductSizeColor> ProductSizeColors { get; set; }
     }
 }

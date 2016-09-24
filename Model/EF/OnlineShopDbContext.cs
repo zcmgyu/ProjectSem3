@@ -35,6 +35,7 @@ namespace Model.EF
         public virtual DbSet<ProductSize> ProductSizes { get; set; }
         public virtual DbSet<ProductSizeColor> ProductSizeColors { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Shipping> Shippings { get; set; }
         public virtual DbSet<Slide> Slides { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -80,6 +81,11 @@ namespace Model.EF
                 .HasMany(e => e.AspNetUserLogins)
                 .WithRequired(e => e.AspNetUser)
                 .HasForeignKey(e => e.UserId);
+
+            modelBuilder.Entity<AspNetUser>()
+                .HasMany(e => e.Shippings)
+                .WithOptional(e => e.AspNetUser)
+                .HasForeignKey(e => e.AccountID);
 
             modelBuilder.Entity<Category>()
                 .Property(e => e.MetaTitle)
@@ -158,12 +164,16 @@ namespace Model.EF
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<OrderDetail>()
+                .Property(e => e.Color)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OrderDetail>()
+                .Property(e => e.Size)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OrderDetail>()
                 .Property(e => e.Price)
                 .HasPrecision(18, 0);
-
-            modelBuilder.Entity<Product>()
-                .Property(e => e.SKU)
-                .IsUnicode(false);
 
             modelBuilder.Entity<Product>()
                 .Property(e => e.MetaTitle)
@@ -188,6 +198,10 @@ namespace Model.EF
             modelBuilder.Entity<Product>()
                 .Property(e => e.MetaDescriptions)
                 .IsFixedLength();
+
+            modelBuilder.Entity<Product>()
+                .Property(e => e.SKU)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Product>()
                 .HasMany(e => e.OrderDetails)
@@ -221,18 +235,16 @@ namespace Model.EF
                 .HasForeignKey(e => e.CategoryID);
 
             modelBuilder.Entity<ProductColor>()
+                .Property(e => e.ID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ProductColor>()
                 .Property(e => e.ColorName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<ProductColor>()
                 .Property(e => e.RGBHex)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<ProductColor>()
-                .HasMany(e => e.ProductSizeColors)
-                .WithRequired(e => e.ProductColor)
-                .HasForeignKey(e => e.ColorID)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ProductSize>()
                 .Property(e => e.ID)
@@ -242,11 +254,9 @@ namespace Model.EF
                 .Property(e => e.SizeName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<ProductSize>()
-                .HasMany(e => e.ProductSizeColors)
-                .WithRequired(e => e.ProductSize)
-                .HasForeignKey(e => e.SizeID)
-                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<ProductSizeColor>()
+                .Property(e => e.ColorID)
+                .IsUnicode(false);
 
             modelBuilder.Entity<ProductSizeColor>()
                 .Property(e => e.SizeID)

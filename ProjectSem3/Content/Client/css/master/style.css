@@ -39,6 +39,7 @@
     23. Blog
     24. Login
     25. 404
+    26. For Project Customize
 
 -----------------------------------------------------------------------------------*/
 
@@ -3887,8 +3888,17 @@ h1.thank-you {
   color: #fff;
 }
 
+/* ------------------------------------
+26. Project Customize
+-------------------------------------- */
 
-
+#pj3-wraptext{
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 230px;
+}
 
 
 

@@ -1,4 +1,10 @@
-﻿@section CustomStyle{
+﻿@model ProjectSem3.Models.ManageViewModel
+@{var listGender = new[]{
+        new { Text = "Male", Value="1" },
+        new { Text = "Female", Value="0" }
+    }.ToList();
+}
+@section CustomStyle{
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="~/Content/Client/lib/plugin-datepicker/plugins/font-awesome/css/font-awesome.css">
     <link href="~/Content/Client/lib/plugin-datepicker/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
@@ -27,15 +33,22 @@
             $(this).attr('value', $('.date-picker').val());
         });
     </script>
-    <script src="~/Content/Client/js/controller/manageController.js"></script>  @*Muốn thằng này chạy trước*@
+    <script src="~/Content/Client/js/controller/manageController.js"></script>
 
     <script>
-        @*var selectedCityValue = @Model.Item1.City.ToString();*@
+        // For Account Form
         var setSelectedCity = function () {
-            $('select[name="City"] option[value="@Model.City"]').attr('selected', 'selected'); // Goi thang nay trong ham success cua Ajax
+            $('select[name="AccountInfo.City"] option[value="@Model.AccountInfo.City"]').attr('selected', 'selected'); // Goi thang nay trong ham success cua Ajax
         };
         var setSelectedDistrict = function () {
-            $('select[name="District"] option[value="@Model.District"]').attr('selected', 'selected'); // Goi thang nay trong ham success cua Ajax
+            $('select[name="AccountInfo.District"] option[value="@Model.AccountInfo.District"]').attr('selected', 'selected'); // Goi thang nay trong ham success cua Ajax
+        };
+        // For Shipping Form
+        var setSelectedCityShipping = function () {
+            $('.shipping-address select[name="ShippingInfo.City"] option[value="@Model.ShippingInfo.City"]').attr('selected', 'selected'); // Goi thang nay trong ham success cua Ajax
+        };
+        var setSelectedDistrictShipping = function () {
+            $('.shipping-address select[name="ShippingInfo.District"] option[value="@Model.ShippingInfo.District"]').attr('selected', 'selected'); // Goi thang nay trong ham success cua Ajax
         };
     </script>
 }
@@ -79,8 +92,88 @@
                             </div>
                             <div id="personal-info" class="panel-collapse collapse in" role="tabpanel">
                                 <div class="panel-body">
-                                    @Html.Partial("_PersonalInfo")
-                                    
+
+                                    @using (Html.BeginForm("UpdateInfo", "Manage", FormMethod.Post, new { @id = "personalInfo" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="billing-address">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            @Html.TextBoxFor(model => model.AccountInfo.Firstname, new { @class = "custom-form", @placeholder = "First Name" })
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            @Html.TextBoxFor(model => model.AccountInfo.Lastname, new { @class = "custom-form", @placeholder = "Last Name" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+
+                                                            @Html.DropDownListFor(model => model.AccountInfo.Gender, new SelectList(listGender, "Value", "Text", Model.AccountInfo.Gender), "Gender", new { @class = "custom-select custom-form" })
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            @Html.TextBoxFor(model => model.AccountInfo.DOB, new { @class = "custom-select custom-form date-picker", @size = "16", @placeholder = "Birthday" })
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            @Html.DropDownListFor(model => model.AccountInfo.City, new SelectList(new string[] { }, Model.AccountInfo.City), new { @class = "custom-select custom-form", @id = "ddlCity" })
+                                                        </div>
+
+                                                        <div class="col-sm-6">
+                                                            @Html.DropDownListFor(model => model.AccountInfo.District, new SelectList(new string[] { }, Model.AccountInfo.District), "District", new { @class = "custom-select custom-form", @id = "ddlDistrict" })
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            @Html.TextBoxFor(model => model.AccountInfo.Address, new { @class = "custom-form", @placeholder = "Address" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            @Html.TextBoxFor(model => model.AccountInfo.PhoneNumber, new { @class = "custom-form", @placeholder = "Phone Number" })
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            @Html.TextBoxFor(model => model.AccountInfo.PostCode, new { @class = "custom-form", @placeholder = "Post Code" })
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="row">
+                                                            <div class="col-sm-12">
+                                                                @Html.TextBoxFor(model => model.Email, new { @class = "custom-form", @id = "RegisterEmail", @placeholder = "Email" })
+                                                            </div>
+                                                        </div>*@
+
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" checked="checked" name="create-account" />
+                                                            Sign up for our newsletter!
+                                                        </label>
+
+                                                    </div>
+                                                    <!-- http://stackoverflow.com/questions/442704/how-do-you-handle-multiple-submit-buttons-in-asp-net-mvc-framework -->
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <input type="submit" class="custom-submit-2 save" value="Edit" id="edit-btn" />
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <input type="submit" class="custom-submit-2 save hide-element" value="Update" id="update-btn" />
+                                                            <div class="col-md-3">
+                                                                <input type="submit" class="custom-submit-2 save hide-element" value="Cancel" id="cancel-btn" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    }
+
                                 </div>
 
                             </div>
@@ -98,7 +191,86 @@
                                 <div class="panel-body">
                                     <!-- CHECKOUT-AREA START -->
                                     <div class="checkout-area">
-                                        @Html.Partial("_ShippingAddress")
+                                        @using (Html.BeginForm("Shipping", "Manage", FormMethod.Post, new { @id = "shippingInfo" }))
+                                        {
+                                            <div class="row">
+                                                <!-- Shipping-Address Start -->
+                                                <div class="col-md-12">
+                                                    <div class="shipping-address">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                @Html.TextBoxFor(m => m.ShippingInfo.Firstname, new { @class = "custom-form", @placeholder = "Firstname" })
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                @Html.TextBoxFor(m => m.ShippingInfo.Lastname, new { @class = "custom-form", @placeholder = "Lastname" })
+                                                            </div>
+                                                        </div>
+                                                        @Html.DropDownListFor(model => model.ShippingInfo.Gender, new SelectList(listGender, "Value", "Text", Model.ShippingInfo.Gender), "Gender", new { @class = "custom-select custom-form" })
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                @Html.DropDownListFor(model => model.ShippingInfo.City, new SelectList(new string[] { }), new { @class = "custom-select custom-form", @id = "ddlCityShipping" })
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                @Html.DropDownListFor(model => model.ShippingInfo.District, new SelectList(new string[] { }), "District", new { @class = "custom-select custom-form", @id = "ddlDistrictShipping" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+
+                                                                @Html.TextBoxFor(m => m.ShippingInfo.Address, new { @class = "custom-form", @placeholder = "Address" })
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+
+                                                                @Html.TextBoxFor(m => m.ShippingInfo.PhoneNumber, new { @class = "custom-form", @placeholder = "Phone Number" })
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                @Html.TextBoxFor(m => m.ShippingInfo.PostCode, new { @class = "custom-form", @placeholder = "Post Code" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                @Html.TextBoxFor(m => m.ShippingInfo.Email, new { @class = "custom-form", @placeholder = "Email" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                @Html.TextBoxFor(m => m.ShippingInfo.OrderNote, new { @class = "custom-form", @placeholder = "Order Note" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+
+                                                                <input type="submit" class="custom-submit-2 save" value="Edit" id="edit-btn" />
+
+
+                                                            </div>
+
+                                                            <div class="col-md-12">
+                                                                @{
+                                                                    if (ViewBag.IsCreated)
+                                                                    {
+                                                                        <input type="submit" class="custom-submit-2 save hide-element" value="Update" id="update-btn" />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <input type="submit" class="custom-submit-2 save hide-element" value="Create" id="create-btn" />
+                                                                    }
+                                                                }
+                                                                <div class="col-md-3">
+                                                                    <input type="submit" class="custom-submit-2 save hide-element" value="Cancel" id="cancel-btn" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Shipping-Address End -->
+                                            </div>
+                                                                    }
+
                                     </div>
                                     <!-- CHECKOUT-AREA END -->
                                 </div>
@@ -132,43 +304,43 @@
                 </div>
             </div>
         </div>
-        </div>
-        <!-- MY-ACCOUNT-AREA END -->
-        <!-- BRAND-LOGO-AREA START -->
-        <div class="brand-logo-area margin-bottom-80">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-5 col-sm-12">
-                        <div class="brand-brief">
-                            <h2 class="border-left-right">they are with us</h2>
-                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                        </div>
+    </div>
+    <!-- MY-ACCOUNT-AREA END -->
+    <!-- BRAND-LOGO-AREA START -->
+    <div class="brand-logo-area margin-bottom-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 col-sm-12">
+                    <div class="brand-brief">
+                        <h2 class="border-left-right">they are with us</h2>
+                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
                     </div>
-                    <div class="col-md-7 col-sm-12">
-                        <div class="brand-logo fix">
-                            <div class="single-logo">
-                                <img src="~/Content/Client/img/brand/1.png" />
-                            </div>
-                            <div class="single-logo">
-                                <img src="~/Content/Client/img/brand/2.png" />
-                            </div>
-                            <div class="single-logo">
-                                <img src="~/Content/Client/img/brand/3.png" />
-                            </div>
-                            <div class="single-logo">
-                                <img src="~/Content/Client/img/brand/4.png" />
-                            </div>
-                            <div class="single-logo">
-                                <img src="~/Content/Client/img/brand/5.png" />
-                            </div>
-                            <div class="single-logo">
-                                <img src="~/Content/Client/img/brand/6.png" />
-                            </div>
+                </div>
+                <div class="col-md-7 col-sm-12">
+                    <div class="brand-logo fix">
+                        <div class="single-logo">
+                            <img src="~/Content/Client/img/brand/1.png" />
+                        </div>
+                        <div class="single-logo">
+                            <img src="~/Content/Client/img/brand/2.png" />
+                        </div>
+                        <div class="single-logo">
+                            <img src="~/Content/Client/img/brand/3.png" />
+                        </div>
+                        <div class="single-logo">
+                            <img src="~/Content/Client/img/brand/4.png" />
+                        </div>
+                        <div class="single-logo">
+                            <img src="~/Content/Client/img/brand/5.png" />
+                        </div>
+                        <div class="single-logo">
+                            <img src="~/Content/Client/img/brand/6.png" />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- BRAND-LOGO-AREA END -->
-    </section>
-    <!-- PAGE-CONTENT END -->
+    </div>
+    <!-- BRAND-LOGO-AREA END -->
+</section>
+<!-- PAGE-CONTENT END -->

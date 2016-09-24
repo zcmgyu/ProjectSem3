@@ -1,0 +1,37 @@
+﻿@if (ViewBag.TotalPage > 1)
+{
+    var pageDisplay = (int)ViewBag.MaxPage;
+    int totalPage = (int)ViewBag.TotalPage;
+    int currentPage = (int)ViewBag.Page;
+
+    // Create numeric links
+    var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+    var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+    var link = "/Product/ShopList/";
+    <div class="shop-pagination">
+        <ul>
+            @if (currentPage > ViewBag.First)
+            {
+                <li><a href="@link?page=@ViewBag.First" title="First Page" class="first"><i class="sp-arrow-bold-left"></i></a></li>
+                        <li><a href="@link?page=@ViewBag.Prev" title="Prev Page" class="prev"><i class="sp-arrow-bold-left"></i></a></li>
+            }
+            @for (var i = startPageIndex; i <= endPageIndex; i++)
+            {
+                if (currentPage == i)
+                {
+                    <li class="active"><a href="@link?page=@i" title="Page @i">@i</a></li>
+                }
+                else
+                {
+                    <li><a href="@link?page=@i" title="Page @i" class="pos">@i</a></li>
+                }
+            }
+            @if (currentPage < totalPage)
+            {
+                <li><a href="@link?page=@ViewBag.Next" title="Next Page" class="next"><i class="sp-arrow-bold-right"></i></a></li>
+                        <li><a href="@link?page=@ViewBag.Last" title="Last Page" class="last"><i class="sp-arrow-bold-right"></i></a></li>
+            }
+        </ul>
+    </div>
+}

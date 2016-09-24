@@ -19,6 +19,12 @@ namespace Model.EF
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long OrderID { get; set; }
 
+        [StringLength(10)]
+        public string Color { get; set; }
+
+        [StringLength(3)]
+        public string Size { get; set; }
+
         public int? Quantity { get; set; }
 
         public decimal? Price { get; set; }

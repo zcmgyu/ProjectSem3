@@ -1,0 +1,309 @@
+﻿@using ProjectSem3.Models
+@using System.Configuration
+@model Model.EF.Shipping
+
+@{
+
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var cart = (List<CartItem>)Session[ProjectSem3.Common.CommonSession.CartSession];
+    var listGender = new[] { new { Text = "Male", Value = "1" }, new { Text = "Female", Value = "0" } }.ToList();
+}
+
+@section Scripts{
+    <script src="~/Content/Client/js/controller/shopController.js"></script>
+    <script>
+        // For Account Form
+        var setSelectedCity = function () {
+            $('select[name="City"] option[value="@Model.City"]').attr('selected', 'selected'); // Goi thang nay trong ham success cua Ajax
+        };
+        var setSelectedDistrict = function () {
+            $('select[name="District"] option[value="@Model.District"]').attr('selected', 'selected'); // Goi thang nay trong ham success cua Ajax
+        };
+
+    </script>
+   
+}
+
+<section class="page-content">
+    <!-- PAGE-BANNER START -->
+    <div class="page-banner-area photo-4 margin-bottom-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-banner-menu">
+                        <h2 class="page-banner-title">Checkout</h2>
+                        <ul>
+                            <li><a href="index.html">home</a></li>
+                            <li>Checkout</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- PAGE-BANNER END -->
+    <!-- CHECKOUT-AREA START -->
+    <div class="checkout-area margin-bottom-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="title-6 margin-bottom-50">Checkout</h3>
+                </div>
+            </div>
+            <div class="coupon-area">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="coupon-accordion">
+
+                            <!-- ACCORDION START -->
+                            <h3>Have a coupon? <span id="showcoupon">Click here to enter your code</span></h3>
+                            <div id="checkout_coupon" class="coupon-checkout-content">
+                                <div class="coupon-info">
+                                    <form action="#">
+                                        <p class="checkout-coupon">
+                                            <input type="text" placeholder="Coupon code" />
+                                            <input type="submit" value="Apply Coupon" />
+                                        </p>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- ACCORDION END -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Checkout-Billing-details and order start -->
+            <div class="checkout-bill-order">
+                @using (Html.BeginForm("Payment", "Shop", FormMethod.Post, new { @id = "checkout-form" }))
+                {
+                    
+
+                <!-- Show info here-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="checkout-bill">
+                                <h3 class="title-7 margin-bottom-50">Billing Details</h3>
+                            </div>
+                            <div class="row coupon-info">
+                                <div class="col-md-6">
+                                    <p class="form-row-first">
+                                        <label>Firstname <span class="required">*</span></label>
+                                        @Html.TextBoxFor(m => m.Firstname, new { @class = "custom-form", @placeholder = "Firstname" })
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="form-row-first">
+                                        <label>Lastname <span class="required">*</span></label>
+                                        @Html.TextBoxFor(m => m.Lastname, new { @class = "custom-form", @placeholder = "Lastname" })
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row coupon-info">
+                                <div class="col-md-12">
+                                    <p class="form-row-first">
+                                        <label>Gender </label>
+                                        @Html.DropDownListFor(model => model.Gender, new SelectList(listGender, "Value", "Text", Model.Gender), "Gender", new { @class = "custom-select custom-form" })
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row coupon-info">
+                                <div class="col-sm-6">
+                                    <p class="form-row-first">
+                                        <label>City <span class="required">*</span></label>
+                                        @Html.DropDownListFor(model => model.City, new SelectList(new string[] { }), new { @class = "custom-select custom-form", @id = "ddlCity" })
+                                    </p>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <p class="form-row-first">
+                                        <label>District <span class="required">*</span></label>
+                                        @Html.DropDownListFor(model => model.District, new SelectList(new string[] { }), new { @class = "custom-select custom-form", @id = "ddlDistrict" })
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div class="row coupon-info">
+                                <div class="col-md-12">
+                                    <p class="form-row-first">
+                                        <label>Address </label>
+                                        @Html.TextBoxFor(m => m.Address, new { @class = "custom-form", @placeholder = "Address" })
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row coupon-info">
+                                <div class="col-md-6">
+                                    <p class="form-row-first">
+                                        <label>Phone Number <span class="required">*</span></label>
+                                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "custom-form", @placeholder = "Phone Number" })
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="form-row-last">
+                                        <label>Post code </label>
+                                        @Html.TextBoxFor(m => m.PostCode, new { @class = "custom-form", @placeholder = "Post Code" })
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="row coupon-info">
+                                <div class="col-md-12">
+                                    <p class="form-row-first">
+                                        <label>Email </label>
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "custom-form", @placeholder = "Email" })
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row coupon-info">
+                                <div class="col-md-12">
+                                    <p class="form-row-first">
+                                        <label>Order Note </label>
+                                        @Html.TextAreaFor(m => m.OrderNote, new { @class = "custom-form", @placeholder = "Order Note", @rows = "6" })
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ORDER PLACE-->
+                        <div class="col-md-6">
+                            <div class="your-order">
+                                <h3 class="title-7 margin-bottom-50">Your Order</h3>
+                                <div class="your-order-table table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="product-name">Product</th>
+                                                <th class="product-total">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                decimal? totalPrice = 0;
+
+                                                if (cart != null)
+                                                {
+                                                    foreach (var item in cart)
+                                                    {
+                                                        var actualPrice = item.Product.PromotionPrice ?? item.Product.Price;
+                                                        totalPrice += (item.Quantity * actualPrice);
+                                                        <tr>
+                                                            <td class="product-name">@item.Product.Name <br /> [Color: @item.Color][Size: @item.Size][Quantity: @item.Quantity]</td>
+                                                            <td class="product-total">$@actualPrice</td>
+                                                        </tr>
+
+
+                                                    }
+
+                                                }
+
+                                            }
+                                            <tr class="shipping">
+                                                <th>Shipping</th>
+                                                <td>
+                                                    <ul>
+                                                        <li>
+                                                            <input type="checkbox" id="1">
+                                                            <label for="1">
+                                                                Free Shipping
+                                                            </label>
+                                                        </li>
+                                                        <li>
+                                                            <input type="checkbox" id="2">
+                                                            <label for="2">
+                                                                Flat Rate  <span class="amount">$120.00</span>
+                                                            </label>
+                                                        </li>
+                                                        <li>
+                                                            <input type="checkbox" id="3">
+                                                            <label for="3">
+                                                                International Delivery
+                                                            </label>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="product-name order-total">Order Total</td>
+                                                <td class="product-total order-total">$@totalPrice</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="payment-method">
+                                        <div class="payment-accordion">
+                                            <!-- ACCORDION START -->
+                                            @*<h3 class="payment-accordion-toggle active">Direct Bank Transfer</h3>
+                                                <div class="payment-content default">
+                                                    <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                                </div>*@
+                                            <!-- ACCORDION END -->
+                                            <!-- ACCORDION START -->
+                                            <h3 class="payment-accordion-toggle" data-payment-type="1">Pay at Store</h3>
+                                            <p>You will receive your order at Shop and pay here</p>
+                                            @*<div class="payment-content">
+                                                <p>You will receive your order at Shop and pay here</p>
+                                            </div>*@
+                                            <!-- ACCORDION END -->
+                                            <!-- ACCORDION START -->
+                                            @*<h3 class="payment-accordion-toggle" data-payment-type="2">PayPal</h3>
+                                            <div class="payment-content">
+                                                <p>Pay via PayPal you can pay with your credit card if you don’t have a PayPal account.</p>
+                                                <a href="#"><img src="~/Content/Client/img/bg/payment.png" alt="" /></a>
+                                            </div>*@
+                                            <!-- ACCORDION END -->
+                                        </div>
+                                        <div class="order-button-payment">
+                                            <input type="submit" value="Place order" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                                }
+
+
+
+            </div>
+            <!-- Checkout-Billing-details and order end -->
+        </div>
+    </div>
+    <!-- CHECKOUT-AREA END -->
+    <!-- BRAND-LOGO-AREA START -->
+    <div class="brand-logo-area margin-bottom-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 col-sm-12">
+                    <div class="brand-brief">
+                        <h2 class="border-left-right">they are with us</h2>
+                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+                    </div>
+                </div>
+                <div class="col-md-7 col-sm-12">
+                    <div class="brand-logo fix">
+                        <div class="single-logo">
+                            <img src="~/Content/Client/img/brand/1.png" alt="" />
+                        </div>
+                        <div class="single-logo">
+                            <img src="~/Content/Client/img/brand/2.png" alt="" />
+                        </div>
+                        <div class="single-logo">
+                            <img src="~/Content/Client/img/brand/3.png" alt="" />
+                        </div>
+                        <div class="single-logo">
+                            <img src="~/Content/Client/img/brand/4.png" alt="" />
+                        </div>
+                        <div class="single-logo">
+                            <img src="~/Content/Client/img/brand/5.png" alt="" />
+                        </div>
+                        <div class="single-logo">
+                            <img src="~/Content/Client/img/brand/6.png" alt="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- BRAND-LOGO-AREA END -->
+</section>

@@ -1,0 +1,292 @@
+﻿@using Model.EF;
+@using Model.ViewModel;
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var order = ViewBag.Order as Order;
+    var orderdetail = ViewBag.OrderDetail as List<OrderDetailViewModel>;
+    var customerInfo = ViewBag.CustomerInfo as AspNetUser;
+    var listPaymentStatus = new Dictionary<int, string>
+    {
+        {0, "Ignore"},
+        {1, "Waiting"},
+        {2, "Sent"},
+        {3, "Received"},
+        {4, "Closed"}
+
+    }.ToList();
+}
+
+@section LevelScriptJs
+{
+    <script src="~/Content/Admin/controller/orderController.js"></script>
+}
+
+<!-- Begin: life time stats -->
+<div class="portlet light portlet-fit portlet-datatable bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-settings font-dark"></i>
+            <span class="caption-subject font-dark sbold uppercase">
+                Order #@order.ID
+                <span class="hidden-xs">| @order.CreatedDate </span>
+            </span>
+        </div>
+        <div class="actions">
+            <div class="btn-group">
+                <a class="btn btn-circle btn-default dropdown-toggle" href="javascript:;" data-toggle="dropdown">
+                    <span class="hidden-xs"> Change Status </span>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+
+                <ul class="dropdown-menu pull-right" id="list-status">
+                    @foreach (var item in listPaymentStatus)
+                    {
+                        if (item.Key != @order.Status)
+                        {
+                            <li>
+                                <a href="javascript:;" data-order-status="@item.Key"> @item.Value </a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="tab-pane active" id="tab_1">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="portlet yellow-crusta box">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-cogs"></i>Order Details
+                            </div>
+
+                        </div>
+                        <div class="portlet-body">
+                            <div class="row static-info">
+                                <div class="col-md-5 name"> Order #: </div>
+                                <div class="col-md-7 value">
+                                    @Html.Hidden("OrderID", order.ID.ToString(), new { @id = "orderId" })
+                                    @order.ID
+                                    @*<span class="label label-info label-sm"> Email confirmation was sent </span>*@
+                                </div>
+                            </div>
+                            <div class="row static-info">
+                                <div class="col-md-5 name"> Order Date & Time: </div>
+                                <div class="col-md-7 value"> @order.CreatedDate </div>
+                            </div>
+                            <div class="row static-info">
+                                <div class="col-md-5 name"> Order Status: </div>
+                                <div class="col-md-7 value">
+
+                                    @{
+                                        if (@order.Status == 0)
+                                        {
+                                            <span class="label label-success" id="status-target"> Ignore </span>
+                                        }
+                                        else if (@order.Status == 1)
+                                        {
+                                            <span class="label label-success" id="status-target"> Waiting </span>
+                                        }
+                                        else if (@order.Status == 2)
+                                        {
+                                            <span class="label label-success" id="status-target"> Sent </span>
+                                        }
+                                        else if (@order.Status == 3)
+                                        {
+                                            <span class="label label-success" id="status-target"> Received </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="label label-success" id="status-target"> Closed </span>
+                                        }
+
+                                    }
+
+                                </div>
+                            </div>
+
+                            <div class="row static-info">
+                                <div class="col-md-5 name"> Payment Type: </div>
+                                @{
+
+                                    if (order.PaymentType == 1)
+                                    {
+                                        <div class="col-md-7 value"> Normal </div>
+                                    }
+                                    else if (order.PaymentType == 2)
+                                    {
+                                        <div class="col-md-7 value"> Paypal </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-7 value"> --- </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="portlet blue-hoki box">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-cogs"></i>Customer Information
+                            </div>
+
+                        </div>
+                        <div class="portlet-body">
+                            <div class="row static-info">
+                                <div class="col-md-5 name"> Customer Name: </div>
+                                <div class="col-md-7 value"> @(customerInfo.Firstname + " " + customerInfo.Lastname) </div>
+                            </div>
+                            <div class="row static-info">
+                                <div class="col-md-5 name"> Email: </div>
+                                <div class="col-md-7 value"> @customerInfo.Email </div>
+                            </div>
+                            <div class="row static-info">
+                                <div class="col-md-5 name"> City: </div>
+                                <div class="col-md-7 value"> @customerInfo.City </div>
+                            </div>
+                            <div class="row static-info">
+                                <div class="col-md-5 name"> District: </div>
+                                <div class="col-md-7 value"> @customerInfo.District </div>
+                            </div>
+                            <div class="row static-info">
+                                <div class="col-md-5 name"> Phone Number: </div>
+                                <div class="col-md-7 value"> @customerInfo.PhoneNumber </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="portlet green-meadow box">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-cogs"></i>Shipping Address
+                            </div>
+
+                        </div>
+                        <div class="portlet-body">
+                            <div class="row static-info">
+                                <div class="col-md-12 value">
+                                    @(order.ShipFirstname + " " + order.ShipLastname)
+                                    @if (order.PaymentType == 1)
+                                    {
+                                        <br> @order.ShipCity
+                                        <br> @(order.ShipDistrict + ", " + order.ShipAddress)
+                                        <br> @("Zip Code: " + @order.ShipPostCode)
+                                        if (order.ShipGender == 0)
+                                        {
+                                            <br> @("Female")
+                                        }
+                                        else if (@order.ShipGender == 1)
+                                        {
+                                            <br> @("Male")
+                                        }
+
+                                        <br> @("Phone: " + @order.ShipMobile)
+                                        <br>
+                                    }
+                                    else if (order.PaymentType == 2)
+                                    {
+                                        <br> @order.ShipState
+                                        <br> @order.ShipCity
+                                        <br> @order.ShipAddress
+                                        <br> @order.ShipCountry
+                                        <br> @order.ShipPostCode
+                                        <br> @("Phone: " + order.ShipMobile)
+                                        <br>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="portlet red-sunglo box">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-cogs"></i>Payment Note
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="row static-info">
+                                <div class="col-md-12 value">
+                                    <br>@order.ShipNote
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="portlet grey-cascade box">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-cogs"></i>Shopping Cart
+                            </div>
+                            @*<div class="actions">
+                                    <a href="javascript:;" class="btn btn-default btn-sm">
+                                        <i class="fa fa-pencil"></i> Edit
+                                    </a>
+                                </div>*@
+                        </div>
+                        <div class="portlet-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th> Product </th>
+                                            <th> Color </th>
+                                            <th> Size </th>
+                                            <th> Quantity </th>
+                                            <th> Actual Price </th>
+                                            <th> Total </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{ decimal? total = 0;
+                                            foreach (var item in orderdetail)
+                                            {
+                                                var actualPrice = item.Price * item.Quantity;
+                                                <tr>
+                                                    @Html.Hidden(item.ProductID.ToString())
+                                                    <td> @item.ProductName </td>
+                                                    <td> @item.Color </td>
+                                                    <td> @item.Size </td>
+                                                    <td> @item.Quantity </td>
+                                                    <td> $@item.Price </td>
+                                                    <td> $@actualPrice </td>
+                                                </tr>
+                                                total += actualPrice;
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-8">
+                    <div class="well">
+                        <div class="row static-info align-reverse">
+                            <div class="col-md-8 name"> Total Due: </div>
+                            <div class="col-md-3 value"> $@total </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End: life time stats -->

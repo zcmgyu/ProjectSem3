@@ -65,7 +65,7 @@
             {
             <div class="single-product">
                 <div class="product-photo">
-                    <a href="#">
+                    <a href="/Product/Detail/@item.ID">
                         @for (var i = 0; i < 2; i++)
                         {
                             if ((item.ListImage.Count - 1) < i)
@@ -195,7 +195,7 @@
                                         {
                                         <div class="single-product">
                                             <div class="product-photo">
-                                                <a href="#">
+                                                <a href="/Product/Detail/@featured[i].ID">
                                                     @for (var k = 0; k < 2; k++)
                                                     {
                                                         if ((@featured[i].ListImage.Count - 1) < k)
@@ -242,7 +242,7 @@
                                             <!-- Single-product start -->
                                                 <div class="single-product">
                                                     <div class="product-photo">
-                                                        <a href="#">
+                                                        <a href="/Product/Detail/@featured[i + j].ID">
                                                             @for (var k = 0; k < 2; k++)
                                                             {
                                                                 if ((@featured[i + j].ListImage.Count - 1) < k)

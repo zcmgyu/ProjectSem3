@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectSem3.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,13 @@ namespace ProjectSem3
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            //routes.Add(
+            //new Route("{controller}/{action}/{id}",
+            //    new RouteValueDictionary(
+            //        new { controller = "Customer", action = "Index", id = "" }),
+            //        new HyphenatedRouteHandler()
+            //    )
+            //);
 
             routes.MapRoute(
                 name: "Default",
@@ -20,7 +27,7 @@ namespace ProjectSem3
                 namespaces: new[] { "ProjectSem3.Controllers" }
             );
 
-            
+
 
         }
     }

@@ -1,0 +1,63 @@
+﻿
+@model Model.ViewModel.CustomerFilterViewModel
+<tr role="row" class="filter">
+    <td> </td>
+    <td>
+        <div class="margin-bottom-5">
+            @Html.TextBoxFor(m => m.Firstname, new { @class = "form-control form-filter input-sm", @placeholer = "Firstname" })
+        </div>
+        @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control form-filter input-sm", @placeholer = "Lastname" })
+    </td>
+    <td>
+        @{
+            var listGender = new[]
+            {
+                new { value = "1", Text = "Male"},
+                new { value = "0", Text = "Female"},
+            }.ToList();
+        }
+        @Html.DropDownListFor(m => m.Gender, new SelectList(listGender, "value", "text"), "Select...", new { @class = "form-control form-filter input-sm" })
+
+    </td>
+    <td>
+        <div class="input-group date date-picker margin-bottom-5" data-date-format="dd/mm/yyyy">
+            @*<input type="text" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="From">*@
+            @Html.TextBoxFor(m => m.DOB, new { @class = "form-control form-filter input-sm", @readonly = "true", @placeholer = "From" })
+            <span class="input-group-btn">
+                <button class="btn btn-sm default" type="button">
+                    <i class="fa fa-calendar"></i>
+                </button>
+            </span>
+        </div>
+    </td>
+    <td>
+        @Html.TextBoxFor(m => m.Address, new { @class = "form-control form-filter input-sm"})
+    </td>
+    <td>
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-filter input-sm" })
+    </td>
+    <td>
+        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control form-filter input-sm" })
+    </td>
+    <td>
+        @{
+            var listStatus = new[]
+            {
+                new { value = "0", Text = "Blocked"},
+                new { value = "1", Text = "Usable"},
+            }.ToList();
+        }
+        @Html.DropDownListFor(m => m.Gender, new SelectList(listStatus, "value", "text"), "Select...", new { @class = "form-control form-filter input-sm" })
+    </td>
+
+    <td>
+        <div class="margin-bottom-5">
+            <button class="btn btn-sm btn-success filter-submit margin-bottom" id="btnSearch">
+                <i class="fa fa-search"></i> Search
+            </button>
+        </div>
+        <button class="btn btn-sm btn-default filter-cancel">
+            <i class="fa fa-times"></i> Reset
+        </button>
+    </td>
+</tr>

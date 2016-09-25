@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Login || Shopick</title>
+    <title>@ViewBag.Title || Shopick</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -88,16 +88,16 @@
                             <nav>
                                 <ul>
                                     <li>
-                                        <a href="index.html">home</a>
-                                        <ul class="submenu">
+                                        <a href="/Home/Index">home</a>
+                                        @*<ul class="submenu">
                                             <li class="submenu-title"><a href="#">Home pages</a></li>
                                             <li><a href="index.html">Homepage Version 1</a></li>
                                             <li><a href="index-2.html">Homepage Version 2</a></li>
-                                        </ul>
+                                        </ul>*@
                                     </li>
-                                    <li><a href="shop.html">mens</a></li>
-                                    <li><a href="shop-list.html">womens</a></li>
-                                    <li>
+                                    <li><a href="/Product/ShopList?categoryId=1">mens</a></li>
+                                    <li><a href="/Product/ShopList?categoryId=2">womens</a></li>
+                                    @*<li>
                                         <a href="shop.html">shop</a>
                                         <div class="mega-menu">
                                             <span>
@@ -131,37 +131,18 @@
                                                 <a href="#"><img src="~/Content/Client/img/megamenu/1.jpg" alt="" /></a>
                                             </span>
                                         </div>
-                                    </li>
-                                    <li>
+                                    </li>*@
+                                    @*<li>
                                         <a href="blog.html">blog</a>
                                         <ul class="submenu">
                                             <li class="submenu-title"><a href="#">Blog pages</a></li>
                                             <li><a href="blog.html">Blog</a></li>
                                             <li><a href="single-blog.html">Single-blog</a></li>
                                         </ul>
-                                    </li>
+                                    </li>*@
                                     <!--
                                     <li><a href="about.html">about</a></li> -->
-                                    <li>
-                                        <a href="#">Pages</a>
-                                        <ul class="submenu">
-                                            <li class="submenu-title"><a href="#">All pages</a></li>
-                                            <li><a href="shop.html">Shop</a></li>
-                                            <li><a href="shop-list.html">Shop-List</a></li>
-                                            <li><a href="single-product.html">Single Product</a></li>
-                                            <li><a href="cart.html">Shopping Cart</a></li>
-                                            <li><a href="wishlist.html">Wishlist</a></li>
-                                            <li><a href="checkout.html">Checkout</a></li>
-                                            <li><a href="login.html">Login</a></li>
-                                            <li><a href="my-account.html">My Account</a></li>
-                                            <li><a href="blog.html">Blog</a></li>
-                                            <li><a href="single-blog.html">Single-Blog</a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="404.html">404</a></li>
-                                            <li><a href="contact.html">Contact Us</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="contact.html">contact</a></li>
+                                    <li><a href="/Contact/Index">contact</a></li>
                                 </ul>
                             </nav>
                         </div>

@@ -1,5 +1,4 @@
 ﻿using Model.DAO;
-using ProjectSem3.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +13,7 @@ namespace ProjectSem3.Areas.Admin.Controllers
         // GET: Admin/Home
         public ActionResult Index()
        {
+            
             return View();
         }
 

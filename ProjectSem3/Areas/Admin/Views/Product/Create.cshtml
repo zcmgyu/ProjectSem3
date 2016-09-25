@@ -222,23 +222,23 @@
                                                     @*@ShowTree(Model.ProductGeneral.Categories.Where(e => e.ParentID == null).ToList())*@
 
                                                     @*@helper ShowTree(List<ProductCategory> categories)
-                                                        {
-                                                        <ul class="list-unstyled">
-                                                            @for (var i = 0; i < categories.Count(); i++)
                                                             {
-                                                                var children = Model.ProductGeneral.Categories.Where(e => e.ParentID == categories[i].ID).ToList();
-                                                                <li>
-                                                                    <label>
-                                                                        @Html.CheckBoxFor(m => categories[i].IsSelected) @Html.DisplayFor(m => categories[i].Name)
-                                                                    </label>
-                                                                    @if (children.Count > 0)
-                                                                    {
-                                                                        @ShowTree(children);
-                                                                    }
-                                                                </li>
-                                                            }
-                                                        </ul>
-                                                    }*@
+                                                            <ul class="list-unstyled">
+                                                                @for (var i = 0; i < categories.Count(); i++)
+                                                                {
+                                                                    var children = Model.ProductGeneral.Categories.Where(e => e.ParentID == categories[i].ID).ToList();
+                                                                    <li>
+                                                                        <label>
+                                                                            @Html.CheckBoxFor(m => categories[i].IsSelected) @Html.DisplayFor(m => categories[i].Name)
+                                                                        </label>
+                                                                        @if (children.Count > 0)
+                                                                        {
+                                                                            @ShowTree(children);
+                                                                        }
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        }*@
                                                 </div>
                                             </div>
                                             <span class="help-block"> select one or more categories </span>
@@ -253,6 +253,16 @@
                                             @Html.TextBoxFor(m => m.ProductGeneral.SKU, new { @class = "form-control" })
                                         </div>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">
+                                            Product Type:
+                                        </label>
+                                        <div class="col-md-10">
+                                            @{ var listProductType = new[] { new { Text = "New Collection", Value = 1 }, new { Text = "New Featured", Value = 0 } };}
+                                            @Html.DropDownListFor(m => m.ProductGeneral.ProductType, new SelectList(listProductType, "Value", "Text"), "Select...", new { @class = "table-group-action-input form-control input-medium" })
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">
                                             Price:
@@ -265,7 +275,6 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">
                                             Promotion Price:
-                                            <span class="required"> * </span>
                                         </label>
                                         <div class="col-md-10">
                                             @Html.TextBoxFor(m => m.ProductGeneral.PromotionPrice, new { @class = "form-control" })
@@ -316,11 +325,11 @@
                                 </div>
                                 <div id="tab_images_uploader_container" class="text-align-reverse margin-bottom-10">
                                     @*<a id="tab_images_uploader_pickfiles" href="javascript:;" class="btn btn-success">
-                                        <i class="fa fa-plus"></i> Select Files
-                                    </a>
-                                    <a id="tab_images_uploader_uploadfiles" href="javascript:;" class="btn btn-primary">
-                                        <i class="fa fa-share"></i> Upload Files
-                                    </a>*@
+                                            <i class="fa fa-plus"></i> Select Files
+                                        </a>
+                                        <a id="tab_images_uploader_uploadfiles" href="javascript:;" class="btn btn-primary">
+                                            <i class="fa fa-share"></i> Upload Files
+                                        </a>*@
                                     <a id="tab_images_uploader_addimage" href="javascript:;" class="btn btn-primary">
                                         <i class="fa fa-share"></i> Add More
                                     </a>

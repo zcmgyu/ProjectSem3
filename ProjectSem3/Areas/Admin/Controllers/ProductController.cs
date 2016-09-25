@@ -167,9 +167,10 @@ namespace ProjectSem3.Areas.Admin.Controllers
             var strSCQ = outputSCQ.ToString().Replace("&#xD;&#xA;", Environment.NewLine);
             //
             var productDao = new ProductDao().InsertProduct(model.ProductGeneral.Name, 
-                model.ProductGeneral.Description, model.ProductGeneral.ShortDescription, model.ProductGeneral.SKU,
+                model.ProductGeneral.Description, model.ProductGeneral.ShortDescription, model.ProductGeneral.SKU, model.ProductGeneral.ProductType,
                 model.ProductGeneral.Price, model.ProductGeneral.PromotionPrice, model.ProductGeneral.Status, strImg, strSCQ);
-            if (productDao) RedirectToAction("List");
+            if (productDao)
+                return RedirectToAction("List");
             return View(model);
         }
 

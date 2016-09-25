@@ -97,6 +97,8 @@ namespace Model.DAO
             return _db.Database.SqlQuery<bool>("InsertShipping @Firstname, @Lastname, @Gender, @Address, @City, @District, @PostCode, @PhoneNumber, @Email, @OrderNote, @AccountID", sqlParams).SingleOrDefault();
         }
 
+    
+        
     }
 }
 

@@ -12,6 +12,9 @@ namespace ProjectSem3.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.NewCollection = new ProductDao().LoadSimpleProductByProductType(1); // New Collection == 1
+            ViewBag.NewFeatured = new ProductDao().LoadSimpleProductByProductType(2); // New Featured == 2
+          
             return View();
         }
         [ChildActionOnly]

@@ -40,6 +40,7 @@ namespace Model.EF
         public bool? IncludedVAT { get; set; }
 
         public long? CategoryID { get; set; }
+        public int? ProductType { get; set; }
 
         public int? Warranty { get; set; }
 

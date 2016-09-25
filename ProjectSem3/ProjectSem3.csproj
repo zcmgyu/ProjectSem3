@@ -226,6 +226,7 @@
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\ShoppingController.cs" />
+    <Compile Include="Common\HyphenatedRouteHandler.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
@@ -281,6 +282,7 @@
     <Content Include="Content\Admin\apps\scripts\todo-2.min.js" />
     <Content Include="Content\Admin\apps\scripts\todo.js" />
     <Content Include="Content\Admin\apps\scripts\todo.min.js" />
+    <Content Include="Content\Admin\controller\customerController.js" />
     <Content Include="Content\Admin\controller\orderController.js" />
     <Content Include="Content\Admin\Extension\ckfinder\bin\Debug\CKFinder.dll" />
     <Content Include="Content\Admin\Extension\ckfinder\bin\Debug\CKFinder.pdb" />
@@ -6129,6 +6131,7 @@
     <Content Include="Content\Client\css\bootstrap.min.css" />
     <Content Include="Content\Client\css\jquery-ui.min.css" />
     <Content Include="Content\Client\css\lightbox.min.css" />
+    <Content Include="Content\Client\css\master\Category.css" />
     <Content Include="Content\Client\css\master\master.css" />
     <Content Include="Content\Client\css\master\modify.css" />
     <Content Include="Content\Client\css\master\style.css" />
@@ -6864,6 +6867,8 @@
     <Content Include="Areas\Admin\Views\Order\List.cshtml" />
     <Content Include="Areas\Admin\Views\Order\_FilterPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\_FilterPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\Detail.cshtml" />
     <None Include="Properties\PublishProfiles\ProjectSem3.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

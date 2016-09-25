@@ -50,9 +50,36 @@ namespace Model.DAO
             return _db.Database.SqlQuery<string>("LoadProductSize").ToList();
         }
         public bool InsertProduct(string name, string description,
-            string shortDescription, string SKU, decimal? price,
+            string shortDescription, string SKU, int? productType, decimal? price,
             decimal? promotionPrice, int status, string moreImages, string listColorSizeQuantity)
         {
+            var productTypeParam = new SqlParameter();
+            if (productType == null)
+            {
+                productTypeParam = new SqlParameter("@productType", System.Data.SqlDbType.Int);
+                productTypeParam.Value = DBNull.Value;
+                productTypeParam.Direction = System.Data.ParameterDirection.Input;
+            }
+            else
+            {
+                productTypeParam = new SqlParameter("@productType", productType);
+            }
+
+
+            var promotionPriceParameter = new SqlParameter();
+            if (promotionPrice == null)
+            {
+                promotionPriceParameter = new SqlParameter("@promotionPrice", System.Data.SqlDbType.Decimal)
+                {
+                    Value = DBNull.Value,
+                    Direction = System.Data.ParameterDirection.Input
+                };
+            }
+            else
+            {
+                promotionPriceParameter = new SqlParameter("@promotionPrice", promotionPrice);
+            }
+
             object[] sqlParams =
                 {
                     new SqlParameter("@name", name),
@@ -61,23 +88,29 @@ namespace Model.DAO
                     new SqlParameter("@shortDescription", shortDescription),
                     //new SqlParameter("@categoryID", category),
                     new SqlParameter("@SKU", SKU),
+                    productTypeParam,
+                    
                     new SqlParameter("@price", System.Data.SqlDbType.Decimal) {
                           Precision = 18,
                           Scale = 0,
                           Value = price
                     },
-                    new SqlParameter("@promotionPrice", System.Data.SqlDbType.Decimal) {
-                          Precision = 18,
-                          Scale = 0,
-                          Value = promotionPrice
-                    },
+
+                    promotionPriceParameter,
+                    //new SqlParameter("@promotionPrice", System.Data.SqlDbType.Decimal) {
+                    //      Precision = 18,
+                    //      Scale = 0,
+                    //      Value = promotionPrice
+                    //},
                     new SqlParameter("@status", status),
                     new SqlParameter("@moreImages", moreImages),
                     new SqlParameter("@listColorSizeQuantity", listColorSizeQuantity)
                 };
-
+            // Allow Null to Parameter
+            
+            
             return _db.Database.SqlQuery<int>("InsertProduct @name," +
-                    "@description, @shortDescription, @SKU," +
+                    "@description, @shortDescription, @SKU, @productType, " +
                 "@price, @promotionPrice, @status, @moreImages, @listColorSizeQuantity", sqlParams)
                 .SingleOrDefault() > 0;
         }
@@ -129,10 +162,116 @@ namespace Model.DAO
             return _db.Database.SqlQuery<bool>("UpdateSlideContent @Id, @title, @description, @image, @displayorder, @status", sqlParams).SingleOrDefault();
         }
 
-        public IEnumerable<Product> LoadSimpleProductList(ref int totalRecord, int page = 1, int pageSize = 10)
+        public List<ProductDetailGeneral> LoadSimpleProductByProductType(int productType)
         {
+            var result = _db.Database.SqlQuery<ProductDetailGeneral>("LoadSimpleProductByProductType @productType", new SqlParameter("@productType", productType)).ToList();
+            foreach (var item in result)
+            {
+                // Parse Image Xml to List Image
+                var xImages = XElement.Parse(item.MoreImages);
+                item.ListImage = new List<Image>();
+                foreach (var xItem in xImages.Elements())
+                {
 
-            var data = _db.Database.SqlQuery<Product>("LoadSimpleProductList").ToList();
+                    var image = new Image
+                    {
+                        Id = Convert.ToInt32(xItem.Element("Id").Value),
+                        Name = xItem.Element("Name").Value,
+                        Order = Convert.ToInt32(xItem.Element("Order").Value),
+                        Url = xItem.Element("Url").Value
+                    };
+                    item.ListImage.Add(image);
+                };
+
+            }
+            return result;
+        }
+
+       
+
+
+        public IEnumerable<Product> LoadSimpleProductList(ref int totalRecord, int? categoryId, decimal? firstprice, decimal? lastprice, string color, string size, int page = 1, int pageSize = 10)
+        {
+            //Check null before add to parameter
+            SqlParameter firstpriceParam = null;
+            if (firstprice == null)
+            {
+                firstpriceParam = new SqlParameter("@priceFrom", System.Data.SqlDbType.Decimal) 
+                {
+                    Value = DBNull.Value,
+                    Direction = System.Data.ParameterDirection.Input
+                };
+            } else
+            {
+                firstpriceParam = new SqlParameter("@priceFrom", firstprice);
+            }
+
+            SqlParameter lastPriceParam = null;
+            if (lastprice == null)
+            {
+                lastPriceParam = new SqlParameter("@priceTo", System.Data.SqlDbType.Decimal)
+                {
+                    Value = DBNull.Value,
+                    Direction = System.Data.ParameterDirection.Input
+                };
+            }
+            else
+            {
+                lastPriceParam = new SqlParameter("@priceTo", lastprice);
+            }
+
+            SqlParameter categoryParam = null;
+            if (categoryId == null)
+            {
+                categoryParam = new SqlParameter("@category", System.Data.SqlDbType.Int)
+                {
+                    Value = DBNull.Value,
+                    Direction = System.Data.ParameterDirection.Input
+                };
+            }
+            else
+            {
+                categoryParam = new SqlParameter("@category", categoryId);
+            }
+
+            SqlParameter sizeParam = null;
+            if (size == "")
+            {
+                sizeParam = new SqlParameter("@size", System.Data.SqlDbType.NVarChar)
+                {
+                    Value = DBNull.Value,
+                    Direction = System.Data.ParameterDirection.Input
+                };
+            }
+            else
+            {
+                sizeParam = new SqlParameter("@size", size);
+            }
+
+            SqlParameter colorParam = null;
+            if (color == "")
+            {
+                colorParam = new SqlParameter("@color", System.Data.SqlDbType.NVarChar)
+                {
+                    Value = DBNull.Value,
+                    Direction = System.Data.ParameterDirection.Input
+                };
+            }
+            else
+            {
+                colorParam = new SqlParameter("@color", color);
+            }
+
+
+            object[] sqlParams =
+            {
+                firstpriceParam,
+                lastPriceParam,
+                categoryParam,
+                sizeParam,
+                colorParam
+            };
+            var data = _db.Database.SqlQuery<Product>("LoadSimpleProductList @priceFrom, @priceTo, @category, @size, @color", sqlParams).ToList();
             totalRecord = data.Count();
             return data.Skip((page - 1) * pageSize).Take(pageSize);
         }

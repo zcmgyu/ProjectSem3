@@ -1,6 +1,12 @@
-﻿@{
+﻿@using Model.ViewModel;
+@{
     ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var collection = ViewBag.NewCollection as List<ProductDetailGeneral>;
+    var featured = ViewBag.NewFeatured as List<ProductDetailGeneral>;
+    string[] classType = { "primary-photo", "secondary-photo" };
 }
+
 
 <!-- SLIDER-AREA START -->
 @{ Html.RenderAction("TopSlide");}
@@ -53,136 +59,55 @@
         </div>
     </div>
     <div class="new-collection active-new-collection-2">
+
         <!-- Single-product start -->
-        <div class="single-product new-colect">
-            <div class="product-photo">
-                <a href="#">
-                    <img class="primary-photo" src="~/Content/Client/img/new-collection/new-2/1.jpg" alt="" />
-                    <img class="secondary-photo" src="~/Content/Client/img/new-collection/new-2/5.jpg" alt="" />
-                </a>
-                <div class="pro-action">
-                    <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
-                    <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
-                    <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
+        @foreach (var item in collection)
+            {
+            <div class="single-product">
+                <div class="product-photo">
+                    <a href="#">
+                        @for (var i = 0; i < 2; i++)
+                        {
+                            if ((item.ListImage.Count - 1) < i)
+                            {
+                                break;
+                            }
+                            <img class="@classType[i]" src="@Url.Content(item.ListImage[i].Url)" alt="" />
+                        }
+
+                        @*<img class="secondary-photo" src="~/Content/Client/img/new-collection/new-2/5.jpg" alt="" />*@
+                    </a>
+                    <div class="pro-action">
+                        <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
+                        <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
+                        <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
+                    </div>
+                </div>
+                <div class="product-brief">
+                    <div class="pro-rating">
+                        <a href="#"><i class="sp-star rating-1"></i></a>
+                        <a href="#"><i class="sp-star rating-1"></i></a>
+                        <a href="#"><i class="sp-star rating-1"></i></a>
+                        <a href="#"><i class="sp-star rating-1"></i></a>
+                        <a href="#"><i class="sp-star rating-2"></i></a>
+                    </div>
+                    <h2><a href="#">@item.Name</a></h2>
+                    <h3 class="s-price-box">
+                        @if (item.PromotionPrice == 0 || item.PromotionPrice == null)
+                        {
+                            <span>$@item.Price</span>
+                        }
+                        else
+                        {
+                            <span class="old-price">$@item.Price</span>
+                            <span class="new-price">$@item.PromotionPrice</span>
+                        }
+                    </h3>
                 </div>
             </div>
-            <div class="product-brief">
-                <div class="pro-rating">
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-2"></i></a>
-                </div>
-                <h2><a href="#">Randomised Words</a></h2>
-                <h3>$500.00</h3>
-            </div>
-        </div>
+        }
         <!-- Single-product end -->
-        <!-- Single-product start -->
-        <div class="single-product new-colect">
-            <div class="product-photo">
-                <a href="#">
-                    <img class="primary-photo" src="~/Content/Client/img/new-collection/new-2/2.jpg" alt="" />
-                    <img class="secondary-photo" src="~/Content/Client/img/new-collection/new-2/4.jpg" alt="" />
-                </a>
-                <div class="pro-action">
-                    <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
-                    <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
-                    <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
-                </div>
-            </div>
-            <div class="product-brief">
-                <div class="pro-rating">
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-2"></i></a>
-                </div>
-                <h2><a href="#">Randomised Words</a></h2>
-                <h3>$500.00</h3>
-            </div>
-        </div>
-        <!-- Single-product end -->
-        <!-- Single-product start -->
-        <div class="single-product new-colect">
-            <div class="product-photo">
-                <a href="#">
-                    <img class="primary-photo" src="~/Content/Client/img/new-collection/new-2/3.jpg" alt="" />
-                    <img class="secondary-photo" src="~/Content/Client/img/new-collection/new-2/1.jpg" alt="" />
-                </a>
-                <div class="pro-action">
-                    <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
-                    <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
-                    <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
-                </div>
-            </div>
-            <div class="product-brief">
-                <div class="pro-rating">
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-2"></i></a>
-                </div>
-                <h2><a href="#">Randomised Words</a></h2>
-                <h3>$500.00</h3>
-            </div>
-        </div>
-        <!-- Single-product end -->
-        <!-- Single-product start -->
-        <div class="single-product new-colect">
-            <div class="product-photo">
-                <a href="#">
-                    <img class="primary-photo" src="~/Content/Client/img/new-collection/new-2/4.jpg" alt="" />
-                    <img class="secondary-photo" src="~/Content/Client/img/new-collection/new-2/2.jpg" alt="" />
-                </a>
-                <div class="pro-action">
-                    <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
-                    <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
-                    <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
-                </div>
-            </div>
-            <div class="product-brief">
-                <div class="pro-rating">
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-2"></i></a>
-                </div>
-                <h2><a href="#">Randomised Words</a></h2>
-                <h3>$500.00</h3>
-            </div>
-        </div>
-        <!-- Single-product end -->
-        <!-- Single-product start -->
-        <div class="single-product new-colect">
-            <div class="product-photo">
-                <a href="#">
-                    <img class="primary-photo" src="~/Content/Client/img/new-collection/new-2/5.jpg" alt="" />
-                    <img class="secondary-photo" src="~/Content/Client/img/new-collection/new-2/3.jpg" alt="" />
-                </a>
-                <div class="pro-action">
-                    <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
-                    <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
-                    <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
-                </div>
-            </div>
-            <div class="product-brief">
-                <div class="pro-rating">
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-1"></i></a>
-                    <a href="#"><i class="sp-star rating-2"></i></a>
-                </div>
-                <h2><a href="#">Randomised Words</a></h2>
-                <h3>$500.00</h3>
-            </div>
-        </div>
-        <!-- Single-product end -->
+
     </div>
 </div>
 <!-- NEW-COLLECTION END -->
@@ -251,24 +176,44 @@
                     <div role="tabpanel" class="tab-pane fade in active" id="men">
                         <div class="row">
                             <div class="active-best-sell navigation-top-right">
-                                <div class="col-md-12">
-                                    <!-- Single-product start -->
-                                    <div class="single-product">
-                                        <div class="product-photo">
-                                            <a href="#">
-                                                <img class="primary-photo" src="~/Content/Client/img/best-sell/1.jpg" alt="" />
-                                                <img class="secondary-photo" src="~/Content/Client/img/best-sell/6.jpg" alt="" />
-                                            </a>
-                                            <div class="pro-action">
-                                                <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
+                                @{ var count = 0;
+                                    var isOdd = false;
+                                    if (@featured.Count % 2 != 0)
+                                    {
+                                        isOdd = true;
+                                        count = @featured.Count + 1;
+                                    } else
+                                    {
+                                        count = @featured.Count;
+                                    }
+                               }
+                                
+                                @for (var i = 0; i < @count / 2; i++)
+                                {
+                                    <div class="col-md-12">
+                                        @if (isOdd & i == (@count / 2) - 1)
+                                        {
+                                        <div class="single-product">
+                                            <div class="product-photo">
+                                                <a href="#">
+                                                    @for (var k = 0; k < 2; k++)
+                                                    {
+                                                        if ((@featured[i].ListImage.Count - 1) < k)
+                                                        {
+                                                            break;
+                                                        }
+                                                        <img class="@classType[k]" src="@Url.Content(@featured[i].ListImage[k].Url)" alt="" />
+                                                    }
+
+                                                    @*<img class="secondary-photo" src="~/Content/Client/img/new-collection/new-2/5.jpg" alt="" />*@
+                                                </a>
+                                                <div class="pro-action">
+                                                    <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
+                                                    <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
+                                                    <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="product-brief">
-                                            <h2><a href="#">Randomised Words</a></h2>
-                                            <div class="product-brief-inner">
-                                                <h3>$500.00</h3>
+                                            <div class="product-brief">
                                                 <div class="pro-rating">
                                                     <a href="#"><i class="sp-star rating-1"></i></a>
                                                     <a href="#"><i class="sp-star rating-1"></i></a>
@@ -276,271 +221,77 @@
                                                     <a href="#"><i class="sp-star rating-1"></i></a>
                                                     <a href="#"><i class="sp-star rating-2"></i></a>
                                                 </div>
+                                                <h2><a href="#">@featured[i].Name</a></h2>
+                                                <h3 class="s-price-box">
+                                                    @if (@featured[i].PromotionPrice == 0 || @featured[i].PromotionPrice == null)
+                                                    {
+                                                        <span>$@featured[i].Price</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="old-price">$@featured[i].Price</span>
+                                                                <span class="new-price">$@featured[i].PromotionPrice</span>
+                                                    }
+                                                </h3>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- Single-product end -->
-                                    <!-- Single-product start -->
-                                    <div class="single-product">
-                                        <div class="product-photo">
-                                            <a href="#">
-                                                <img class="primary-photo" src="~/Content/Client/img/best-sell/4.jpg" alt="" />
-                                                <img class="secondary-photo" src="~/Content/Client/img/best-sell/1.jpg" alt="" />
-                                            </a>
-                                            <div class="pro-action">
-                                                <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-brief">
-                                            <h2><a href="#">Randomised Words</a></h2>
-                                            <div class="product-brief-inner">
-                                                <h3>$500.00</h3>
-                                                <div class="pro-rating">
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-2"></i></a>
+                                        }
+                                        else {
+                                            for (var j = 0; j < 2; j++)
+                                            {
+                                            <!-- Single-product start -->
+                                                <div class="single-product">
+                                                    <div class="product-photo">
+                                                        <a href="#">
+                                                            @for (var k = 0; k < 2; k++)
+                                                            {
+                                                                if ((@featured[i + j].ListImage.Count - 1) < k)
+                                                                {
+                                                                    break;
+                                                                }
+                                                                <img class="@classType[k]" src="@Url.Content(@featured[i + j].ListImage[k].Url)" alt="" />
+                                                            }
+
+                                                            @*<img class="secondary-photo" src="~/Content/Client/img/new-collection/new-2/5.jpg" alt="" />*@
+                                                        </a>
+                                                        <div class="pro-action">
+                                                            <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
+                                                            <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
+                                                            <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-brief">
+                                                        <div class="pro-rating">
+                                                            <a href="#"><i class="sp-star rating-1"></i></a>
+                                                            <a href="#"><i class="sp-star rating-1"></i></a>
+                                                            <a href="#"><i class="sp-star rating-1"></i></a>
+                                                            <a href="#"><i class="sp-star rating-1"></i></a>
+                                                            <a href="#"><i class="sp-star rating-2"></i></a>
+                                                        </div>
+                                                        <h2><a href="#">@featured[i + j].Name</a></h2>
+                                                        <h3 class="s-price-box">
+                                                            @if (@featured[i + j].PromotionPrice == 0 || @featured[i + j].PromotionPrice == null)
+                                                            {
+                                                                <span>$@featured[i + j].Price</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="old-price">$@featured[i + j].Price</span>
+                                                                <span class="new-price">$@featured[i + j].PromotionPrice</span>
+                                                            }
+                                                        </h3>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            <!-- Single-product end -->
+                                            }
+                                        }
+                                        
+                                        
+                                        
                                     </div>
-                                    <!-- Single-product end -->
-                                </div>
-                                <div class="col-md-12">
-                                    <!-- Single-product start -->
-                                    <div class="single-product">
-                                        <div class="product-photo">
-                                            <a href="#">
-                                                <img class="primary-photo" src="~/Content/Client/img/best-sell/2.jpg" alt="" />
-                                                <img class="secondary-photo" src="~/Content/Client/img/best-sell/4.jpg" alt="" />
-                                            </a>
-                                            <div class="pro-action">
-                                                <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-brief">
-                                            <h2><a href="#">Randomised Words</a></h2>
-                                            <div class="product-brief-inner">
-                                                <h3>$500.00</h3>
-                                                <div class="pro-rating">
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-2"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single-product end -->
-                                    <!-- Single-product start -->
-                                    <div class="single-product">
-                                        <div class="product-photo">
-                                            <a href="#">
-                                                <img class="primary-photo" src="~/Content/Client/img/best-sell/5.jpg" alt="" />
-                                                <img class="secondary-photo" src="~/Content/Client/img/best-sell/1.jpg" alt="" />
-                                            </a>
-                                            <div class="pro-action">
-                                                <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-brief">
-                                            <h2><a href="#">Randomised Words</a></h2>
-                                            <div class="product-brief-inner">
-                                                <h3>$500.00</h3>
-                                                <div class="pro-rating">
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-2"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single-product end -->
-                                </div>
-                                <div class="col-md-12">
-                                    <!-- Single-product start -->
-                                    <div class="single-product">
-                                        <div class="product-photo">
-                                            <a href="#">
-                                                <img class="primary-photo" src="~/Content/Client/img/best-sell/4.jpg" alt="" />
-                                                <img class="secondary-photo" src="~/Content/Client/img/best-sell/5.jpg" alt="" />
-                                            </a>
-                                            <div class="pro-action">
-                                                <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-brief">
-                                            <h2><a href="#">Randomised Words</a></h2>
-                                            <div class="product-brief-inner">
-                                                <h3>$500.00</h3>
-                                                <div class="pro-rating">
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-2"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single-product end -->
-                                    <!-- Single-product start -->
-                                    <div class="single-product">
-                                        <div class="product-photo">
-                                            <a href="#">
-                                                <img class="primary-photo" src="~/Content/Client/img/best-sell/2.jpg" alt="" />
-                                                <img class="secondary-photo" src="~/Content/Client/img/best-sell/4.jpg" alt="" />
-                                            </a>
-                                            <div class="pro-action">
-                                                <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-brief">
-                                            <h2><a href="#">Randomised Words</a></h2>
-                                            <div class="product-brief-inner">
-                                                <h3>$500.00</h3>
-                                                <div class="pro-rating">
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-2"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single-product end -->
-                                </div>
-                                <div class="col-md-12">
-                                    <!-- Single-product start -->
-                                    <div class="single-product">
-                                        <div class="product-photo">
-                                            <a href="#">
-                                                <img class="primary-photo" src="~/Content/Client/img/best-sell/3.jpg" alt="" />
-                                                <img class="secondary-photo" src="~/Content/Client/img/best-sell/5.jpg" alt="" />
-                                            </a>
-                                            <div class="pro-action">
-                                                <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-brief">
-                                            <h2><a href="#">Randomised Words</a></h2>
-                                            <div class="product-brief-inner">
-                                                <h3>$500.00</h3>
-                                                <div class="pro-rating">
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-2"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single-product end -->
-                                    <!-- Single-product start -->
-                                    <div class="single-product">
-                                        <div class="product-photo">
-                                            <a href="#">
-                                                <img class="primary-photo" src="~/Content/Client/img/best-sell/6.jpg" alt="" />
-                                                <img class="secondary-photo" src="~/Content/Client/img/best-sell/2.jpg" alt="" />
-                                            </a>
-                                            <div class="pro-action">
-                                                <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-brief">
-                                            <h2><a href="#">Randomised Words</a></h2>
-                                            <div class="product-brief-inner">
-                                                <h3>$500.00</h3>
-                                                <div class="pro-rating">
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-2"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single-product end -->
-                                </div>
-                                <div class="col-md-12">
-                                    <!-- Single-product start -->
-                                    <div class="single-product">
-                                        <div class="product-photo">
-                                            <a href="#">
-                                                <img class="primary-photo" src="~/Content/Client/img/best-sell/3.jpg" alt="" />
-                                                <img class="secondary-photo" src="~/Content/Client/img/best-sell/5.jpg" alt="" />
-                                            </a>
-                                            <div class="pro-action">
-                                                <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-brief">
-                                            <h2><a href="#">Randomised Words</a></h2>
-                                            <div class="product-brief-inner">
-                                                <h3>$500.00</h3>
-                                                <div class="pro-rating">
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-2"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single-product end -->
-                                    <!-- Single-product start -->
-                                    <div class="single-product">
-                                        <div class="product-photo">
-                                            <a href="#">
-                                                <img class="primary-photo" src="~/Content/Client/img/best-sell/6.jpg" alt="" />
-                                                <img class="secondary-photo" src="~/Content/Client/img/best-sell/2.jpg" alt="" />
-                                            </a>
-                                            <div class="pro-action">
-                                                <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
-                                                <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
-                                            </div>
-                                        </div>
-                                        <div class="product-brief">
-                                            <h2><a href="#">Randomised Words</a></h2>
-                                            <div class="product-brief-inner">
-                                                <h3>$500.00</h3>
-                                                <div class="pro-rating">
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-1"></i></a>
-                                                    <a href="#"><i class="sp-star rating-2"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Single-product end -->
-                                </div>
+                                }
+                                
+                                
                             </div>
                         </div>
                     </div>

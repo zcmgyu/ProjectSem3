@@ -26,6 +26,7 @@ namespace ProjectSem3.Areas.Admin.Models
         public ProductCategory Category { get; set; }
         [Required]
         public string SKU { get; set; }
+        public int? ProductType { get; set; }
         [Required]
         public decimal? Price { get; set; }
         public decimal? PromotionPrice { get; set; }

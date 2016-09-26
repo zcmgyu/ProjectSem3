@@ -16,7 +16,7 @@ namespace Model.EF
         }
 
         public long ID { get; set; }
-        public int? PaymentType { get; set; }
+
         public DateTime? CreatedDate { get; set; }
 
         public string CustomerID { get; set; }
@@ -31,10 +31,7 @@ namespace Model.EF
 
         [StringLength(50)]
         public string ShipMobile { get; set; }
-        [StringLength(20)]
-        public string ShipCountry { get; set; }
-        [StringLength(20)]
-        public string ShipState { get; set; }
+
         [StringLength(20)]
         public string ShipCity { get; set; }
 
@@ -53,6 +50,14 @@ namespace Model.EF
         public string ShipNote { get; set; }
 
         public int? Status { get; set; }
+
+        public int? PaymentType { get; set; }
+
+        [StringLength(20)]
+        public string ShipCountry { get; set; }
+
+        [StringLength(20)]
+        public string ShipState { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }

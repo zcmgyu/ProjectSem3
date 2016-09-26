@@ -25,6 +25,7 @@ namespace Model.EF
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Footer> Footers { get; set; }
         public virtual DbSet<Language> Languages { get; set; }
+        public virtual DbSet<ListProductCategory> ListProductCategories { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<MenuType> MenuTypes { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
@@ -160,7 +161,6 @@ namespace Model.EF
             modelBuilder.Entity<Order>()
                 .HasMany(e => e.OrderDetails)
                 .WithRequired(e => e.Order)
-                .HasForeignKey(e => e.ProductID)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<OrderDetail>()
@@ -204,6 +204,11 @@ namespace Model.EF
                 .IsUnicode(false);
 
             modelBuilder.Entity<Product>()
+                .HasMany(e => e.ListProductCategories)
+                .WithRequired(e => e.Product)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Product>()
                 .HasMany(e => e.OrderDetails)
                 .WithRequired(e => e.Product)
                 .WillCascadeOnDelete(false);
@@ -230,9 +235,10 @@ namespace Model.EF
                 .IsFixedLength();
 
             modelBuilder.Entity<ProductCategory>()
-                .HasMany(e => e.Products)
-                .WithOptional(e => e.ProductCategory)
-                .HasForeignKey(e => e.CategoryID);
+                .HasMany(e => e.ListProductCategories)
+                .WithRequired(e => e.ProductCategory)
+                .HasForeignKey(e => e.CategoryID)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ProductColor>()
                 .Property(e => e.ID)

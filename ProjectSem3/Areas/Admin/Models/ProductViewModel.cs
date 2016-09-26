@@ -22,8 +22,8 @@ namespace ProjectSem3.Areas.Admin.Models
 
         public string ShortDescription { get; set; }
         public string MetaTitle { get; set; }
-
-        public ProductCategory Category { get; set; }
+        public string ListCategories { get; set; }
+        public List<ProductCategory> Category { get; set; }
         [Required]
         public string SKU { get; set; }
         public int? ProductType { get; set; }

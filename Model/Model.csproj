@@ -70,6 +70,7 @@
     <Compile Include="EF\Feedback.cs" />
     <Compile Include="EF\Footer.cs" />
     <Compile Include="EF\Language.cs" />
+    <Compile Include="EF\ListProductCategory.cs" />
     <Compile Include="EF\Menu.cs" />
     <Compile Include="EF\MenuType.cs" />
     <Compile Include="EF\OnlineShopDbContext.cs" />
@@ -86,31 +87,6 @@
     <Compile Include="EF\Tag.cs" />
     <Compile Include="EF\User.cs" />
     <Compile Include="EF\UserGroup.cs" />
-    <Compile Include="Migrations\201609240409351_Initial.cs" />
-    <Compile Include="Migrations\201609240409351_Initial.Designer.cs">
-      <DependentUpon>201609240409351_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609240436362_Remove question mark from CustomerID in Order table.cs" />
-    <Compile Include="Migrations\201609240436362_Remove question mark from CustomerID in Order table.Designer.cs">
-      <DependentUpon>201609240436362_Remove question mark from CustomerID in Order table.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609240447228_Change type of CustomerID string in Order table.cs" />
-    <Compile Include="Migrations\201609240447228_Change type of CustomerID string in Order table.Designer.cs">
-      <DependentUpon>201609240447228_Change type of CustomerID string in Order table.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609240659598_Add PaymentType Column in Order table.cs" />
-    <Compile Include="Migrations\201609240659598_Add PaymentType Column in Order table.Designer.cs">
-      <DependentUpon>201609240659598_Add PaymentType Column in Order table.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609240715549_Add State, Country in Order table.cs" />
-    <Compile Include="Migrations\201609240715549_Add State, Country in Order table.Designer.cs">
-      <DependentUpon>201609240715549_Add State, Country in Order table.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609251457197_Add ProductType in Product table.cs" />
-    <Compile Include="Migrations\201609251457197_Add ProductType in Product table.Designer.cs">
-      <DependentUpon>201609251457197_Add ProductType in Product table.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CustomerViewModel.cs" />
     <Compile Include="ViewModel\OrderDetailViewModel.cs" />
@@ -128,26 +104,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModel\Client\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201609240409351_Initial.resx">
-      <DependentUpon>201609240409351_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609240436362_Remove question mark from CustomerID in Order table.resx">
-      <DependentUpon>201609240436362_Remove question mark from CustomerID in Order table.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609240447228_Change type of CustomerID string in Order table.resx">
-      <DependentUpon>201609240447228_Change type of CustomerID string in Order table.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609240659598_Add PaymentType Column in Order table.resx">
-      <DependentUpon>201609240659598_Add PaymentType Column in Order table.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609240715549_Add State, Country in Order table.resx">
-      <DependentUpon>201609240715549_Add State, Country in Order table.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609251457197_Add ProductType in Product table.resx">
-      <DependentUpon>201609251457197_Add ProductType in Product table.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

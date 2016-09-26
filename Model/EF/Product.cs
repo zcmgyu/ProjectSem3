@@ -12,6 +12,7 @@ namespace Model.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
+            ListProductCategories = new HashSet<ListProductCategory>();
             OrderDetails = new HashSet<OrderDetail>();
             ProductSizeColors = new HashSet<ProductSizeColor>();
         }
@@ -39,8 +40,7 @@ namespace Model.EF
 
         public bool? IncludedVAT { get; set; }
 
-        public long? CategoryID { get; set; }
-        public int? ProductType { get; set; }
+        public string ListCategory { get; set; }
 
         public int? Warranty { get; set; }
 
@@ -72,10 +72,13 @@ namespace Model.EF
         [StringLength(200)]
         public string ShortDescription { get; set; }
 
+        public int? ProductType { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ListProductCategory> ListProductCategories { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-
-        public virtual ProductCategory ProductCategory { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductSizeColor> ProductSizeColors { get; set; }

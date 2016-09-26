@@ -12,7 +12,7 @@ namespace Model.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ProductCategory()
         {
-            Products = new HashSet<Product>();
+            ListProductCategories = new HashSet<ListProductCategory>();
         }
 
         public long ID { get; set; }
@@ -53,6 +53,6 @@ namespace Model.EF
         public bool IsSelected { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<ListProductCategory> ListProductCategories { get; set; }
     }
 }

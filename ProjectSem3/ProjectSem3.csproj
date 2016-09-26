@@ -6464,7 +6464,7 @@
     <Content Include="Content\Client\lib\plugin-datepicker\plugins\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\Client\lib\plugin-datepicker\plugins\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="Content\Client\json\vietnam_provinces_cities.json" />
-    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Test\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Account\_LoginPartial.cshtml" />
@@ -6869,6 +6869,9 @@
     <Content Include="Areas\Admin\Views\Order\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Customer\_FilterPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Customer\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Properties\PublishProfiles\ProjectSem3.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

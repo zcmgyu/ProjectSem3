@@ -114,6 +114,8 @@ namespace ProjectSem3.Areas.Admin.Controllers
         // GET: Admin/Product
         public ActionResult Create()
         {
+            ViewBag.ListCategory = new ProductDao().LoadProductCategory();
+
             var colors = new ProductDao().LoadProductColor();
             var sizes = new ProductDao().LoadProductSize();
             var categories = new ProductDao().LoadProductCategory();
@@ -123,7 +125,8 @@ namespace ProjectSem3.Areas.Admin.Controllers
                 ProductGeneral = new ProductGeneral(),
                 SizeColorQuantities = new List<SizeColorQuantityViewModel>()
             };
-
+            // Add category
+            model.ProductGeneral.Category = categories;
             
             foreach (var color in colors)
             {
@@ -148,7 +151,8 @@ namespace ProjectSem3.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(ProductViewModel model)
         {
-            if(!ModelState.IsValid)
+
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -166,9 +170,13 @@ namespace ProjectSem3.Areas.Admin.Controllers
             serializerSCQ.Serialize(writerSCQ, listSCQ);
             var strSCQ = outputSCQ.ToString().Replace("&#xD;&#xA;", Environment.NewLine);
             //
+
+            // Splip String to Array
+            //var categoryArr = model.ProductGeneral.ListCategories.Split(';');
+            // Insert to DB
             var productDao = new ProductDao().InsertProduct(model.ProductGeneral.Name, 
                 model.ProductGeneral.Description, model.ProductGeneral.ShortDescription, model.ProductGeneral.SKU, model.ProductGeneral.ProductType,
-                model.ProductGeneral.Price, model.ProductGeneral.PromotionPrice, model.ProductGeneral.Status, strImg, strSCQ);
+                model.ProductGeneral.Price, model.ProductGeneral.PromotionPrice, model.ProductGeneral.Status, strImg, strSCQ, model.ProductGeneral.ListCategories);
             if (productDao)
                 return RedirectToAction("List");
             return View(model);

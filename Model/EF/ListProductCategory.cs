@@ -6,8 +6,8 @@ namespace Model.EF
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("OrderDetail")]
-    public partial class OrderDetail
+    [Table("ListProductCategory")]
+    public partial class ListProductCategory
     {
         [Key]
         [Column(Order = 0)]
@@ -17,24 +17,14 @@ namespace Model.EF
         [Key]
         [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long OrderID { get; set; }
+        public long CategoryID { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
-        [StringLength(10)]
-        public string Color { get; set; }
+        public DateTime? CreatedDate { get; set; }
 
-        [Key]
-        [Column(Order = 3)]
-        [StringLength(3)]
-        public string Size { get; set; }
-
-        public int? Quantity { get; set; }
-
-        public decimal? Price { get; set; }
-
-        public virtual Order Order { get; set; }
+        public bool? Status { get; set; }
 
         public virtual Product Product { get; set; }
+
+        public virtual ProductCategory ProductCategory { get; set; }
     }
 }

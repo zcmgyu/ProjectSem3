@@ -91,7 +91,7 @@
                         <a href="#"><i class="sp-star rating-1"></i></a>
                         <a href="#"><i class="sp-star rating-2"></i></a>
                     </div>
-                    <h2><a href="#">@item.Name</a></h2>
+                    <h2><a href="/Product/Detail/@item.ID">@item.Name</a></h2>
                     <h3 class="s-price-box">
                         @if (item.PromotionPrice == 0 || item.PromotionPrice == null)
                         {
@@ -221,7 +221,7 @@
                                                     <a href="#"><i class="sp-star rating-1"></i></a>
                                                     <a href="#"><i class="sp-star rating-2"></i></a>
                                                 </div>
-                                                <h2><a href="#">@featured[i].Name</a></h2>
+                                                <h2><a href="/Product/Deatail/@featured[i].ID">@featured[i].Name</a></h2>
                                                 <h3 class="s-price-box">
                                                     @if (@featured[i].PromotionPrice == 0 || @featured[i].PromotionPrice == null)
                                                     {
@@ -268,7 +268,7 @@
                                                             <a href="#"><i class="sp-star rating-1"></i></a>
                                                             <a href="#"><i class="sp-star rating-2"></i></a>
                                                         </div>
-                                                        <h2><a href="#">@featured[i + j].Name</a></h2>
+                                                        <h2><a href="/Product/Detail/@featured[i + j]">@featured[i + j].Name</a></h2>
                                                         <h3 class="s-price-box">
                                                             @if (@featured[i + j].PromotionPrice == 0 || @featured[i + j].PromotionPrice == null)
                                                             {

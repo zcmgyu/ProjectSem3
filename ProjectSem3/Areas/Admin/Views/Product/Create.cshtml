@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var listCategory = ViewBag.ListCategory as List<ProductCategory>;
 }
 @section LevelPluginCss{
     <link href="~/Content/Admin/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
@@ -50,6 +51,22 @@
                 finder.popup();
 
             });
+        });
+    </script>
+
+    <script>
+        
+        $('.listCategories').change(function() {
+            if (this.checked) {
+                var current = $("#categoryTarget").val();
+                var addmore = (current += (";" + $(this).data('id') + ";"));
+                alert("admore = " + addmore);
+                $('#categoryTarget').val(addmore);
+            } else {
+                var getDataId =  ";" + ($(this).data("id")) + ";";
+                var str = $('#categoryTarget').val().replace(getDataId, '');
+                $('#categoryTarget').val(str);
+            }
         });
     </script>
 
@@ -219,17 +236,17 @@
                                         <div class="col-md-10">
                                             <div class="form-control height-auto">
                                                 <div class="scroller" style="height:275px;" data-always-visible="1">
-                                                    @*@ShowTree(Model.ProductGeneral.Categories.Where(e => e.ParentID == null).ToList())*@
-
-                                                    @*@helper ShowTree(List<ProductCategory> categories)
+                                                    @ShowTree(listCategory.Where(e => e.ParentID == null).ToList())
+                                                    @Html.TextBoxFor(m => m.ProductGeneral.ListCategories, new { @id = "categoryTarget"})
+                                                    @helper ShowTree(List<ProductCategory> categories)
                                                             {
                                                             <ul class="list-unstyled">
                                                                 @for (var i = 0; i < categories.Count(); i++)
                                                                 {
-                                                                    var children = Model.ProductGeneral.Categories.Where(e => e.ParentID == categories[i].ID).ToList();
+                                                                    var children = Model.ProductGeneral.Category.Where(e => e.ParentID == categories[i].ID).ToList();
                                                                     <li>
                                                                         <label>
-                                                                            @Html.CheckBoxFor(m => categories[i].IsSelected) @Html.DisplayFor(m => categories[i].Name)
+                                                                            @Html.CheckBoxFor(m => categories[i].IsSelected, new { @data_id = @categories[i].ID, @class = "listCategories"}) @Html.DisplayFor(m => categories[i].Name)
                                                                         </label>
                                                                         @if (children.Count > 0)
                                                                         {
@@ -238,7 +255,7 @@
                                                                     </li>
                                                                 }
                                                             </ul>
-                                                        }*@
+                                                        }
                                                 </div>
                                             </div>
                                             <span class="help-block"> select one or more categories </span>

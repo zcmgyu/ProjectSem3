@@ -19,7 +19,8 @@ namespace ProjectSem3.Controllers
         }
 
         // GET: Product
-        public ActionResult ShopList(int? categoryId, decimal? firstprice, decimal? lastprice, string color = "", string size = "", int page = 1, int pageSize = 9)
+        public ActionResult ShopList(decimal? firstprice, decimal? lastprice, string color = "", string categoryId = "", string size = "", int page = 1, int pageSize = 9)
+
         {
             int totalRecord = 0;
             var listProduct = new ProductDao().LoadSimpleProductList(ref totalRecord, categoryId, firstprice, lastprice, color, size, page, pageSize);

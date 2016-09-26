@@ -51,7 +51,7 @@ namespace Model.DAO
         }
         public bool InsertProduct(string name, string description,
             string shortDescription, string SKU, int? productType, decimal? price,
-            decimal? promotionPrice, int status, string moreImages, string listColorSizeQuantity)
+            decimal? promotionPrice, int status, string moreImages, string listColorSizeQuantity, string listCategory)
         {
             var productTypeParam = new SqlParameter();
             if (productType == null)
@@ -89,7 +89,7 @@ namespace Model.DAO
                     //new SqlParameter("@categoryID", category),
                     new SqlParameter("@SKU", SKU),
                     productTypeParam,
-                    
+
                     new SqlParameter("@price", System.Data.SqlDbType.Decimal) {
                           Precision = 18,
                           Scale = 0,
@@ -104,14 +104,15 @@ namespace Model.DAO
                     //},
                     new SqlParameter("@status", status),
                     new SqlParameter("@moreImages", moreImages),
-                    new SqlParameter("@listColorSizeQuantity", listColorSizeQuantity)
+                    new SqlParameter("@listColorSizeQuantity", listColorSizeQuantity),
+                    new SqlParameter("@listCategory", listCategory)
                 };
             // Allow Null to Parameter
             
             
             return _db.Database.SqlQuery<int>("InsertProduct @name," +
                     "@description, @shortDescription, @SKU, @productType, " +
-                "@price, @promotionPrice, @status, @moreImages, @listColorSizeQuantity", sqlParams)
+                "@price, @promotionPrice, @status, @moreImages, @listColorSizeQuantity, @listCategory", sqlParams)
                 .SingleOrDefault() > 0;
         }
 
@@ -190,7 +191,7 @@ namespace Model.DAO
        
 
 
-        public IEnumerable<Product> LoadSimpleProductList(ref int totalRecord, int? categoryId, decimal? firstprice, decimal? lastprice, string color, string size, int page = 1, int pageSize = 10)
+        public IEnumerable<Product> LoadSimpleProductList(ref int totalRecord, string categoryId, decimal? firstprice, decimal? lastprice, string color, string size, int page = 1, int pageSize = 10)
         {
             //Check null before add to parameter
             SqlParameter firstpriceParam = null;
@@ -221,9 +222,9 @@ namespace Model.DAO
             }
 
             SqlParameter categoryParam = null;
-            if (categoryId == null)
+            if (categoryId == "")
             {
-                categoryParam = new SqlParameter("@category", System.Data.SqlDbType.Int)
+                categoryParam = new SqlParameter("@category", System.Data.SqlDbType.NVarChar)
                 {
                     Value = DBNull.Value,
                     Direction = System.Data.ParameterDirection.Input

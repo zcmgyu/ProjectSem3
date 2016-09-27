@@ -6126,6 +6126,7 @@
     <Content Include="Content\Admin\pages\scripts\ui-tree.min.js" />
     <Content Include="Content\Admin\pages\scripts\widgets.js" />
     <Content Include="Content\Admin\pages\scripts\widgets.min.js" />
+    <Content Include="Content\BackupDB\OnlineShopBackup.sql" />
     <Content Include="Content\Client\css\animate.css" />
     <Content Include="Content\Client\css\bootstrap-datepicker3.min.css" />
     <Content Include="Content\Client\css\bootstrap.min.css" />
@@ -6923,6 +6924,9 @@
     <Content Include="Views\Shop\Checkout.cshtml" />
     <Content Include="Views\Shared\_HeaderCart.cshtml" />
     <Content Include="Views\Paypal\GetDataPaypal.cshtml" />
+    <Content Include="Views\Home\_LoadMenuBar.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Paypal\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

@@ -28,6 +28,8 @@ namespace ProjectSem3.Controllers
             return View(shippingInfo);
         }
 
+
+        [Authorize]
         [HttpPost]
         public ActionResult Payment(Shipping model)
         {

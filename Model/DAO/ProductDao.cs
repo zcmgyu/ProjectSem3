@@ -157,10 +157,11 @@ namespace Model.DAO
                 new SqlParameter("@title", model.Title),
                 new SqlParameter("@description", model.Description),
                 new SqlParameter("@image", model.Image),
+                new SqlParameter("@link", model.Link),
                 new SqlParameter("@displayorder", model.DisplayOrder),
                 new SqlParameter("@status", model.Status)
             };
-            return _db.Database.SqlQuery<bool>("UpdateSlideContent @Id, @title, @description, @image, @displayorder, @status", sqlParams).SingleOrDefault();
+            return _db.Database.SqlQuery<bool>("UpdateSlideContent @Id, @title, @description, @image, @link, @displayorder, @status", sqlParams).SingleOrDefault();
         }
 
         public List<ProductDetailGeneral> LoadSimpleProductByProductType(int productType)

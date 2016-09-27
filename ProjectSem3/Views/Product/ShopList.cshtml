@@ -7,6 +7,7 @@
     ViewBag.Title = "ShopList";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var listColor = ViewBag.Colors as List<string>;
+    var listCategory = ViewBag.Category as List<Model.EF.ProductCategory>;
 }
 @section CustomStyle{
     <style>
@@ -128,6 +129,21 @@
                     <aside class="widget widget-categories">
                         <h5>categories</h5>
                         <ul>
+                            @foreach (var item in listCategory.Where(x => x.ParentID == 1))
+                            {
+                                var child = listCategory.Where(x => x.ParentID == item.ID);
+                                var countChild = child.Count();
+                                <li><a href="/Product/ShopList?categoryId=@item.ID">@item.Name</a></li>
+                                    @*@if (countChild > 0)
+                                    {
+                                        foreach (var childItem in child)
+                                        {
+                                            <a href="/Product/ShopList?categoryId=@childItem.ID">@childItem.Name</a>
+                                        }
+
+                                    }*@
+
+                                                            }
                             <li><a href="#">Mens</a></li>
                             <li><a href="#">Womens</a></li>
                             <li><a href="#">T-shirt</a></li>
@@ -221,7 +237,7 @@
                                                             <img class="@classType[i]" src="@Url.Content(item.MoreImages[i])" alt="@item.MoreImages[i]" />
                                                         }
 
-                                                        @*<img class="secondary-photo" src="img/shop/9.jpg" alt="" />*@
+                                                        @*<img class="secondary-photo" src="~/Content/Client/img/shop/9.jpg" alt="" />*@
                                                     </a>
                                                     <div class="pro-action">
                                                         <a href="" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
@@ -265,8 +281,8 @@
                                                         }
                                                     </a>
                                                     <div class="pro-action">
-                                                        <a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>
-                                                        <a href="#" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
+                                                        @*<a href="#" class="action-btn"><i class="sp-heart"></i><span>Wishlist</span></a>*@
+                                                        <a href="/Product/Detail/@item.Id" class="action-btn"><i class="sp-shopping-cart"></i><span>Add to cart</span></a>
                                                         <a href="#" class="action-btn"><i class="sp-compare-alt"></i><span>Compare</span></a>
                                                     </div>
                                                 </div>
@@ -352,7 +368,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="best-product-banner">
-                        <a href="#"><img src="img/banner/best-product-banner.jpg" alt="" /></a>
+                        <a href="#"><img src="~/Content/Client/img/banner/best-product-banner.jpg" alt="" /></a>
                     </div>
                 </div>
             </div>
@@ -365,7 +381,7 @@
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="banner-photo">
-                        <a href="#"><img src="img/banner/4.jpg" alt="" /></a>
+                        <a href="#"><img src="~/Content/Client/img/banner/4.jpg" alt="" /></a>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12">

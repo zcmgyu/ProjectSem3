@@ -67,7 +67,7 @@
                                         <th class="product-price">Price</th>
                                         <th class="product-quantity">Quantity</th>
                                         <th class="product-subtotal">Subtotal</th>
-                                        <th class="product-remove">Remove</th>
+                                        @*<th class="product-remove">Remove</th>*@
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -86,7 +86,7 @@
                                                     <td class="product-price"><span class="amount">$@actualPrice</span></td>
                                                     <td class="product-quantity"><input type="text" value="@item.Quantity" /></td>
                                                     <td class="product-subtotal">$@(actualPrice * item.Quantity)</td>
-                                                    <td class="product-remove"><a href="#"><i class="pe-7s-close"></i></a></td>
+                                                    @*<td class="product-remove"><a href="#"><i class="pe-7s-close"></i></a></td>*@
                                                 </tr>
                                                 totalPrice = totalPrice + (actualPrice * item.Quantity);
                                             }
@@ -103,9 +103,10 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="coupon">
-                                                        <input type="submit" value="update cart" />
-                                                        <span>do you have coupon code</span>
-                                                        <input type="text" />
+                                                        @*<input type="submit" value="update cart" />*@javascript:history.back()
+                                                        <input type="submit" value="Back" onclick="javascript:history.back()"/>*
+                                                        @*<span>do you have coupon code</span>
+                                                        @*<input type="text" />*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -120,10 +121,10 @@
                                                                         <th>Subtotal</th>
                                                                         <td>$@totalPrice</td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    @*<tr>
                                                                         <th>Discount</th>
                                                                         <td><span>no discount or coupon code</span></td>
-                                                                    </tr>
+                                                                    </tr>*@
                                                                     <tr>
                                                                         <th>Shipping</th>
                                                                         <td><p>free shipping</p></td>

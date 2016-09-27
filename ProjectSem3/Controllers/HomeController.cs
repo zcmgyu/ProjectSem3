@@ -24,6 +24,14 @@ namespace ProjectSem3.Controllers
             return PartialView("_TopSlide", model);
         }
 
+        [ChildActionOnly]
+
+        public ActionResult LoadMenuBar()
+        {
+            var model = new ProductDao().LoadProductCategory();
+            return PartialView("_LoadMenuBar", model);
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

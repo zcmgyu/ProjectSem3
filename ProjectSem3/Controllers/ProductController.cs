@@ -63,6 +63,7 @@ namespace ProjectSem3.Controllers
             }
             //
             ViewBag.Colors = new ProductDao().LoadProductColor();
+            ViewBag.Category = new ProductDao().LoadProductCategory();
             return View(listProductVM);
         }
 

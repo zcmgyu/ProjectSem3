@@ -83,70 +83,8 @@
                             <a href="/Home/Index"><img src="~/Content/Client/img/logo.png" alt="" /></a>
                         </div>
                     </div>
-                    <div class="col-md-8 hidden-sm hidden-xs">
-                        <div class="main-menu pull-right">
-                            <nav>
-                                <ul>
-                                    <li>
-                                        <a href="/Home/Index">home</a>
-                                        @*<ul class="submenu">
-                                            <li class="submenu-title"><a href="#">Home pages</a></li>
-                                            <li><a href="index.html">Homepage Version 1</a></li>
-                                            <li><a href="index-2.html">Homepage Version 2</a></li>
-                                        </ul>*@
-                                    </li>
-                                    <li><a href="/Product/ShopList?categoryId=1">mens</a></li>
-                                    <li><a href="/Product/ShopList?categoryId=2">womens</a></li>
-                                    @*<li>
-                                        <a href="shop.html">shop</a>
-                                        <div class="mega-menu">
-                                            <span>
-                                                <a class="mega-menu-title" href="#">WOMEN CLOTH</a>
-                                                <a href="#">casual shirt</a>
-                                                <a href="#">rikke t-shirt</a>
-                                                <a href="#">mia top</a>
-                                                <a href="#">mia top</a>
-                                                <a href="#">muscle tee</a>
-                                                <a href="#">seine blouse</a>
-                                            </span>
-                                            <span>
-                                                <a class="mega-menu-title" href="#">MEN CLOTH</a>
-                                                <a href="#">casual shirt</a>
-                                                <a href="#">t-shirt</a>
-                                                <a href="#">t-shirt</a>
-                                                <a href="#">zeans</a>
-                                                <a href="#">trousers/ pants </a>
-                                                <a href="#">sweamwear</a>
-                                            </span>
-                                            <span>
-                                                <a class="mega-menu-title" href="#">WOMEN JEWELRY</a>
-                                                <a href="#">necklace</a>
-                                                <a href="#">samhar cuff</a>
-                                                <a href="#">samhar cuff</a>
-                                                <a href="#">samhar cuff</a>
-                                                <a href="#">nail set</a>
-                                                <a href="#">drop earrings</a>
-                                            </span>
-                                            <span class="mega-menu-photo">
-                                                <a href="#"><img src="~/Content/Client/img/megamenu/1.jpg" alt="" /></a>
-                                            </span>
-                                        </div>
-                                    </li>*@
-                                    @*<li>
-                                        <a href="blog.html">blog</a>
-                                        <ul class="submenu">
-                                            <li class="submenu-title"><a href="#">Blog pages</a></li>
-                                            <li><a href="blog.html">Blog</a></li>
-                                            <li><a href="single-blog.html">Single-blog</a></li>
-                                        </ul>
-                                    </li>*@
-                                    <!--
-                                    <li><a href="about.html">about</a></li> -->
-                                    <li><a href="/Contact/Index">contact</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
+                    @{ Html.RenderAction("LoadMenuBar", "Home");}
+
                     <div class="col-md-2 col-sm-6 col-xs-12">
                         @{ Html.RenderAction("HeaderCart", "Home");}
                     </div>
@@ -320,6 +258,31 @@
     <script src="~/Content/Client/js/wow.min.js"></script>
     <script type="text/javascript">
         new WOW().init();
+    </script>
+    <!-- Google Map js -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-8RnVSbK3DbjRikF3OhirTmWgFgf_9kA&callback=initMap"
+            type="text/javascript"></script>
+    
+    <script>
+			function initialize() {
+				var mapOptions = {
+					zoom: 5,
+					scrollwheel: false,
+					center: new google.maps.LatLng(40.7058316, -74.2581978)
+				};
+
+				var map = new google.maps.Map(document.getElementById('googleMap'),
+					mapOptions);
+
+				var marker = new google.maps.Marker({
+					position: map.getCenter(),
+					animation:google.maps.Animation.BOUNCE,
+					icon: 'img/map-marker.png',
+					map: map
+				});
+			}
+
+			google.maps.event.addDomListener(window, 'load', initialize);
     </script>
     <!-- plugins js -->
     <script src="~/Content/Client/js/plugins.js"></script>

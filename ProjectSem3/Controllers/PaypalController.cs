@@ -84,7 +84,7 @@ namespace ProjectSem3.Controllers
             {
                 // Remove session
                 Session[Common.CommonSession.CartSession] = null;
-                return RedirectToAction("Index", "Home");
+                return View("Success");
             }
             return View();
         }

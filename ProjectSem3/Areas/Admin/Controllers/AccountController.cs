@@ -53,7 +53,7 @@ namespace ProjectSem3.Areas.Admin.Controllers
 
         //
         // GET: Admin/Account
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;

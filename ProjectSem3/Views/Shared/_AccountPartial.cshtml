@@ -3,8 +3,8 @@
     {
         <li><a href="@Url.Action("Index", "Manage")">My Account</a></li>
     }
-    <li><a href="#">Wishlist</a></li>
-    <li><a href="#">Checkout</a></li>
+    <li>@*<a href="#">Wishlist</a>*@</li>
+    <li><a href="/Shop/Checkout">Checkout</a></li>
     @if (Request.IsAuthenticated)
     {
         using (Html.BeginForm("Signout", "Account", FormMethod.Post, new { id = "logoutForm" }))

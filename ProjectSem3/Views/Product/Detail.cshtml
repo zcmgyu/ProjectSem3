@@ -158,7 +158,7 @@
                             @Html.DisplayFor(m => m.ProductGeneral.Name)
                         </h3>
                         <h4>
-                            @if (@Model.ProductGeneral.PromotionPrice != 0)
+                            @if (@Model.ProductGeneral.PromotionPrice == 0 || @Model.ProductGeneral.PromotionPrice == null)
                             {
                                 <span>$@Model.ProductGeneral.Price</span>
                             }
@@ -388,7 +388,7 @@
                     <div class="product-brief">
                         <h2><a href="#">@item.Name</a></h2>
                         <h3 class="s-price-box">
-                            @if (item.PromotionPrice == 0)
+                            @if (item.PromotionPrice == 0 || item.PromotionPrice == null)
                             {
                                 <span>$@item.Price</span>
                             }
